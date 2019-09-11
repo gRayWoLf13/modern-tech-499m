@@ -63,6 +63,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Logic\AIPlayer.cs" />
+    <Compile Include="Logic\Cell.cs" />
+    <Compile Include="Logic\GameLogic.cs" />
+    <Compile Include="Logic\IPlayer.cs" />
+    <Compile Include="Logic\MoveResult.cs" />
+    <Compile Include="Logic\UserPlayer.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
