@@ -16,8 +16,8 @@ namespace modern_tech_499m.Logic
 
         public GameLogic(int initialValue, IPlayer player1, IPlayer player2)
         {
-            CurrentPlayer = Player1 = player1;
-            Player2 = player2;
+            Player1 = player1;
+            CurrentPlayer = Player2 = player2;
             InitialValue = initialValue;
             CreateField(initialValue);
         }
@@ -108,7 +108,12 @@ namespace modern_tech_499m.Logic
                 return (MoveResult.ContinuousMove, lastCellNumber);
             if (endedOnEnemyCell)
             {
-                if (Field[lastCellNumber + CellsCount + 1].Value == 2 || Field[lastCellNumber + CellsCount + 1].Value == 3)
+                int lastCellIndexInField;
+                if (player.Equals(Player1))
+                    lastCellIndexInField = lastCellNumber + CellsCount + 1;
+                else
+                    lastCellIndexInField = lastCellNumber;
+                if (Field[lastCellIndexInField].Value == 2 || Field[lastCellIndexInField].Value == 3)
                     StealEnemyPoints(player, lastCellNumber);
             }
             return (MoveResult.EndedMove, lastCellNumber);
@@ -137,7 +142,7 @@ namespace modern_tech_499m.Logic
                 endedCellIndexOnField = endedCellNumber;
                 targetEndingCellIndexOfField = Field.Count - 1;
             }
-            while ((Field[endedCellIndexOnField].Value == 2 || Field[endedCellIndexOnField].Value == 3) && !Field[endedCellIndexOnField].IsEndingCell && endedCellIndexOnField >= 0)
+            while (endedCellIndexOnField >= 0 && !Field[endedCellIndexOnField].IsEndingCell && (Field[endedCellIndexOnField].Value == 2 || Field[endedCellIndexOnField].Value == 3))
             {
                 Field[targetEndingCellIndexOfField].Value += Field[endedCellIndexOnField].Value;
                 Field[endedCellIndexOnField].Value = 0;
