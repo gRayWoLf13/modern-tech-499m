@@ -1,11 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using modern_tech_499m.Logic;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using modern_tech_499m.Logic;
 
 namespace modern_tech_499m.Tests
 {
     [TestClass]
-    public class GameLogicUnitTest
+    public class modern_tech_499m_Tests_GameLogic
     {
         [TestMethod]
         public void FieldCreation()

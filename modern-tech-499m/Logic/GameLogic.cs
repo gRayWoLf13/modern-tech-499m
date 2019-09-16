@@ -1,92 +1,110 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
-[assembly: InternalsVisibleTo("LogicTests")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("modern_tech_499m.Tests")]
 namespace modern_tech_499m.Logic
 {
-    class GameLogic
+    internal class GameLogic
     {
-        const int CellsCount = 6;
+        public static readonly int CellsCount;
+        private List<Cell> field;
+        private IPlayer player1, player2, currentPlayer;
+        private int initialValue;
+        private static List<int> availableValuesToStealEnemyPoints;
 
-        List<Cell> Field;
-        IPlayer Player1, Player2, CurrentPlayer;
-        int InitialValue;
+        static GameLogic()
+        {
+            //TODO: Read cellsCount and availableStealingValues from config files...
+            CellsCount = 6;
+            availableValuesToStealEnemyPoints = new List<int>() { 2, 3 };
+        }
 
         public GameLogic(int initialValue, IPlayer player1, IPlayer player2)
         {
-            Player1 = player1;
-            CurrentPlayer = Player2 = player2;
-            InitialValue = initialValue;
+            if (player1 == null || player2 == null)
+                throw new ArgumentNullException("One of the players is null");
+            currentPlayer = this.player1 = player1;
+            this.player2 = player2;
+            this.initialValue = initialValue;
             CreateField(initialValue);
         }
 
-        public GameLogic(IPlayer player1, IPlayer player2, params int[] initialValues)
+        public GameLogic(IPlayer player1, IPlayer player2, int[] initialValues)
         {
-            CurrentPlayer = Player1 = player1;
-            Player2 = player2;
-            InitialValue = CreateField(initialValues) / 2 / CellsCount;
-        }
-
-        int CreateField(params int[] initialvalues)
-        {
-            Field = new List<Cell>();
-            int counter = 0;
-            for (int i = 0; i < CellsCount; i++)
-                Field.Add(new Cell() { Owner = Player1, Value = initialvalues[counter++], IsEndingCell = false, Number = i });
-            Field.Add(new Cell() { Owner = Player1, Value = 0, IsEndingCell = true, Number = CellsCount });
-            for (int i = 0; i < CellsCount; i++)
-                Field.Add(new Cell() { Owner = Player2, Value = initialvalues[counter++], IsEndingCell = false, Number = i });
-            Field.Add(new Cell() { Owner = Player2, Value = 0, IsEndingCell = true, Number = CellsCount });
-            int sum = 0;
-            for (int i = 0; i < counter; sum += initialvalues[i++]) ;
-            return sum;
-        }
-
-        void CreateField(int initialValue)
-        {
-            Field = new List<Cell>();
-            for (int i = 0; i < CellsCount; i++)
-                Field.Add(new Cell() { Owner = Player1, Value = initialValue, IsEndingCell = false, Number = i });
-            Field.Add(new Cell() { Owner = Player1, Value = 0, IsEndingCell = true, Number = CellsCount });
-            for (int i = 0; i < CellsCount; i++)
-                Field.Add(new Cell() { Owner = Player2, Value = initialValue, IsEndingCell = false, Number = i });
-            Field.Add(new Cell() { Owner = Player2, Value = 0, IsEndingCell = true, Number = CellsCount });
+            if (player1 == null || player2 == null)
+                throw new ArgumentNullException("One of the players is null");
+            if (initialValues.Length != CellsCount * 2 + 2)
+                throw new ArgumentException("Initial values array size is incorrect");
+            currentPlayer = this.player1 = player1;
+            this.player2 = player2;
+            initialValue = CreateField(initialValues) / 2 / CellsCount;
         }
 
         public MoveResult MakeMove(IPlayer player, int cellIndex)
         {
-            if (player != CurrentPlayer)
+            if (player != currentPlayer)
                 return MoveResult.ImpossibleMove;
-            if (cellIndex < 0 || cellIndex >= 6)
+            if (cellIndex < 0 || cellIndex >= CellsCount)
                 return MoveResult.ImpossibleMove;
-            int indexOnField = player.Equals(Player1) ? cellIndex : CellsCount + 1 + cellIndex;
-            if (Field[indexOnField].Value == 0)
+            int indexOnField = player.Equals(player1) ? cellIndex : CellsCount + 1 + cellIndex;
+            if (field[indexOnField].Value == 0)
                 return MoveResult.ImpossibleMove;
-            var result = MakeSingleMove(player, indexOnField);
+            (MoveResult moveResult, int lastCellNumber) result = MakeSingleMove(player, indexOnField);
             while (result.moveResult == MoveResult.ContinuousMove)
             {
-                indexOnField = player.Equals(Player1) ? result.lastCellNumber : CellsCount + 1 + result.lastCellNumber;
+                indexOnField = player.Equals(player1) ? result.lastCellNumber : CellsCount + 1 + result.lastCellNumber;
                 result = MakeSingleMove(player, indexOnField);
             }
             if (CheckGameEnding())
                 return MoveResult.GameEnded;
-            CurrentPlayer = CurrentPlayer.Equals(Player1) ? Player2 : Player1;
+            currentPlayer = currentPlayer.Equals(player1) ? player2 : player1;
             return MoveResult.EndedMove;
         }
 
-        (MoveResult moveResult, int lastCellNumber) MakeSingleMove(IPlayer player, int indexOnField)
+        private int CreateField(int[] initialvalues)
+        {
+            field = new List<Cell>();
+            int counter = 0;
+            for (int i = 0; i < CellsCount; i++)
+            {
+                field.Add(new Cell() { Owner = player1, Value = initialvalues[counter], IsEndingCell = false, Number = i });
+                counter++;
+            }
+            field.Add(new Cell() { Owner = player1, Value = 0, IsEndingCell = true, Number = CellsCount });
+            for (int i = 0; i < CellsCount; i++)
+            {
+                field.Add(new Cell() { Owner = player2, Value = initialvalues[counter], IsEndingCell = false, Number = i });
+                counter++;
+            }
+            field.Add(new Cell() { Owner = player2, Value = 0, IsEndingCell = true, Number = CellsCount });
+            return initialvalues.Sum();
+        }
+
+        private void CreateField(int initialValue)
+        {
+            field = new List<Cell>();
+            for (int i = 0; i < CellsCount; i++)
+            {
+                field.Add(new Cell() { Owner = player1, Value = initialValue, IsEndingCell = false, Number = i });
+            }
+            field.Add(new Cell() { Owner = player1, Value = 0, IsEndingCell = true, Number = CellsCount });
+            for (int i = 0; i < CellsCount; i++)
+            {
+                field.Add(new Cell() { Owner = player2, Value = initialValue, IsEndingCell = false, Number = i });
+            }
+            field.Add(new Cell() { Owner = player2, Value = 0, IsEndingCell = true, Number = CellsCount });
+        }
+
+        private (MoveResult moveResult, int lastCellNumber) MakeSingleMove(IPlayer player, int indexOnField)
         {
             bool passedEnemyCell = false;
             bool endedOnPlayerCell = true;
             bool endedOnEnemyCell = false;
-            int lastCellNumber = Field[indexOnField].Number;
-            int value = Field[indexOnField].Value;
-            Field[indexOnField].Value = 0;
-            foreach (var cell in Field.Cycle(indexOnField + 1))
+            int lastCellNumber = field[indexOnField].Number;
+            int value = field[indexOnField].Value;
+            field[indexOnField].Value = 0;
+            foreach (Cell cell in field.Cycle(indexOnField + 1))
             {
                 if (value == 0)
                     break;
@@ -111,30 +129,30 @@ namespace modern_tech_499m.Logic
             if (endedOnEnemyCell)
             {
                 int lastCellIndexInField;
-                if (player.Equals(Player1))
+                if (player.Equals(player1))
                     lastCellIndexInField = lastCellNumber + CellsCount + 1;
                 else
                     lastCellIndexInField = lastCellNumber;
-                if (Field[lastCellIndexInField].Value == 2 || Field[lastCellIndexInField].Value == 3)
+                if (availableValuesToStealEnemyPoints.Contains(field[lastCellIndexInField].Value))
                     StealEnemyPoints(player, lastCellNumber);
             }
             return (MoveResult.EndedMove, lastCellNumber);
         }
 
-        bool CheckGameEnding()
+        private bool CheckGameEnding()
         {
-            if (Field[CellsCount].Value >= InitialValue * CellsCount)
+            if (field[CellsCount].Value >= initialValue * CellsCount)
                 return true;
-            if (Field.Last().Value >= InitialValue * CellsCount)
+            if (field[CellsCount * 2 + 1].Value >= initialValue * CellsCount)
                 return true;
             return false;
         }
 
-        void StealEnemyPoints(IPlayer currentPlayer, int endedCellNumber)
+        private void StealEnemyPoints(IPlayer currentPlayer, int endedCellNumber)
         {
             int endedCellIndexOnField;
             int targetEndingCellIndexOfField;
-            if (currentPlayer.Equals(Player1))
+            if (currentPlayer.Equals(player1))
             {
                 endedCellIndexOnField = endedCellNumber + CellsCount + 1;
                 targetEndingCellIndexOfField = CellsCount;
@@ -142,13 +160,15 @@ namespace modern_tech_499m.Logic
             else
             {
                 endedCellIndexOnField = endedCellNumber;
-                targetEndingCellIndexOfField = Field.Count - 1;
+                targetEndingCellIndexOfField = field.Count - 1;
             }
-            while (endedCellIndexOnField >= 0 && !Field[endedCellIndexOnField].IsEndingCell && (Field[endedCellIndexOnField].Value == 2 || Field[endedCellIndexOnField].Value == 3))
+            bool haveFreeCells = endedCellIndexOnField >= 0 && !field[endedCellIndexOnField].IsEndingCell;
+            while (haveFreeCells && availableValuesToStealEnemyPoints.Contains(field[endedCellIndexOnField].Value))
             {
-                Field[targetEndingCellIndexOfField].Value += Field[endedCellIndexOnField].Value;
-                Field[endedCellIndexOnField].Value = 0;
+                field[targetEndingCellIndexOfField].Value += field[endedCellIndexOnField].Value;
+                field[endedCellIndexOnField].Value = 0;
                 endedCellIndexOnField--;
+                haveFreeCells = endedCellIndexOnField >= 0 && !field[endedCellIndexOnField].IsEndingCell;
             }
         }
     }
