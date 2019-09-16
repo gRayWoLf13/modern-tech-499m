@@ -21,13 +21,61 @@ namespace modern_tech_499m
     /// </summary>
     public partial class MainWindow : Window
     {
+        UserPlayer player1, player2;
+        GameLogic logic;
         public MainWindow()
         {
             InitializeComponent();
-            UserPlayer p1 = new UserPlayer(), p2 = new UserPlayer();
-            //GameLogic l = new GameLogic(p1, p2, 0, 0, 0, 0, 0, 5, 2, 2, 2, 2, 2, 2);
-            GameLogic l = new GameLogic(22, p1, p2);
-            l.MakeMove(p1, 5);
+        }
+
+        private void Init()
+        {
+            player1 = new UserPlayer();
+            player2 = new UserPlayer();
+            logic = new GameLogic(6, player1, player2);
+        }
+
+        private void UpdateCellsValues()
+        {
+            player1Cell0.Content = logic.GetCellValue(player1, 0);
+            player1Cell1.Content = logic.GetCellValue(player1, 1);
+            player1Cell2.Content = logic.GetCellValue(player1, 2);
+            player1Cell3.Content = logic.GetCellValue(player1, 3);
+            player1Cell4.Content = logic.GetCellValue(player1, 4);
+            player1Cell5.Content = logic.GetCellValue(player1, 5);
+            player1EndingCell.Content = logic.GetCellValue(player1, 6);
+
+            player2Cell0.Content = logic.GetCellValue(player2, 0);
+            player2Cell1.Content = logic.GetCellValue(player2, 1);
+            player2Cell2.Content = logic.GetCellValue(player2, 2);
+            player2Cell3.Content = logic.GetCellValue(player2, 3);
+            player2Cell4.Content = logic.GetCellValue(player2, 4);
+            player2Cell5.Content = logic.GetCellValue(player2, 5);
+            player2EndingCell.Content = logic.GetCellValue(player2, 6);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Init();
+            UpdateCellsValues();
+        }
+
+        private void Player1Cell0_Click(object sender, RoutedEventArgs e)
+        {
+            string buttonName = (sender as Button).Name;
+            IPlayer player = buttonName.StartsWith("player1") ? player1 : player2;
+            int index = int.Parse(buttonName.Substring(buttonName.Length - 1));
+            try
+            {
+                MoveResult result = logic.MakeMove(player, index);
+                UpdateCellsValues();
+                lastStatus.Text = Enum.GetName(typeof(MoveResult), result);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Close();
+            }
         }
     }
 }
