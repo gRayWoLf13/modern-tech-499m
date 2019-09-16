@@ -45,9 +45,12 @@ namespace modern_tech_499m.Tests
                 {
                     return -1;
                 }
-                if (!x.Owner.Equals(y.Owner))
+                else
                 {
-                    return -1;
+                    if (x.Owner != null && !x.Owner.Equals(y.Owner))
+                    {
+                        return -1;
+                    }
                 }
                 if (x.Value.CompareTo(y.Value) != 0)
                 {
