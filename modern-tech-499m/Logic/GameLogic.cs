@@ -35,7 +35,7 @@ namespace modern_tech_499m.Logic
         {
             if (player1 == null || player2 == null)
                 throw new ArgumentNullException("One of the players is null");
-            if (initialValues.Length != CellsCount * 2 + 2)
+            if (initialValues.Length != CellsCount * 2)
                 throw new ArgumentException("Initial values array size is incorrect");
             currentPlayer = this.player1 = player1;
             this.player2 = player2;
@@ -46,7 +46,7 @@ namespace modern_tech_499m.Logic
         {
             if (player == null)
                 throw new ArgumentNullException("Passed player is null");
-            if (cellIndex < 0 || cellIndex >= CellsCount)
+            if (cellIndex < 0 || cellIndex > CellsCount)
                 throw new ArgumentOutOfRangeException(nameof(cellIndex), "Param value is outside of the range");
             int indexOnField = player.Equals(player1) ? cellIndex : CellsCount + 1 + cellIndex;
             return field[indexOnField].Value;
@@ -58,6 +58,11 @@ namespace modern_tech_499m.Logic
                 return MoveResult.ImpossibleMove;
             if (cellIndex < 0 || cellIndex >= CellsCount)
                 return MoveResult.ImpossibleMove;
+            if (!CheckMovePossible())
+            {
+                ClearAllEnemyNonEndingCellsOnGameEnd();
+                return MoveResult.GameEnded;
+            }
             int indexOnField = player.Equals(player1) ? cellIndex : CellsCount + 1 + cellIndex;
             if (field[indexOnField].Value == 0)
                 return MoveResult.ImpossibleMove;
@@ -158,6 +163,26 @@ namespace modern_tech_499m.Logic
             if (field[CellsCount * 2 + 1].Value >= initialValue * CellsCount)
                 return true;
             return false;
+        }
+
+        private bool CheckMovePossible()
+        {
+            int cellToStartSearching = currentPlayer.Equals(player1) ? 0 : CellsCount + 1;
+            for (int i = 0; i < CellsCount; i++)
+                if (field[cellToStartSearching + i].Value != 0)
+                    return true;
+            return false;
+        }
+
+        private void ClearAllEnemyNonEndingCellsOnGameEnd()
+        {
+            int cellToStartCleaning = currentPlayer.Equals(player1) ? CellsCount + 1 : 0;
+            int targetEngingCell = currentPlayer.Equals(player1) ? CellsCount * 2 + 1 : CellsCount;
+            for(int i = 0; i < CellsCount; i++)
+            {
+                field[targetEngingCell].Value += field[cellToStartCleaning + i].Value;
+                field[cellToStartCleaning + i].Value = 0;
+            }
         }
 
         private void StealEnemyPoints(IPlayer currentPlayer, int endedCellNumber)
