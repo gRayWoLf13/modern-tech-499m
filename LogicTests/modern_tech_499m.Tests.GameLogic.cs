@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using modern_tech_499m.Logic;
+using System.Collections.Generic;
 
-namespace LogicTests
+namespace modern_tech_499m.Tests
 {
     [TestClass]
-    public class LogicUnitTest
+    public class GameLogicUnitTest
     {
         [TestMethod]
         public void FieldCreation()
@@ -32,15 +31,28 @@ namespace LogicTests
             new Cell(){Number = 5, Owner = null, IsEndingCell = false, Value = initialCount},
             new Cell(){Number = 6, Owner = null, IsEndingCell = true, Value = 0} };
 
-            CollectionAssert.AreEqual(expectedField, resultField, Comparer<Cell>.Create((x, y) => {
+            CollectionAssert.AreEqual(expectedField, resultField, Comparer<Cell>.Create((x, y) =>
+            {
                 if (x.IsEndingCell.CompareTo(y.IsEndingCell) != 0)
+                {
                     return -1;
+                }
                 if (x.Number.CompareTo(y.Number) != 0)
+                {
                     return -1;
-                if ((x.Owner?.Equals(y.Owner)).HasValue && (x.Owner?.Equals(y.Owner)).Value == false)
+                }
+                if (x.Owner == null ^ y.Owner == null)
+                {
                     return -1;
+                }
+                if (!x.Owner.Equals(y.Owner))
+                {
+                    return -1;
+                }
                 if (x.Value.CompareTo(y.Value) != 0)
+                {
                     return -1;
+                }
                 return 0;
             }));
         }
