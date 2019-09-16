@@ -42,6 +42,16 @@ namespace modern_tech_499m.Logic
             initialValue = CreateField(initialValues) / 2 / CellsCount;
         }
 
+        public int GetCellValue(IPlayer player, int cellIndex)
+        {
+            if (player == null)
+                throw new ArgumentNullException("Passed player is null");
+            if (cellIndex < 0 || cellIndex >= CellsCount)
+                throw new ArgumentOutOfRangeException(nameof(cellIndex), "Param value is outside of the range");
+            int indexOnField = player.Equals(player1) ? cellIndex : CellsCount + 1 + cellIndex;
+            return field[indexOnField].Value;
+        }
+
         public MoveResult MakeMove(IPlayer player, int cellIndex)
         {
             if (player != currentPlayer)
@@ -130,12 +140,12 @@ namespace modern_tech_499m.Logic
                 return (MoveResult.ContinuousMove, lastCellNumber);
             if (endedOnEnemyCell)
             {
-                int lastCellIndexInField;
+                int lastCellIndexOnField;
                 if (player.Equals(player1))
-                    lastCellIndexInField = lastCellNumber + CellsCount + 1;
+                    lastCellIndexOnField = lastCellNumber + CellsCount + 1;
                 else
-                    lastCellIndexInField = lastCellNumber;
-                if (availableValuesToStealEnemyPoints.Contains(field[lastCellIndexInField].Value))
+                    lastCellIndexOnField = lastCellNumber;
+                if (availableValuesToStealEnemyPoints.Contains(field[lastCellIndexOnField].Value))
                     StealEnemyPoints(player, lastCellNumber);
             }
             return (MoveResult.EndedMove, lastCellNumber);
@@ -153,21 +163,21 @@ namespace modern_tech_499m.Logic
         private void StealEnemyPoints(IPlayer currentPlayer, int endedCellNumber)
         {
             int endedCellIndexOnField;
-            int targetEndingCellIndexOfField;
+            int targetEndingCellIndexOnField;
             if (currentPlayer.Equals(player1))
             {
                 endedCellIndexOnField = endedCellNumber + CellsCount + 1;
-                targetEndingCellIndexOfField = CellsCount;
+                targetEndingCellIndexOnField = CellsCount;
             }
             else
             {
                 endedCellIndexOnField = endedCellNumber;
-                targetEndingCellIndexOfField = field.Count - 1;
+                targetEndingCellIndexOnField = field.Count - 1;
             }
             bool haveFreeCells = endedCellIndexOnField >= 0 && !field[endedCellIndexOnField].IsEndingCell;
             while (haveFreeCells && availableValuesToStealEnemyPoints.Contains(field[endedCellIndexOnField].Value))
             {
-                field[targetEndingCellIndexOfField].Value += field[endedCellIndexOnField].Value;
+                field[targetEndingCellIndexOnField].Value += field[endedCellIndexOnField].Value;
                 field[endedCellIndexOnField].Value = 0;
                 endedCellIndexOnField--;
                 haveFreeCells = endedCellIndexOnField >= 0 && !field[endedCellIndexOnField].IsEndingCell;
