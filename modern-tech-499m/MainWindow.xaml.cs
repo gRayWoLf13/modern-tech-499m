@@ -32,7 +32,8 @@ namespace modern_tech_499m
         {
             player1 = new UserPlayer();
             player2 = new UserPlayer();
-            logic = new GameLogic(6, player1, player2);
+            //logic = new GameLogic(6, player1, player2);
+            logic = new GameLogic(player1, player2, new int[] { 0, 0, 0, 0, 0, 1, 1, 2, 3, 4, 5, 6 });
         }
 
         private void UpdateCellsValues()
