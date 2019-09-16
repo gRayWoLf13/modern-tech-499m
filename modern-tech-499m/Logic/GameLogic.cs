@@ -30,6 +30,7 @@ namespace modern_tech_499m.Logic
             CreateField(initialValue);
         }
 
+        [Obsolete]
         public GameLogic(IPlayer player1, IPlayer player2, int[] initialValues)
         {
             if (player1 == null || player2 == null)
@@ -62,6 +63,7 @@ namespace modern_tech_499m.Logic
             return MoveResult.EndedMove;
         }
 
+        [Obsolete]
         private int CreateField(int[] initialvalues)
         {
             field = new List<Cell>();
