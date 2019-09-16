@@ -25,9 +25,10 @@ namespace modern_tech_499m
         {
             InitializeComponent();
             UserPlayer p1 = new UserPlayer(), p2 = new UserPlayer();
-            //GameLogic l = new GameLogic(p1, p2, 0, 0, 0, 0, 0, 5, 2, 2, 2, 2, 2, 2);
-            GameLogic l = new GameLogic(22, p1, p2);
-            l.MakeMove(p1, 5);
+            GameLogic l = new GameLogic(p1, p2, new int[] { 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2 });
+            l.MakeMove(p1, 0);
+           // GameLogic l = new GameLogic(22, p1, p2);
+           // l.MakeMove(p1, 5);
         }
     }
 }
