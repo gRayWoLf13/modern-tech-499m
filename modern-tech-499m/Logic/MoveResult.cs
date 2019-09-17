@@ -2,7 +2,7 @@
 {
     enum MoveResult
     {
-        ImpossibleMove,
+        ImpossibleMove = 1,
         GameEnded,
         ContinuousMove,
         EndedMove

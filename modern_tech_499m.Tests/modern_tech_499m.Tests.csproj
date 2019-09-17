@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1C82CBA6-B03E-4B4D-94CD-5E4506F33F6C}</ProjectGuid>
+    <ProjectGuid>{7FC58456-73DC-4BBC-BDBB-8F2AE16EF5E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogicTests</RootNamespace>
-    <AssemblyName>LogicTests</AssemblyName>
+    <RootNamespace>modern_tech_499m.Tests</RootNamespace>
+    <AssemblyName>modern_tech_499m.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,7 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LogicUnitTest.cs" />
+    <Compile Include="modern_tech_499m.Tests.GameLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
