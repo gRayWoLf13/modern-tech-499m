@@ -116,9 +116,7 @@ namespace modern_tech_499m.Logic
         private (MoveResult moveResult, int lastCellNumber) MakeSingleMove(IPlayer player, int indexOnField)
         {
             bool passedEnemyCell = false;
-            bool endedOnPlayerCell = true;
-            bool endedOnEnemyCell = false;
-            int lastCellNumber = field[indexOnField].Number;
+            Cell lastCell = field[indexOnField];
             int value = field[indexOnField].Value;
             field[indexOnField].Value = 0;
             foreach (Cell cell in field.Cycle(indexOnField + 1))
@@ -129,31 +127,17 @@ namespace modern_tech_499m.Logic
                     continue;
                 if (!passedEnemyCell && cell.Owner != player && !cell.IsEndingCell)
                     passedEnemyCell = true;
-                if (cell.Owner == player && !cell.IsEndingCell)
-                    endedOnPlayerCell = true;
-                else
-                    endedOnPlayerCell = false;
-                if (cell.Owner != player && !cell.IsEndingCell)
-                    endedOnEnemyCell = true;
-                else
-                    endedOnEnemyCell = false;
-                lastCellNumber = cell.Number;
+                lastCell = cell;
                 cell.Value++;
                 value--;
             }
-            if (passedEnemyCell && endedOnPlayerCell)
-                return (MoveResult.ContinuousMove, lastCellNumber);
-            if (endedOnEnemyCell)
-            {
-                int lastCellIndexOnField;
-                if (player.Equals(player1))
-                    lastCellIndexOnField = lastCellNumber + CellsCount + 1;
-                else
-                    lastCellIndexOnField = lastCellNumber;
-                if (availableValuesToStealEnemyPoints.Contains(field[lastCellIndexOnField].Value))
-                    StealEnemyPoints(player, lastCellNumber);
-            }
-            return (MoveResult.EndedMove, lastCellNumber);
+            bool endedOnPlayerCell = lastCell.Owner == player && !lastCell.IsEndingCell;
+            bool endedOnEnemyCell = lastCell.Owner != player && !lastCell.IsEndingCell;
+            if (passedEnemyCell && endedOnPlayerCell && lastCell.Value > 1)
+                return (MoveResult.ContinuousMove, lastCell.Number);
+            if (endedOnEnemyCell && availableValuesToStealEnemyPoints.Contains(lastCell.Value))
+                StealEnemyPoints(player, lastCell.Number);
+            return (MoveResult.EndedMove, lastCell.Number);
         }
 
         private bool CheckGameEnding()
