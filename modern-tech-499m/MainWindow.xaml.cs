@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using modern_tech_499m.Logic;
+using modern_tech_499m.AILogic;
 
 namespace modern_tech_499m
 {
@@ -28,37 +29,27 @@ namespace modern_tech_499m
             InitializeComponent();
         }
 
-        private void Init()
+        private void ShowAIWorkingMessage(IPlayer player)
         {
-            IPlayer player1 = new UserPlayer(), player2 = new UserPlayer();
-            var logic = new GameLogic(6, player1, player2);
-            //var logic = new GameLogic(player1, player2, new int[] { 0, 0, 0, 0, 0, 1, 1, 2, 3, 4, 5, 6 });
-            controller = new GameController(player1, player2, player1, logic, UpdateFeld, ShowGameEnding,
-                ShowAIWorkingMessage, StopAIWorkingMessage, ShowWaitingForUserMessage, StopWaitingForUserMessage);
-            controller.RunGame();
+            currentPlayerInfo.Text = $"AI player '{player.Name}' is solving current move";
         }
 
-        private void ShowAIWorkingMessage()
+        private void StopAIWorkingMessage(IPlayer player)
         {
-            //show something
+            currentPlayerInfo.Text = "";
         }
 
-        private void StopAIWorkingMessage()
+        private void ShowWaitingForUserMessage(IPlayer player)
         {
-            //show something
+            currentPlayerInfo.Text = $"Waiting for user '{player.Name}' to make the move";
         }
 
-        private void ShowWaitingForUserMessage()
+        private void StopWaitingForUserMessage(IPlayer player)
         {
-            //show something
+            currentPlayerInfo.Text = "";
         }
 
-        private void StopWaitingForUserMessage()
-        {
-            //show something
-        }
-
-        private void ShowGameEnding()
+        private void ShowGameEnding(IPlayer player)
         {
             MessageBox.Show("Game ended");
         }
@@ -84,17 +75,53 @@ namespace modern_tech_499m
             lastStatus.Text = moveResult;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Init();
-        }
-
         private void Player1Cell0_Click(object sender, RoutedEventArgs e)
         {
             string buttonName = (sender as Button).Name;
+            if (buttonName == null || controller == null)
+                return;
             IPlayer player = buttonName.StartsWith("player1") ? controller.player1 : controller.player2;
             int index = int.Parse(buttonName.Substring(buttonName.Length - 1));
             controller.SetLastCell(player, index);
+        }
+
+        private void UserVsUser_Click(object sender, RoutedEventArgs e)
+        {
+            IPlayer player1, player2;
+            string buttonName = (sender as Button).Name;
+            switch(buttonName)
+            {
+                case "userVsUser":
+                    {
+                        player1 = new UserPlayer("User1");
+                        player2 = new UserPlayer("User2");
+                        break;
+                    }
+                case "userVsAI":
+                    {
+                        player1 = new UserPlayer("User1");
+                        player2 = new AIPlayer("Bot2");
+                        break;
+                    }
+                case "AIVsUser":
+                    {
+                        player1 = new AIPlayer("Bot1");
+                        player2 = new UserPlayer("User2");
+                        break;
+                    }
+                case "AIVsAI":
+                default:
+                    {
+                        player1 = new AIPlayer("Bot1");
+                        player2 = new AIPlayer("Bot2");
+                        break;
+                    }
+            }
+            GameLogic logic = new GameLogic(6, player1, player2, player1);
+            controller?.StopGame();
+            controller = new GameController(player1, player2, player1, logic, UpdateFeld, ShowGameEnding,
+                ShowAIWorkingMessage, StopAIWorkingMessage, ShowWaitingForUserMessage, StopWaitingForUserMessage);
+            controller.RunGame();
         }
     }
 }

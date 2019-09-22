@@ -5,7 +5,7 @@ using System.Linq;
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("modern_tech_499m.Tests")]
 namespace modern_tech_499m.Logic
 {
-    internal class GameLogic
+    internal class GameLogic : ICloneable
     {
         public static readonly int CellsCount;
         private List<Cell> field;
@@ -20,26 +20,43 @@ namespace modern_tech_499m.Logic
             availableValuesToStealEnemyPoints = new List<int>() { 2, 3 };
         }
 
-        public GameLogic(int initialValue, IPlayer player1, IPlayer player2)
+        public GameLogic(int initialValue, IPlayer player1, IPlayer player2, IPlayer firstPlayer)
         {
             if (player1 == null || player2 == null)
                 throw new ArgumentNullException("One of the players is null");
-            currentPlayer = this.player1 = player1;
+            if (!firstPlayer.Equals(player1) && !firstPlayer.Equals(player2))
+                throw new ArgumentException("First player is incorrect");
+            this.player1 = player1;
             this.player2 = player2;
+            currentPlayer = firstPlayer;
             this.initialValue = initialValue;
             CreateField(initialValue);
         }
 
         [Obsolete]
-        public GameLogic(IPlayer player1, IPlayer player2, int[] initialValues)
+        public GameLogic(IPlayer player1, IPlayer player2, IPlayer firstPlayer, int[] initialValues, int endingCellPlayer1Value, int endingCellPlayer2Value)
         {
             if (player1 == null || player2 == null)
                 throw new ArgumentNullException("One of the players is null");
             if (initialValues.Length != CellsCount * 2)
                 throw new ArgumentException("Initial values array size is incorrect");
-            currentPlayer = this.player1 = player1;
+            if (!firstPlayer.Equals(player1) && !firstPlayer.Equals(player2))
+                throw new ArgumentException("First player is incorrect");
+            this.player1 = player1;
             this.player2 = player2;
-            initialValue = CreateField(initialValues) / 2 / CellsCount;
+            currentPlayer = firstPlayer;
+            initialValue = CreateField(initialValues, endingCellPlayer1Value, endingCellPlayer2Value) / 2 / CellsCount;
+        }
+
+        public object Clone()
+        {
+            int[] initialValues = new int[CellsCount * 2];
+            for (int i = 0; i < CellsCount; i++)
+                initialValues[i] = field[i].Value;
+            for (int i = 0; i < CellsCount; i++)
+                initialValues[CellsCount + i] = field[CellsCount + 1 + i].Value;
+            GameLogic logicClone = new GameLogic(player1, player2, currentPlayer, initialValues, field[CellsCount].Value, field[CellsCount * 2 + 1].Value);
+            return logicClone;
         }
 
         public int GetCellValue(IPlayer player, int cellIndex)
@@ -79,7 +96,7 @@ namespace modern_tech_499m.Logic
         }
 
         [Obsolete]
-        private int CreateField(int[] initialvalues)
+        private int CreateField(int[] initialvalues, int endingCellPlayer1Value, int endingCellPlayer2Value)
         {
             field = new List<Cell>();
             int counter = 0;
@@ -88,13 +105,13 @@ namespace modern_tech_499m.Logic
                 field.Add(new Cell() { Owner = player1, Value = initialvalues[counter], IsEndingCell = false, Number = i });
                 counter++;
             }
-            field.Add(new Cell() { Owner = player1, Value = 0, IsEndingCell = true, Number = CellsCount });
+            field.Add(new Cell() { Owner = player1, Value = endingCellPlayer1Value, IsEndingCell = true, Number = CellsCount });
             for (int i = 0; i < CellsCount; i++)
             {
                 field.Add(new Cell() { Owner = player2, Value = initialvalues[counter], IsEndingCell = false, Number = i });
                 counter++;
             }
-            field.Add(new Cell() { Owner = player2, Value = 0, IsEndingCell = true, Number = CellsCount });
+            field.Add(new Cell() { Owner = player2, Value = endingCellPlayer2Value, IsEndingCell = true, Number = CellsCount });
             return initialvalues.Sum();
         }
 

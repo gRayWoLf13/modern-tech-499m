@@ -1,4 +1,5 @@
 ﻿using modern_tech_499m.Logic;
+using modern_tech_499m.AILogic;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,14 +13,15 @@ namespace modern_tech_499m
         private (IPlayer player, int cellNumber) lastCell;
         public GameLogic gameLogic;
         private readonly EventWaitHandle cellSelectedEvent;
+        private bool gameStopPending;
 
         private Action<string> updateField;
-        private Action showGameEnding;
-        private Action showAIWorkingMessage, stopAIWorkingMessage;
-        private Action showWaitingForUserMessage, stopWaitingForUserMessage;
+        private Action<IPlayer> showGameEnding;
+        private Action<IPlayer> showAIWorkingMessage, stopAIWorkingMessage;
+        private Action<IPlayer> showWaitingForUserMessage, stopWaitingForUserMessage;
 
         public GameController(IPlayer player1, IPlayer player2, IPlayer firstPlayer, GameLogic gameLogic, Action<string> updateField,
-            Action showGameEnding, Action showAIWorkingMessage, Action stopAIWorkingMessage, Action showWaitingForUserMessage, Action stopWaitingForUserMessage)
+            Action<IPlayer> showGameEnding, Action<IPlayer> showAIWorkingMessage, Action<IPlayer> stopAIWorkingMessage, Action<IPlayer> showWaitingForUserMessage, Action<IPlayer> stopWaitingForUserMessage)
         {
             if (!firstPlayer.Equals(player1) && !firstPlayer.Equals(player2))
                 throw new ArgumentException("First player is incorrect");
@@ -46,20 +48,27 @@ namespace modern_tech_499m
 
         public async void RunGame()
         {
+            gameStopPending = false;
             updateField("Game starting");
             for (; ; )
             {
+                if (gameStopPending)
+                {
+                    updateField("Game interrupted");
+                    return;
+                }
                 if (currentPlayer is UserPlayer)
                 {
-                    showWaitingForUserMessage();
+                    showWaitingForUserMessage(currentPlayer);
                     await WaitForUserMove();
-                    stopWaitingForUserMessage();
+                    stopWaitingForUserMessage(currentPlayer);
                 }
                 if (currentPlayer is AIPlayer)
                 {
-                    showAIWorkingMessage();
-                    lastCell = (currentPlayer, await AISolver.GetCell());
-                    stopAIWorkingMessage();
+                    showAIWorkingMessage(currentPlayer);
+                    AISolver solver = new AISolver(gameLogic, player1, player2, currentPlayer);
+                    lastCell = (currentPlayer, await solver.GetCell());
+                    stopAIWorkingMessage(currentPlayer);
                 }
                 MoveResult moveResult = gameLogic.MakeMove(lastCell.player, lastCell.cellNumber);
                 updateField(Enum.GetName(typeof(MoveResult), moveResult));
@@ -68,10 +77,15 @@ namespace modern_tech_499m
                 currentPlayer = currentPlayer.Equals(player1) ? player2 : player1;
                 if (moveResult == MoveResult.GameEnded)
                 {
-                    showGameEnding();
+                    showGameEnding(currentPlayer);
                     return;
                 }
             }
+        }
+
+        public void StopGame()
+        {
+            gameStopPending = true;
         }
 
         private Task WaitForUserMove()
