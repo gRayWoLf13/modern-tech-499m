@@ -12,44 +12,37 @@ namespace modern_tech_499m.AILogic
         private static readonly int cellsCount;
         private static readonly Random rand = new Random();
         private readonly GameLogic logic;
-        private readonly IPlayer player1, player2, currentPlayer;
         private static readonly bool useAlphaBetaProcedure;
 
         static AISolver()
         {
             //TODO: Read calculationDepth from config files...
             cellsCount = 6;
-            calculationDepth = 6;
-            useAlphaBetaProcedure = true;
+            calculationDepth = 4;
+            useAlphaBetaProcedure = false;
         }
 
-        public AISolver(GameLogic logic, IPlayer player1, IPlayer player2, IPlayer currentPlayer)
+        public AISolver(GameLogic logic)
         {
             this.logic = logic;
-            this.player1 = player1;
-            this.player2 = player2;
-            this.currentPlayer = currentPlayer;
         }
 
-        public Task<int> GetCell()
+        public int GetCell()
         {
-            return Task.Factory.StartNew(() =>
+            SolvingTreeNode solvingTreeHead = CreateSolvingTree();
+            LinkedListNode<SolvingTreeNode> currentChild = solvingTreeHead.ChildrenNodes.First;
+            List<int> solvingVariants = new List<int>();
+            while (currentChild != null)
             {
-                SolvingTreeNode solvingTreeHead = CreateSolvingTree();
-                LinkedListNode<SolvingTreeNode> currentChild = solvingTreeHead.ChildrenNodes.First;
-                List<int> solvingVariants = new List<int>();
-                while (currentChild != null)
-                {
-                    if (currentChild.Value.GameStateWeight.Value == solvingTreeHead.GameStateWeight.Value)
-                        solvingVariants.Add(currentChild.Value.ParentCellNumber);
-                    currentChild = currentChild.Next;
-                }
-                foreach (var item in solvingVariants)
-                    Debug.Write($"{item} ");
-                Debug.WriteLine("");
-                return solvingVariants[rand.Next(solvingVariants.Count)];
-                //return solvingVariants[0];
-            });
+                if (currentChild.Value.GameStateWeight.Value == solvingTreeHead.GameStateWeight.Value)
+                    solvingVariants.Add(currentChild.Value.ParentCellNumber);
+                currentChild = currentChild.Next;
+            }
+            foreach (var item in solvingVariants)
+                Debug.Write($"{item} ");
+            Debug.WriteLine("");
+            return solvingVariants[rand.Next(solvingVariants.Count)];
+            //return solvingVariants[0];
         }
 
         private SolvingTreeNode CreateSolvingTree()
@@ -59,7 +52,7 @@ namespace modern_tech_499m.AILogic
             {
                 CurrentGameState = logic.Clone() as GameLogic,
                 ParentNode = null,
-                GameMoveOwner = currentPlayer,
+                GameMoveOwner = logic.CurrentPlayer,
                 ChildrenNodes = new LinkedList<SolvingTreeNode>(),
                 TreeNodeDepth = 0
             };
@@ -199,7 +192,7 @@ namespace modern_tech_499m.AILogic
         {
             if (treeNode.TreeNodeDepth == calculationDepth)
             {
-                treeNode.GameStateWeight = GetWeightFunctionValue(currentPlayer, treeNode.CurrentGameState);
+                treeNode.GameStateWeight = GetWeightFunctionValue(logic.CurrentPlayer, treeNode.CurrentGameState);
                 treeNode.PreviewGameStateWeight = treeNode.GameStateWeight;
                 return true;
             }
@@ -209,7 +202,7 @@ namespace modern_tech_499m.AILogic
                 MoveResult moveResult = logicCopy.MakeMove(treeNode.GameMoveOwner, i);
                 if (moveResult == MoveResult.ImpossibleMove)
                     continue;
-                IPlayer childMoveOwner = treeNode.GameMoveOwner.Equals(player1) ? player2 : player1;
+                IPlayer childMoveOwner = logic.GetOtherPlayer(treeNode.GameMoveOwner);
                 SolvingTreeNode childNode = new SolvingTreeNode()
                 {
                     CurrentGameState = logicCopy,
@@ -223,7 +216,7 @@ namespace modern_tech_499m.AILogic
             }
             if (treeNode.ChildrenNodes.Count == 0)
             {
-                treeNode.GameStateWeight = GetWeightFunctionValue(currentPlayer, treeNode.CurrentGameState);
+                treeNode.GameStateWeight = GetWeightFunctionValue(logic.CurrentPlayer, treeNode.CurrentGameState);
                 treeNode.PreviewGameStateWeight = treeNode.GameStateWeight;
                 return true;
             }
@@ -233,15 +226,15 @@ namespace modern_tech_499m.AILogic
         private int GetWeightFunctionValue(IPlayer currentPlayer, GameLogic gameLogic)
         {
             IPlayer player, enemy;
-            if (currentPlayer.Equals(player1))
+            if (currentPlayer.Equals(logic.Player1))
             {
-                player = player1;
-                enemy = player2;
+                player = logic.Player1;
+                enemy = logic.Player2;
             }
             else
             {
-                player = player2;
-                enemy = player1;
+                player = logic.Player2;
+                enemy = logic.Player1;
             }
             return gameLogic.GetCellValue(player, cellsCount) - gameLogic.GetCellValue(enemy, cellsCount);
         }

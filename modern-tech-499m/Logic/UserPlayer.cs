@@ -8,6 +8,7 @@ namespace modern_tech_499m.Logic
 {
     class UserPlayer : IPlayer
     {
+        public event EventHandler<CellGetterEventArgs> OnGetCell;
         public IPlayer Enemy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string Name { get; set; }
 
@@ -16,9 +17,15 @@ namespace modern_tech_499m.Logic
             Name = name;
         }
 
-        public MoveResult MakeMove(int cellIndex)
+        public void GetCell(GameLogic gameLogic)
+        { }
+
+        public void MakeMove(IPlayer player, int cellNumber)
         {
-            throw new NotImplementedException();
+            if (OnGetCell == null)
+                return;
+            CellGetterEventArgs eventArgs = new CellGetterEventArgs(cellNumber);
+            OnGetCell(this, eventArgs);
         }
     }
 }

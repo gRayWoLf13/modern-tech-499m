@@ -1,9 +1,12 @@
-﻿namespace modern_tech_499m.Logic
+﻿using System;
+
+namespace modern_tech_499m.Logic
 {
     interface IPlayer
     {
+        event EventHandler<CellGetterEventArgs> OnGetCell;
         IPlayer Enemy { get; set; }
         string Name { get; set; }
-        MoveResult MakeMove(int cellIndex);
+        void GetCell(GameLogic gameLogic);
     }
 }
