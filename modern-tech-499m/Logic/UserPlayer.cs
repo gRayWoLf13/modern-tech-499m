@@ -20,7 +20,7 @@ namespace modern_tech_499m.Logic
         public void GetCell(GameLogic gameLogic)
         { }
 
-        public void MakeMove(IPlayer player, int cellNumber)
+        public void MakeMove(int cellNumber)
         {
             if (OnGetCell == null)
                 return;

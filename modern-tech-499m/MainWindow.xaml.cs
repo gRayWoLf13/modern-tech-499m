@@ -72,7 +72,7 @@ namespace modern_tech_499m
                 return;
             IPlayer player = buttonName.StartsWith("player1") ? controller.gameLogic.Player1 : controller.gameLogic.Player2;
             int index = int.Parse(buttonName.Substring(buttonName.Length - 1));
-            (player as UserPlayer).MakeMove(player, index);
+            (player as UserPlayer)?.MakeMove(index);
         }
 
         private void UserVsUser_Click(object sender, RoutedEventArgs e)
