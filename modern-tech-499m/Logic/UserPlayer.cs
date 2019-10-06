@@ -8,11 +8,24 @@ namespace modern_tech_499m.Logic
 {
     class UserPlayer : IPlayer
     {
+        public event EventHandler<CellGetterEventArgs> OnGetCell;
         public IPlayer Enemy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Name { get; set; }
 
-        public MoveResult MakeMove(int cellIndex)
+        public UserPlayer(string name)
         {
-            throw new NotImplementedException();
+            Name = name;
+        }
+
+        public void GetCell(GameLogic gameLogic)
+        { }
+
+        public void MakeMove(int cellNumber)
+        {
+            if (OnGetCell == null)
+                return;
+            CellGetterEventArgs eventArgs = new CellGetterEventArgs(cellNumber);
+            OnGetCell(this, eventArgs);
         }
     }
 }
