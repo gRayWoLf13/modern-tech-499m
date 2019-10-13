@@ -9,6 +9,9 @@ namespace modern_tech_499m.Logic
     {
         public static readonly int CellsCount;
         private List<Cell> field;
+        private Stack<Move> undoMovesHistory;
+        private Stack<Move> redoMovesHistory;
+
         public IPlayer Player1 { get; }
         public IPlayer Player2 { get; }
         public IPlayer CurrentPlayer { get; private set; }
@@ -38,6 +41,8 @@ namespace modern_tech_499m.Logic
             this.Player1 = player1;
             this.Player2 = player2;
             CurrentPlayer = firstPlayer;
+            undoMovesHistory = new Stack<Move>();
+            redoMovesHistory = new Stack<Move>();
             this.initialValue = initialValue;
             CreateField(initialValue);
         }
@@ -54,6 +59,8 @@ namespace modern_tech_499m.Logic
             this.Player1 = player1;
             this.Player2 = player2;
             CurrentPlayer = firstPlayer;
+            undoMovesHistory = new Stack<Move>();
+            redoMovesHistory = new Stack<Move>();
             initialValue = CreateField(initialValues, endingCellPlayer1Value, endingCellPlayer2Value) / 2 / CellsCount;
         }
 
@@ -92,16 +99,74 @@ namespace modern_tech_499m.Logic
             int indexOnField = player.Equals(Player1) ? cellIndex : CellsCount + 1 + cellIndex;
             if (field[indexOnField].Value == 0)
                 return MoveResult.ImpossibleMove;
+
+            int[] gameFieldCopy = GetFieldValuesCopy();
+
             (MoveResult moveResult, int lastCellNumber) result = MakeSingleMove(player, indexOnField);
             while (result.moveResult == MoveResult.ContinuousMove)
             {
                 indexOnField = player.Equals(Player1) ? result.lastCellNumber : CellsCount + 1 + result.lastCellNumber;
                 result = MakeSingleMove(player, indexOnField);
             }
+
+            Dictionary<Cell, int> cellValuesChanges = GetFieldValuesChanges(gameFieldCopy);
+            Move madeMove = new Move(CurrentPlayer, cellValuesChanges);
+            undoMovesHistory.Push(madeMove);
+            redoMovesHistory.Clear();
+
             if (CheckGameEnding())
                 return MoveResult.GameEnded;
             CurrentPlayer = GetOtherPlayer(CurrentPlayer);
             return MoveResult.EndedMove;
+        }
+
+        public bool UndoMove()
+        {
+            if (!CurrentPlayer.CanUndoMoves)
+                return false;
+            if (undoMovesHistory.Count == 0)
+                return false;
+            Move lastMove = undoMovesHistory.Pop();
+            redoMovesHistory.Push(lastMove);
+            UndoCellsValues(lastMove.CellValuesChanges);
+            CurrentPlayer = lastMove.MoveOwner;
+            if (!CurrentPlayer.CanUndoMoves)
+            {
+                if (undoMovesHistory.Count == 0)
+                {
+                    lastMove = redoMovesHistory.Pop();
+                    RedoCellsValues(lastMove.CellValuesChanges);
+                    CurrentPlayer = GetOtherPlayer(lastMove.MoveOwner);
+                    return false;
+                }
+                lastMove = undoMovesHistory.Pop();
+                redoMovesHistory.Push(lastMove);
+                UndoCellsValues(lastMove.CellValuesChanges);
+                CurrentPlayer = lastMove.MoveOwner;
+            }
+            return true;
+        }
+
+        public bool RedoMove()
+        {
+            if (!CurrentPlayer.CanUndoMoves)
+                return false;
+            if (redoMovesHistory.Count == 0)
+                return false;
+            Move lastMove = redoMovesHistory.Pop();
+            undoMovesHistory.Push(lastMove);
+            RedoCellsValues(lastMove.CellValuesChanges);
+            CurrentPlayer = GetOtherPlayer(lastMove.MoveOwner);
+            if (!CurrentPlayer.CanUndoMoves)
+            {
+                if (redoMovesHistory.Count == 0)
+                    throw new Exception("Something is really wrong here");
+                lastMove = redoMovesHistory.Pop();
+                undoMovesHistory.Push(lastMove);
+                RedoCellsValues(lastMove.CellValuesChanges);
+                CurrentPlayer = GetOtherPlayer(lastMove.MoveOwner);
+            }
+            return true;
         }
 
         [Obsolete]
@@ -217,6 +282,35 @@ namespace modern_tech_499m.Logic
                 endedCellIndexOnField--;
                 haveFreeCells = endedCellIndexOnField >= 0 && !field[endedCellIndexOnField].IsEndingCell;
             }
+        }
+
+        private int[] GetFieldValuesCopy()
+        {
+            int[] copy = new int[field.Count];
+            for (int i = 0; i < field.Count; i++)
+                copy[i] = field[i].Value;
+            return copy;
+        }
+
+        private Dictionary<Cell, int> GetFieldValuesChanges(int[] previousFieldValues)
+        {
+            Dictionary<Cell, int> fieldValuesChanges = new Dictionary<Cell, int>();
+            for (int i = 0; i < field.Count; i++)
+                if (previousFieldValues[i] != field[i].Value)
+                    fieldValuesChanges.Add(field[i], field[i].Value - previousFieldValues[i]);
+            return fieldValuesChanges;
+        }
+
+        private void UndoCellsValues(Dictionary<Cell, int> deltaValues)
+        {
+            foreach (var keyValuePair in deltaValues)
+                keyValuePair.Key.Value -= keyValuePair.Value;
+        }
+
+        private void RedoCellsValues(Dictionary<Cell, int> deltaValues)
+        {
+            foreach (var keyValuePair in deltaValues)
+                keyValuePair.Key.Value += keyValuePair.Value;
         }
     }
 }

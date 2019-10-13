@@ -113,5 +113,15 @@ namespace modern_tech_499m
                 ShowPlayerWorkingMessage, StopPlayerWorkingMessage);
             controller.RunGame();
         }
+
+        private void UndoMove_Click(object sender, RoutedEventArgs e)
+        {
+            controller?.UndoMove();
+        }
+
+        private void RedoMove_Click(object sender, RoutedEventArgs e)
+        {
+            controller?.RedoMove();
+        }
     }
 }

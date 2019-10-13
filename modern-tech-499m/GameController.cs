@@ -40,6 +40,22 @@ namespace modern_tech_499m
             gameStopPending = true;
         }
 
+        public void UndoMove()
+        {
+            if (gameLogic.UndoMove())
+                updateField("Undo");
+            else
+                updateField("Can't undo");
+        }
+
+        public void RedoMove()
+        {
+            if (gameLogic.RedoMove())
+                updateField("Redo");
+            else
+                updateField("Can't redo");
+        }
+
         private void MakeGameStep()
         {
             showPlayerWorkingMessage(gameLogic.CurrentPlayer);

@@ -72,6 +72,7 @@
     <Compile Include="Logic\CellGetterEventArgs.cs" />
     <Compile Include="Logic\GameLogic.cs" />
     <Compile Include="Logic\IPlayer.cs" />
+    <Compile Include="Logic\Move.cs" />
     <Compile Include="Logic\MoveResult.cs" />
     <Compile Include="Logic\UserPlayer.cs" />
     <Compile Include="MainWindow.xaml.cs">
