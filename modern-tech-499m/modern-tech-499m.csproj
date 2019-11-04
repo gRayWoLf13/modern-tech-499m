@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,6 +74,7 @@
     <Compile Include="Logic\CellGetterEventArgs.cs" />
     <Compile Include="Logic\GameLogic.cs" />
     <Compile Include="Logic\IPlayer.cs" />
+    <Compile Include="Logic\Move.cs" />
     <Compile Include="Logic\MoveResult.cs" />
     <Compile Include="Logic\UserPlayer.cs" />
     <Compile Include="MainWindow.xaml.cs">

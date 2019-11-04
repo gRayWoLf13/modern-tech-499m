@@ -13,9 +13,12 @@ namespace modern_tech_499m.Logic
         public IPlayer Enemy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string Name { get; set; }
 
+        public bool CanUndoMoves { get; set; }
+
         public AIPlayer(string name)
         {
             Name = name;
+            CanUndoMoves = false;
         }
 
         public void GetCell(GameLogic gameLogic)
