@@ -2,29 +2,35 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Configuration;
 using System.Threading.Tasks;
 
 namespace modern_tech_499m.AILogic
 {
     class AISolver
     {
-        private static readonly int calculationDepth;
-        private static readonly int cellsCount;
+        private static readonly int _calculationDepth;
+        private static readonly int _cellsCount;
         private static readonly Random rand = new Random();
-        private readonly GameLogic logic;
-        private static readonly bool useAlphaBetaProcedure;
+        private readonly GameLogic _logic;
+        private static readonly bool _useAlphaBetaProcedure;
 
         static AISolver()
         {
-            //TODO: Read calculationDepth from config files...
-            cellsCount = 6;
-            calculationDepth = 4;
-            useAlphaBetaProcedure = false;
+            string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
+            if (cellsCount == null || !int.TryParse(cellsCount, out _cellsCount))
+                _cellsCount = 6;
+            string calculationDepth = ConfigurationManager.AppSettings["CalculationDepth"];
+            if (calculationDepth == null || !int.TryParse(calculationDepth, out _calculationDepth))
+                _calculationDepth = 4;
+            string useAlphaBetaProcedure = ConfigurationManager.AppSettings["UseAlphaBetaProcedure"];
+            if (useAlphaBetaProcedure == null || !bool.TryParse(useAlphaBetaProcedure, out _useAlphaBetaProcedure))
+                _useAlphaBetaProcedure = false;
         }
 
         public AISolver(GameLogic logic)
         {
-            this.logic = logic;
+            _logic = logic;
         }
 
         public int GetCell()
@@ -50,9 +56,9 @@ namespace modern_tech_499m.AILogic
             Stack<SolvingTreeNode> treeNodes = new Stack<SolvingTreeNode>();
             SolvingTreeNode head = new SolvingTreeNode()
             {
-                CurrentGameState = logic.Clone() as GameLogic,
+                CurrentGameState = _logic.Clone() as GameLogic,
                 ParentNode = null,
-                GameMoveOwner = logic.CurrentPlayer,
+                GameMoveOwner = _logic.CurrentPlayer,
                 ChildrenNodes = new LinkedList<SolvingTreeNode>(),
                 TreeNodeDepth = 0
             };
@@ -112,7 +118,7 @@ namespace modern_tech_499m.AILogic
             int value = currentChild.Value.GameStateWeight.Value;
 
             bool checkNeeded = false;
-            if (useAlphaBetaProcedure)
+            if (_useAlphaBetaProcedure)
                 checkNeeded = TrySetPreviewWeightForNode(cellParent, value);
 
             currentChild = currentChild.Next;
@@ -125,7 +131,7 @@ namespace modern_tech_499m.AILogic
                 else
                     value = Math.Min(value, currentChild.Value.GameStateWeight.Value);
 
-                if (useAlphaBetaProcedure)
+                if (_useAlphaBetaProcedure)
                 {
                     var tmpCheck = TrySetPreviewWeightForNode(currentNode, value);
                     if (!checkNeeded)
@@ -169,7 +175,7 @@ namespace modern_tech_499m.AILogic
 
         private bool CheckTreeNodeToStopCalculation(SolvingTreeNode treeNode)
         {
-            if (treeNode.TreeNodeDepth == calculationDepth)
+            if (treeNode.TreeNodeDepth == _calculationDepth)
                 return false;
             int? parentPreviewWeight = treeNode.ParentNode.PreviewGameStateWeight;
             if (!parentPreviewWeight.HasValue)
@@ -190,19 +196,19 @@ namespace modern_tech_499m.AILogic
 
         private bool AddChildrenNodes(SolvingTreeNode treeNode)
         {
-            if (treeNode.TreeNodeDepth == calculationDepth)
+            if (treeNode.TreeNodeDepth == _calculationDepth)
             {
-                treeNode.GameStateWeight = GetWeightFunctionValue(logic.CurrentPlayer, treeNode.CurrentGameState);
+                treeNode.GameStateWeight = GetWeightFunctionValue(_logic.CurrentPlayer, treeNode.CurrentGameState);
                 treeNode.PreviewGameStateWeight = treeNode.GameStateWeight;
                 return true;
             }
-            for(int i = 0; i < cellsCount; i++)
+            for(int i = 0; i < _cellsCount; i++)
             {
                 GameLogic logicCopy = treeNode.CurrentGameState.Clone() as GameLogic;
                 MoveResult moveResult = logicCopy.MakeMove(treeNode.GameMoveOwner, i);
                 if (moveResult == MoveResult.ImpossibleMove)
                     continue;
-                IPlayer childMoveOwner = logic.GetOtherPlayer(treeNode.GameMoveOwner);
+                IPlayer childMoveOwner = _logic.GetOtherPlayer(treeNode.GameMoveOwner);
                 SolvingTreeNode childNode = new SolvingTreeNode()
                 {
                     CurrentGameState = logicCopy,
@@ -216,7 +222,7 @@ namespace modern_tech_499m.AILogic
             }
             if (treeNode.ChildrenNodes.Count == 0)
             {
-                treeNode.GameStateWeight = GetWeightFunctionValue(logic.CurrentPlayer, treeNode.CurrentGameState);
+                treeNode.GameStateWeight = GetWeightFunctionValue(_logic.CurrentPlayer, treeNode.CurrentGameState);
                 treeNode.PreviewGameStateWeight = treeNode.GameStateWeight;
                 return true;
             }
@@ -226,17 +232,17 @@ namespace modern_tech_499m.AILogic
         private int GetWeightFunctionValue(IPlayer currentPlayer, GameLogic gameLogic)
         {
             IPlayer player, enemy;
-            if (currentPlayer.Equals(logic.Player1))
+            if (currentPlayer.Equals(_logic.Player1))
             {
-                player = logic.Player1;
-                enemy = logic.Player2;
+                player = _logic.Player1;
+                enemy = _logic.Player2;
             }
             else
             {
-                player = logic.Player2;
-                enemy = logic.Player1;
+                player = _logic.Player2;
+                enemy = _logic.Player1;
             }
-            return gameLogic.GetCellValue(player, cellsCount) - gameLogic.GetCellValue(enemy, cellsCount);
+            return gameLogic.GetCellValue(player, _cellsCount) - gameLogic.GetCellValue(enemy, _cellsCount);
         }
     }
 }

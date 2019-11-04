@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("modern_tech_499m.Tests")]
@@ -16,13 +17,25 @@ namespace modern_tech_499m.Logic
         public IPlayer Player2 { get; }
         public IPlayer CurrentPlayer { get; private set; }
         private int initialValue;
-        private static List<int> availableValuesToStealEnemyPoints;
+        private static List<int> _availableValuesToStealEnemyPoints;
 
         static GameLogic()
         {
-            //TODO: Read cellsCount and availableStealingValues from config files...
-            CellsCount = 6;
-            availableValuesToStealEnemyPoints = new List<int>() { 2, 3 };
+            string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
+            if (cellsCount == null || !int.TryParse(cellsCount, out CellsCount))
+                CellsCount = 6;
+            string availableValuesToStealEnemyPoints = ConfigurationManager.AppSettings["AvailableValuesToStealEnemyPoints"];
+            if (availableValuesToStealEnemyPoints == null)
+                _availableValuesToStealEnemyPoints = new List<int>() { 2, 3 };
+            else
+            {
+                string[] splittedValues = availableValuesToStealEnemyPoints.Split(new char[] { ' ', ',', ';' });
+                bool isCorrect = splittedValues.All(item => int.TryParse(item, out int value) && value > 0);
+                if (isCorrect)
+                    _availableValuesToStealEnemyPoints = Array.ConvertAll(splittedValues, item => int.Parse(item)).ToList();
+                else
+                    _availableValuesToStealEnemyPoints = new List<int>() { 2, 3 };
+            }
         }
 
         public IPlayer GetOtherPlayer(IPlayer player)
@@ -226,7 +239,7 @@ namespace modern_tech_499m.Logic
             bool endedOnEnemyCell = lastCell.Owner != player && !lastCell.IsEndingCell;
             if (passedEnemyCell && endedOnPlayerCell && lastCell.Value > 1)
                 return (MoveResult.ContinuousMove, lastCell.Number);
-            if (endedOnEnemyCell && availableValuesToStealEnemyPoints.Contains(lastCell.Value))
+            if (endedOnEnemyCell && _availableValuesToStealEnemyPoints.Contains(lastCell.Value))
                 StealEnemyPoints(player, lastCell.Number);
             return (MoveResult.EndedMove, lastCell.Number);
         }
@@ -275,7 +288,7 @@ namespace modern_tech_499m.Logic
                 targetEndingCellIndexOnField = field.Count - 1;
             }
             bool haveFreeCells = endedCellIndexOnField >= 0 && !field[endedCellIndexOnField].IsEndingCell;
-            while (haveFreeCells && availableValuesToStealEnemyPoints.Contains(field[endedCellIndexOnField].Value))
+            while (haveFreeCells && _availableValuesToStealEnemyPoints.Contains(field[endedCellIndexOnField].Value))
             {
                 field[targetEndingCellIndexOnField].Value += field[endedCellIndexOnField].Value;
                 field[endedCellIndexOnField].Value = 0;
