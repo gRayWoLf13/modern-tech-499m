@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "modern-tech-499m", "modern-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "modern_tech_499m.Tests", "modern_tech_499m.Tests\modern_tech_499m.Tests.csproj", "{7FC58456-73DC-4BBC-BDBB-8F2AE16EF5E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "modern-tech-499m.Repositories", "modern-tech-499m.Repositories\modern-tech-499m.Repositories.csproj", "{52C1FBD4-3AEE-484F-8A97-CC76838517AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7FC58456-73DC-4BBC-BDBB-8F2AE16EF5E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FC58456-73DC-4BBC-BDBB-8F2AE16EF5E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FC58456-73DC-4BBC-BDBB-8F2AE16EF5E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52C1FBD4-3AEE-484F-8A97-CC76838517AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C1FBD4-3AEE-484F-8A97-CC76838517AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C1FBD4-3AEE-484F-8A97-CC76838517AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C1FBD4-3AEE-484F-8A97-CC76838517AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
