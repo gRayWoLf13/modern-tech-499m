@@ -70,7 +70,6 @@
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Commands\OpenAddUserViewCommand.cs" />
     <Compile Include="Commands\DeleteCurrentUserCommand.cs" />
-    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\UsersDatabaseViewModel.cs" />
     <Compile Include="Views\AddUserView.xaml.cs">

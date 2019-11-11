@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using modern_tech_499m.Annotations;
 using modern_tech_499m.Commands;
 using modern_tech_499m.Repositories.Core;
 using modern_tech_499m.Repositories.Core.Domain;
@@ -68,7 +67,6 @@ namespace modern_tech_499m.ViewModels
         #region INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
