@@ -10,7 +10,7 @@ using modern_tech_499m.Repositories.Core.Repositories;
 
 namespace modern_tech_499m.Repositories.Persistence.Repositories
 {
-    class UserRepository : BaseRepository<User>, IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
         public UserRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {}
@@ -25,9 +25,10 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
                     User user = new User()
                     {
                         Id = Convert.ToInt32(reader[nameof(User.Id)].ToString()),
-                        BirthDate = Convert.ToDateTime(reader[nameof(User.BirthDate)].ToString()),
+                        BirthDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(User.BirthDate)].ToString())),
                         FirstName = reader[nameof(User.FirstName)].ToString(),
-                        LastName = reader[nameof(User.LastName)].ToString()
+                        LastName = reader[nameof(User.LastName)].ToString(),
+                        Patronymic = reader[nameof(User.Patronymic)].ToString()
                     };
                     users.Add(user);
                 }
@@ -44,9 +45,10 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
                 if (reader.Read())
                 {
                     user.Id = Convert.ToInt32(reader[nameof(User.Id)].ToString());
-                    user.BirthDate = Convert.ToDateTime(reader[nameof(User.BirthDate)].ToString());
+                    user.BirthDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(User.BirthDate)].ToString()));
                     user.FirstName = reader[nameof(User.FirstName)].ToString();
-                    user.LastName = reader[nameof(User.LastName)].ToString(); 
+                    user.LastName = reader[nameof(User.LastName)].ToString();
+                    user.Patronymic = reader[nameof(User.Patronymic)].ToString();
                 }
             }
 
@@ -56,16 +58,15 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
         protected override void UpdateCommandParameters(User entity, SQLiteCommand cmd)
         {
             cmd.Parameters.AddWithValue(nameof(User.Id), entity.Id);
-            cmd.Parameters.AddWithValue(nameof(User.BirthDate), entity.BirthDate);
-            cmd.Parameters.AddWithValue(nameof(User.FirstName), entity.FirstName);
-            cmd.Parameters.AddWithValue(nameof(User.LastName), entity.LastName);
+            InsertCommandParameters(entity, cmd);
         }
 
         protected override void InsertCommandParameters(User entity, SQLiteCommand cmd)
         {
-            cmd.Parameters.AddWithValue(nameof(User.BirthDate), entity.BirthDate);
+            cmd.Parameters.AddWithValue(nameof(User.BirthDate), entity.BirthDate.ToOADate());
             cmd.Parameters.AddWithValue(nameof(User.FirstName), entity.FirstName);
             cmd.Parameters.AddWithValue(nameof(User.LastName), entity.LastName);
+            cmd.Parameters.AddWithValue(nameof(User.Patronymic), entity.Patronymic);
         }
 
         protected override void InsertManyCommandParameters(IEnumerable<User> entities, SQLiteCommand cmd)
@@ -73,9 +74,10 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             int counter = 0;
             foreach (var entity in entities)
             {
-                cmd.Parameters.AddWithValue(nameof(User.BirthDate), entity.BirthDate);
+                cmd.Parameters.AddWithValue(nameof(User.BirthDate), entity.BirthDate.ToOADate());
                 cmd.Parameters.AddWithValue(nameof(User.FirstName), entity.FirstName);
                 cmd.Parameters.AddWithValue(nameof(User.LastName), entity.LastName);
+                cmd.Parameters.AddWithValue(nameof(User.Patronymic), entity.Patronymic);
                 counter++;
             }
         }
@@ -110,7 +112,7 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 string insertSql =
-                    "insert into Users (BirthDate, FirstName, LastName) VALUES (@BirthDate, @FirstName, @LastName)";
+                    "insert into Users (BirthDate, FirstName, LastName, Patronymic) VALUES (@BirthDate, @FirstName, @LastName, @Patronymic)";
                 Insert(entity, insertSql, transaction);
                 _unitOfWork.Commit();
             }
@@ -127,12 +129,12 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 StringBuilder insertSql = new StringBuilder(
-                    "Insert into Users (BirthDate, FirstName, LastName) VALUES ");
+                    "Insert into Users (BirthDate, FirstName, LastName, Patronymic) VALUES ");
                 int counter = 0;
                 foreach (var entity in entities)
                 {
                     insertSql.Append(
-                        $"(@BirthDate{counter}, @FirstName{counter}, @LastName{counter}), ");
+                        $"(@BirthDate{counter}, @FirstName{counter}, @LastName{counter}, @Patronymic{counter}), ");
                     counter++;
                 }
                 insertSql.Remove(insertSql.Length - 1, 1);

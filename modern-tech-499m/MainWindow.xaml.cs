@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using modern_tech_499m.Logic;
 using modern_tech_499m.AILogic;
+using modern_tech_499m.Repositories.Core;
+using modern_tech_499m.Views;
 
 namespace modern_tech_499m
 {
@@ -122,6 +124,12 @@ namespace modern_tech_499m
         private void RedoMove_Click(object sender, RoutedEventArgs e)
         {
             controller?.RedoMove();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var window = new UsersDatabaseView();
+            window.ShowDialog();
         }
     }
 }

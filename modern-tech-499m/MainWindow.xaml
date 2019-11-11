@@ -59,5 +59,7 @@
             <Separator Visibility="Hidden" Height="10"></Separator>
             <TextBlock x:Name="currentPlayerInfo" VerticalAlignment="Center" Background="PaleVioletRed"></TextBlock>
         </StackPanel>
+
+        <Button Grid.Row="5" Grid.Column="2" Margin="2" Click="ButtonBase_OnClick"></Button>
     </Grid>
 </Window>

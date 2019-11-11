@@ -28,9 +28,9 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
                     GameInfo info = new GameInfo
                     {
                         Id = Convert.ToInt32(reader[nameof(GameInfo.Id)].ToString()),
-                        GameDate = Convert.ToDateTime(reader[nameof(GameInfo.GameDate)].ToString()),
+                        GameDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(GameInfo.GameDate)].ToString())),
                         Score = Convert.ToInt32(reader[nameof(GameInfo.Score)].ToString()),
-                        GameFinished = Convert.ToBoolean(reader[nameof(GameInfo.GameFinished)].ToString()),
+                        GameFinished = Convert.ToInt32(reader[nameof(GameInfo.GameFinished)].ToString()) == 1,
                         InternalGameData = reader[nameof(GameInfo.InternalGameData)].ToString(),
                         InternalSolverData = reader[nameof(GameInfo.InternalSolverData)].ToString()
                     };
@@ -48,9 +48,9 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
                 if (reader.Read())
                 {
                     info.Id = Convert.ToInt32(reader[nameof(GameInfo.Id)].ToString());
-                    info.GameDate = Convert.ToDateTime(reader[nameof(GameInfo.GameDate)].ToString());
+                    info.GameDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(GameInfo.GameDate)].ToString()));
                     info.Score = Convert.ToInt32(reader[nameof(GameInfo.Score)].ToString());
-                    info.GameFinished = Convert.ToBoolean(reader[nameof(GameInfo.GameFinished)].ToString());
+                    info.GameFinished = Convert.ToInt32(reader[nameof(GameInfo.GameFinished)].ToString()) == 1;
                     info.InternalGameData = reader[nameof(GameInfo.InternalGameData)].ToString();
                     info.InternalSolverData = reader[nameof(GameInfo.InternalSolverData)].ToString();
                 }
@@ -61,18 +61,14 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
         protected override void UpdateCommandParameters(GameInfo entity, SQLiteCommand cmd)
         {
             cmd.Parameters.AddWithValue(nameof(entity.Id), entity.Id);
-            cmd.Parameters.AddWithValue(nameof(entity.GameDate), entity.GameDate);
-            cmd.Parameters.AddWithValue(nameof(entity.Score), entity.Score);
-            cmd.Parameters.AddWithValue(nameof(entity.GameFinished), entity.GameFinished);
-            cmd.Parameters.AddWithValue(nameof(entity.InternalGameData), entity.InternalGameData);
-            cmd.Parameters.AddWithValue(nameof(entity.InternalSolverData), entity.InternalSolverData);
+            InsertCommandParameters(entity, cmd);
         }
 
         protected override void InsertCommandParameters(GameInfo entity, SQLiteCommand cmd)
         {
-            cmd.Parameters.AddWithValue(nameof(entity.GameDate), entity.GameDate);
+            cmd.Parameters.AddWithValue(nameof(entity.GameDate), entity.GameDate.ToOADate());
             cmd.Parameters.AddWithValue(nameof(entity.Score), entity.Score);
-            cmd.Parameters.AddWithValue(nameof(entity.GameFinished), entity.GameFinished);
+            cmd.Parameters.AddWithValue(nameof(entity.GameFinished), entity.GameFinished ? 1 : 0);
             cmd.Parameters.AddWithValue(nameof(entity.InternalGameData), entity.InternalGameData);
             cmd.Parameters.AddWithValue(nameof(entity.InternalSolverData), entity.InternalSolverData);
         }
@@ -82,9 +78,9 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             int counter = 0;
             foreach (var entity in entities)
             {
-                cmd.Parameters.AddWithValue($"{nameof(entity.GameDate)}{counter}", entity.GameDate);
+                cmd.Parameters.AddWithValue($"{nameof(entity.GameDate)}{counter}", entity.GameDate.ToOADate());
                 cmd.Parameters.AddWithValue($"{nameof(entity.Score)}{counter}", entity.Score);
-                cmd.Parameters.AddWithValue($"{entity.GameFinished}{counter}", entity.GameFinished);
+                cmd.Parameters.AddWithValue($"{entity.GameFinished}{counter}", entity.GameFinished ? 1 : 0);
                 cmd.Parameters.AddWithValue($"{entity.InternalGameData}{counter}", entity.InternalGameData);
                 cmd.Parameters.AddWithValue($"{entity.InternalSolverData}{counter}", entity.InternalSolverData);
                 counter++;

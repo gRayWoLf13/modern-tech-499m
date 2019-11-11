@@ -12,7 +12,8 @@ namespace modern_tech_499m.Repositories.Persistence
 
         public DatabaseContext()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            //_connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            _connectionString = @"Data Source =.\MainDatabase.db";
         }
 
         public SQLiteConnection Connection
