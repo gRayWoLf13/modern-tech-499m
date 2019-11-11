@@ -11,7 +11,7 @@ using modern_tech_499m.Repositories.Core.Repositories;
 
 namespace modern_tech_499m.Repositories.Persistence.Repositories
 {
-    public abstract class BaseRepository<T> : IRepository<T> where T : class, new()
+    public abstract class BaseRepository<T> : IRepository<T> where T : class, IEntity, new()
     {
         private SQLiteConnection _connection;
         protected readonly IUnitOfWork _unitOfWork;
@@ -33,6 +33,28 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
                     cmd.CommandType = CommandType.Text;
                     cmd.Transaction = transaction;
                     InsertCommandParameters(entity, cmd);
+                    i = cmd.ExecuteNonQuery();
+                }
+
+                return i;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        protected int InsertMany(IEnumerable<T> entities, string insertSql, SQLiteTransaction transaction)
+        {
+            var i = 0;
+            try
+            {
+                using (var cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = insertSql;
+                    InsertManyCommandParameters(entities, cmd);
                     i = cmd.ExecuteNonQuery();
                 }
 
@@ -67,9 +89,24 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
                 cmd.CommandText = deleteSql;
                 cmd.CommandType = CommandType.Text;
                 cmd.Transaction = transaction;
-                DeleteCommandParameters(i, cmd);
+                DeleteCommandParameters(entity, cmd);
                 i = cmd.ExecuteNonQuery();
             }
+            return i;
+        }
+
+        protected int DeleteMany(IEnumerable<T> entities, string deleteSql, SQLiteTransaction transaction)
+        {
+            int i = 0;
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = deleteSql;
+                cmd.Transaction = transaction;
+                DeleteManyCommandParameters(entities, cmd);
+                i = cmd.ExecuteNonQuery();
+            }
+
             return i;
         }
 
@@ -83,6 +120,20 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
                 using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
                     return Map(reader);
+                }
+            }
+        }
+
+        protected IEnumerable<T> GetManyById(IEnumerable<int> ids, string getManyByIdSql)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = getManyByIdSql;
+                cmd.CommandType = CommandType.Text;
+                GetManyByIdCommandParameters(ids, cmd);
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    return Maps(reader);
                 }
             }
         }
@@ -104,13 +155,41 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
 
         protected abstract T Map(SQLiteDataReader reader);
 
-        protected abstract void GetByIdCommandParameters(int id, SQLiteCommand cmd);
+        protected virtual void GetByIdCommandParameters(int id, SQLiteCommand cmd)
+        {
+            cmd.Parameters.AddWithValue("@Id", id);
+        }
 
-        protected abstract void DeleteCommandParameters(int id, SQLiteCommand cmd);
+        protected virtual void GetManyByIdCommandParameters(IEnumerable<int> ids, SQLiteCommand cmd)
+        {
+            int counter = 0;
+            foreach (int id in ids)
+            {
+                cmd.Parameters.AddWithValue($"@Id{counter}", id);
+                counter++;
+            }
+        }
+
+        protected virtual void DeleteCommandParameters(T entity, SQLiteCommand cmd)
+        {
+            cmd.Parameters.AddWithValue("@Id", entity.Id);
+        }
+
+        protected virtual void DeleteManyCommandParameters(IEnumerable<T> entities, SQLiteCommand cmd)
+        {
+            int counter = 0;
+            foreach (var entity in entities)
+            {
+                cmd.Parameters.AddWithValue($"@Id{counter}", entity.Id);
+                counter++;
+            }
+        }
 
         protected abstract void UpdateCommandParameters(T entity, SQLiteCommand cmd);
 
         protected abstract void InsertCommandParameters(T entity, SQLiteCommand cmd);
+
+        protected abstract void InsertManyCommandParameters(IEnumerable<T> entities, SQLiteCommand cmd);
         public abstract T Get(int id);
         public abstract IEnumerable<T> GetAll();
         public abstract IEnumerable<T> Find(Func<T, bool> predicate);

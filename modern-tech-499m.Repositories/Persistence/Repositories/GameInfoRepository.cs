@@ -16,7 +16,7 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
     public class GameInfoRepository : BaseRepository<GameInfo>, IGameInfoRepository
     {
         public GameInfoRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {}
+        { }
 
         protected override List<GameInfo> Maps(SQLiteDataReader reader)
         {
@@ -58,16 +58,6 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             return info;
         }
 
-        protected override void GetByIdCommandParameters(int id, SQLiteCommand cmd)
-        {
-            cmd.Parameters.AddWithValue(@"Id", id);
-        }
-
-        protected override void DeleteCommandParameters(int id, SQLiteCommand cmd)
-        {
-            cmd.Parameters.AddWithValue(@"Id", id);
-        }
-
         protected override void UpdateCommandParameters(GameInfo entity, SQLiteCommand cmd)
         {
             cmd.Parameters.AddWithValue(nameof(entity.Id), entity.Id);
@@ -87,9 +77,23 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             cmd.Parameters.AddWithValue(nameof(entity.InternalSolverData), entity.InternalSolverData);
         }
 
+        protected override void InsertManyCommandParameters(IEnumerable<GameInfo> entities, SQLiteCommand cmd)
+        {
+            int counter = 0;
+            foreach (var entity in entities)
+            {
+                cmd.Parameters.AddWithValue($"{nameof(entity.GameDate)}{counter}", entity.GameDate);
+                cmd.Parameters.AddWithValue($"{nameof(entity.Score)}{counter}", entity.Score);
+                cmd.Parameters.AddWithValue($"{entity.GameFinished}{counter}", entity.GameFinished);
+                cmd.Parameters.AddWithValue($"{entity.InternalGameData}{counter}", entity.InternalGameData);
+                cmd.Parameters.AddWithValue($"{entity.InternalSolverData}{counter}", entity.InternalSolverData);
+                counter++;
+            }
+        }
+
         public override GameInfo Get(int id)
         {
-            string sql = "select * from GameInfo where id = @id";
+            string sql = "select * from GameInfo where Id = @Id";
             return GetById(id, sql);
         }
 
@@ -129,10 +133,31 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
 
         public override void AddRange(IEnumerable<GameInfo> entities)
         {
-            foreach (var entity in entities)
+            try
             {
-                Add(entity);
+                SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
+                StringBuilder insertSql = new StringBuilder(
+                    "Insert into GameInfo (GameDate, Score, GameFinished, InternalGameData, InternalSolverData) VALUES ");
+                int counter = 0;
+                foreach (var entity in entities)
+                {
+                    insertSql.Append(
+                        $"(@GameDate{counter}, @Score{counter}, @GameFinished{counter}, @InternalGameData{counter}, @InternalSolverData{counter}), ");
+                    counter++;
+                }
+                insertSql.Remove(insertSql.Length - 1, 1);
+                InsertMany(entities, insertSql.ToString(), transaction);
+                _unitOfWork.Commit();
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            //foreach (var entity in entities)
+            //{
+            //    Add(entity);
+            //}
         }
 
         public override void Remove(GameInfo entity)
@@ -140,8 +165,8 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             try
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
-                string insertSql = "Delete from GameInfo where Id = @Id";
-                Delete(entity, insertSql, transaction);
+                string deleteSql = "Delete from GameInfo where Id = @Id";
+                Delete(entity, deleteSql, transaction);
                 _unitOfWork.Commit();
             }
             catch (Exception e)
@@ -153,10 +178,31 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
 
         public override void RemoveRange(IEnumerable<GameInfo> entities)
         {
-            foreach (var entity in entities)
+            int counter = 0;
+            try
             {
-                Remove(entity);
+                SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
+                StringBuilder deleteSql = new StringBuilder("Delete from GameInfo where Id IN (");
+                foreach (var entity in entities)
+                {
+                    deleteSql.Append($@"Id{counter}, ");
+                }
+
+                deleteSql.Remove(deleteSql.Length - 2, 2);
+                deleteSql.Append(")");
+                DeleteMany(entities, deleteSql.ToString(), transaction);
+                _unitOfWork.Commit();
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            //foreach (var entity in entities)
+            //{
+            //    Remove(entity);
+            //}
         }
 
         public IEnumerable<GameInfo> GetTopScoreGames(int count)
@@ -167,7 +213,9 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
 
         public IEnumerable<GameInfo> GetGamesByUser(int id)
         {
-            throw new NotImplementedException();
+            var getManySql = "select Id from GameInfo where Player1Id = @Id OR Player2Id = @Id";
+            var gameInfoIds = GetAll(getManySql);
+            return gameInfoIds;
         }
     }
 }

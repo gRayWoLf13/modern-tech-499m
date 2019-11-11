@@ -66,6 +66,7 @@
     <Compile Include="Core\IDatabaseContext.cs" />
     <Compile Include="Core\IDatabaseContextFactory.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\Repositories\IEntity.cs" />
     <Compile Include="Core\Repositories\IGameInfoRepository.cs" />
     <Compile Include="Core\Repositories\IRepository.cs" />
     <Compile Include="Core\Repositories\IUserRepository.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Persistence\Repositories\BaseRepository.cs" />
     <Compile Include="Persistence\Repositories\GameInfoRepository.cs" />
     <Compile Include="Persistence\Repositories\SqliteRepository.cs" />
+    <Compile Include="Persistence\Repositories\UserRepository.cs" />
     <Compile Include="Persistence\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
