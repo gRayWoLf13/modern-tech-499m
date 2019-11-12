@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
 using modern_tech_499m.Repositories.Core;
@@ -16,15 +13,22 @@ namespace modern_tech_499m.ViewModels
     public class UsersDatabaseViewModel : IViewModel
     {
         private IUnitOfWork _unitOfWork;
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         public UsersDatabaseViewModel(IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             OpenAddUserViewCommand = new OpenAddUserViewCommand(this);
-            DeleteCurrentUserCommand = new DeleteCurrentUserCommand(this);
-            _userRepository.Add(new User(){BirthDate = DateTime.Now, FirstName = "Пользователь", LastName = "Номер 1", Patronymic = "Тестирование"});
+            DeleteCurrentUserCommand = new DeleteCurrentUserCommand(this, _userRepository);
+            UpdateUsersTableCommand = new UpdateUsersTableCommand(this, _userRepository);
+            LoadUsers();
+        }
+
+        private void LoadUsers()
+        {
+            Users = _userRepository.GetAll();
+            CurrentUser = Users.FirstOrDefault();
         }
 
         private IEnumerable<User> _users;
@@ -62,6 +66,7 @@ namespace modern_tech_499m.ViewModels
 
         public ICommand OpenAddUserViewCommand { get; private set; }
         public ICommand DeleteCurrentUserCommand { get; private set; }
+        public ICommand UpdateUsersTableCommand { get; private set; }
 
 
         #region INotifyPropertyChanged implementation

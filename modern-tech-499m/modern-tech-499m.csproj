@@ -43,6 +43,7 @@
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -68,8 +69,11 @@
     </ApplicationDefinition>
     <Compile Include="Behaviours\OpenCloseWindowBehavior.cs" />
     <Compile Include="BootStrapper.cs" />
+    <Compile Include="Commands\AddUserCommand.cs" />
     <Compile Include="Commands\OpenAddUserViewCommand.cs" />
     <Compile Include="Commands\DeleteCurrentUserCommand.cs" />
+    <Compile Include="Commands\UpdateUsersTableCommand.cs" />
+    <Compile Include="ViewModels\AddUserViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
     <Compile Include="ViewModels\UsersDatabaseViewModel.cs" />
     <Compile Include="Views\AddUserView.xaml.cs">

@@ -32,6 +32,7 @@ namespace modern_tech_499m.Behaviours
             if ((bool)e.NewValue)
             {
                 object instance = Activator.CreateInstance(me.WindowType);
+                Activator.CreateInstance(me.WindowType);
                 if (instance is Window window)
                 {
                     window.Closing += (s, ev) =>

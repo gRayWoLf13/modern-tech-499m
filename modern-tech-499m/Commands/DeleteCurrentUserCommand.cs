@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.ViewModels;
 
 namespace modern_tech_499m.Commands
@@ -11,10 +8,12 @@ namespace modern_tech_499m.Commands
     internal class DeleteCurrentUserCommand : ICommand
     {
         private readonly UsersDatabaseViewModel _viewModel;
+        private readonly IUserRepository _userRepository;
 
-        public DeleteCurrentUserCommand(UsersDatabaseViewModel viewModel)
+        public DeleteCurrentUserCommand(UsersDatabaseViewModel viewModel, IUserRepository userRepository)
         {
             _viewModel = viewModel;
+            _userRepository = userRepository;
         }
 
         public bool CanExecute(object parameter)
@@ -23,10 +22,16 @@ namespace modern_tech_499m.Commands
         }
 
         public void Execute(object parameter)
-        {
-                throw new NotImplementedException();
+        { 
+            _userRepository.Remove(_viewModel.CurrentUser);
+            //probably a bad idea
+            _viewModel.UpdateUsersTableCommand.Execute(null);
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
+        }
     }
 }
