@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
 using modern_tech_499m.Repositories.Core;
@@ -10,7 +8,7 @@ using modern_tech_499m.Repositories.Core.Repositories;
 
 namespace modern_tech_499m.ViewModels
 {
-    public class UsersDatabaseViewModel : IViewModel
+    class UsersDatabaseViewModel : BaseViewModel
     {
         private IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
@@ -67,15 +65,5 @@ namespace modern_tech_499m.ViewModels
         public ICommand OpenAddUserViewCommand { get; private set; }
         public ICommand DeleteCurrentUserCommand { get; private set; }
         public ICommand UpdateUsersTableCommand { get; private set; }
-
-
-        #region INotifyPropertyChanged implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }

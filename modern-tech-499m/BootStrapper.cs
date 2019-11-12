@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using Autofac;
 using modern_tech_499m.Repositories.Core;
 using modern_tech_499m.Repositories.Core.Repositories;
@@ -18,13 +17,12 @@ namespace modern_tech_499m
                 return;
             var builder = new ContainerBuilder();
 
-            //var assemblies = new[] { Assembly.GetExecutingAssembly() };
             builder.RegisterType<UsersDatabaseViewModel>().AsSelf();
             builder.RegisterType<AddUserViewModel>().AsSelf();
+            builder.RegisterType<MainWindowViewModel>().AsSelf();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
              builder.RegisterType<GameInfoRepository>().As<IGameInfoRepository>();
-            //builder.RegisterType<GameInfoRepository>().Named<IGameInfoRepository>("GameInfoRepository");
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<DatabaseContextFactory>().As<IDatabaseContextFactory>();
 
