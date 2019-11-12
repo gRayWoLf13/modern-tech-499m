@@ -80,9 +80,9 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             {
                 cmd.Parameters.AddWithValue($"{nameof(entity.GameDate)}{counter}", entity.GameDate.ToOADate());
                 cmd.Parameters.AddWithValue($"{nameof(entity.Score)}{counter}", entity.Score);
-                cmd.Parameters.AddWithValue($"{entity.GameFinished}{counter}", entity.GameFinished ? 1 : 0);
-                cmd.Parameters.AddWithValue($"{entity.InternalGameData}{counter}", entity.InternalGameData);
-                cmd.Parameters.AddWithValue($"{entity.InternalSolverData}{counter}", entity.InternalSolverData);
+                cmd.Parameters.AddWithValue($"{nameof(entity.GameFinished)}{counter}", entity.GameFinished ? 1 : 0);
+                cmd.Parameters.AddWithValue($"{nameof(entity.InternalGameData)}{counter}", entity.InternalGameData);
+                cmd.Parameters.AddWithValue($"{nameof(entity.InternalSolverData)}{counter}", entity.InternalSolverData);
                 counter++;
             }
         }
