@@ -242,7 +242,7 @@ namespace modern_tech_499m.AILogic
                 player = _logic.Player2;
                 enemy = _logic.Player1;
             }
-            return gameLogic.GetCellValue(player, _cellsCount) - gameLogic.GetCellValue(enemy, _cellsCount);
+            return gameLogic[player, _cellsCount] - gameLogic[enemy, _cellsCount];
         }
     }
 }
