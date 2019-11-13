@@ -25,8 +25,6 @@ namespace modern_tech_499m.Commands
             IPlayer player = (IPlayer)values[0];
             int cellIndex = Convert.ToInt32(values[1]);
             (player as UserPlayer)?.MakeMove(cellIndex);
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            _viewModel.GameController = _viewModel.GameController;
         }
 
         public event EventHandler CanExecuteChanged

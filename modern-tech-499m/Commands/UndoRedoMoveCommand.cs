@@ -25,8 +25,6 @@ namespace modern_tech_499m.Commands
                 _viewModel.GameController?.UndoMove();
             else
                 _viewModel.GameController?.RedoMove();
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            _viewModel.GameController = _viewModel.GameController;
         }
 
         public event EventHandler CanExecuteChanged

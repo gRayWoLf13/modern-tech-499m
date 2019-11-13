@@ -12,7 +12,7 @@ namespace modern_tech_499m
     class GameController : INotifyPropertyChanged
     {
         public GameLogic GameLogic { get; private set; }
-        private bool gameStopPending;
+        private bool _gameStopPending;
 
         //private Action<string> updateField;
         //private Action<IPlayer> showGameEnding;
@@ -54,20 +54,24 @@ namespace modern_tech_499m
 
         public void RunGame()
         {
-            gameStopPending = false;
+            _gameStopPending = false;
             LastStatus = "Game starting";
             MakeGameStep();
         }
 
         public void StopGame()
         {
-            gameStopPending = true;
+            _gameStopPending = true;
         }
 
         public void UndoMove()
         {
             if (GameLogic.UndoMove())
+            {
                 LastStatus = "Undo";
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                OnPropertyChanged(nameof(GameLogic));
+            }
             else
                 LastStatus = "Can't undo";
         }
@@ -75,7 +79,11 @@ namespace modern_tech_499m
         public void RedoMove()
         {
             if (GameLogic.RedoMove())
+            {
                 LastStatus = "Redo";
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                OnPropertyChanged(nameof(GameLogic));
+            }
             else
                 LastStatus = "Can't redo";
         }
@@ -98,7 +106,7 @@ namespace modern_tech_499m
                 CurrentPlayerInfo = "Game ended";
                 return;
             }
-            if (gameStopPending)
+            if (_gameStopPending)
             {
                 LastStatus = "Game interrupted";
                 return;
@@ -109,6 +117,9 @@ namespace modern_tech_499m
                 //stopPlayerWorkingMessage(sender as IPlayer);
             }
             MakeGameStep();
+
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            OnPropertyChanged(nameof(GameLogic));
         }
 
         #region INotifyPropertyChanged implementation

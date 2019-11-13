@@ -88,7 +88,7 @@ namespace modern_tech_499m.Logic
             return logicClone;
         }
 
-        public int GetCellValue(IPlayer player, int cellIndex)
+        private int GetCellValue(IPlayer player, int cellIndex)
         {
             if (player == null)
                 throw new ArgumentNullException("Passed player is null");
@@ -97,6 +97,27 @@ namespace modern_tech_499m.Logic
             int indexOnField = player.Equals(Player1) ? cellIndex : CellsCount + 1 + cellIndex;
             return field[indexOnField].Value;
         }
+
+        public int this[string player, int cellIndex]
+        {
+            get
+            {
+                IPlayer pl;
+                switch (player)
+                {
+                    case "Player1":
+                        pl = Player1;
+                        break;
+                    case "Player2":
+                        pl = Player2;
+                        break;
+                    default: throw new ArgumentException(nameof(player));
+                }
+                return GetCellValue(pl, cellIndex);
+            }
+        }
+
+        public int this[IPlayer player, int cellIndex] => GetCellValue(player, cellIndex);
 
         public MoveResult MakeMove(IPlayer player, int cellIndex)
         {

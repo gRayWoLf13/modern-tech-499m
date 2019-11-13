@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using modern_tech_499m.AILogic;
 
 namespace modern_tech_499m.Logic
 {
-    class AIPlayer : IPlayer
+    internal class AIPlayer : IPlayer
     {
         public event EventHandler<CellGetterEventArgs> OnGetCell;
         public IPlayer Enemy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

@@ -11,7 +11,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
-        <converters:GameControllerToCellValueConverter x:Key="GameControllerToCellValueConverter"/>
         <converters:GameControllerToCommandParametersConverter x:Key="GameControllerToCommandParametersConverter"/>
     </Window.Resources>
     <i:Interaction.Behaviors>
@@ -57,11 +56,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player1"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player1, 0]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="3" Grid.Row="4" Margin="10" Command="{Binding CellClickCommand}">
@@ -75,11 +70,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player1"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player1, 1]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="4" Grid.Row="4" Margin="10" Command="{Binding CellClickCommand}">
@@ -93,11 +84,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player1"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player1, 2]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="5" Grid.Row="4" Margin="10" Command="{Binding CellClickCommand}">
@@ -111,11 +98,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player1"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player1, 3]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="6" Grid.Row="4" Margin="10" Command="{Binding CellClickCommand}">
@@ -129,11 +112,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player1"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player1, 4]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="7" Grid.Row="4" Margin="10" Command="{Binding CellClickCommand}">
@@ -147,11 +126,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player1"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player1, 5]"></Binding>
             </Button.Content>
         </Button>
 
@@ -166,11 +141,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player2"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player2, 5]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="3" Grid.Row="2" Margin="10" Command="{Binding CellClickCommand}">
@@ -184,11 +155,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player2"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player2, 4]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="4" Grid.Row="2" Margin="10" Command="{Binding CellClickCommand}">
@@ -202,11 +169,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player2"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player2, 3]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="5" Grid.Row="2" Margin="10" Command="{Binding CellClickCommand}">
@@ -220,11 +183,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player2"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player2, 2]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="6" Grid.Row="2" Margin="10" Command="{Binding CellClickCommand}">
@@ -238,11 +197,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player2"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player2, 1]"></Binding>
             </Button.Content>
         </Button>
         <Button Grid.Column="7" Grid.Row="2" Margin="10" Command="{Binding CellClickCommand}">
@@ -256,11 +211,7 @@
                 </MultiBinding>
             </Button.CommandParameter>
             <Button.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player2"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player2, 0]"></Binding>
             </Button.Content>
         </Button>
 
@@ -269,11 +220,7 @@
                 <sys:Int32 x:Key="CellIndex">6</sys:Int32>
             </Label.Resources>
             <Label.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player1"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player1, 6]"></Binding>
             </Label.Content>
         </Label>
 
@@ -282,11 +229,7 @@
                 <sys:Int32 x:Key="CellIndex">6</sys:Int32>
             </Label.Resources>
             <Label.Content>
-                <MultiBinding Converter="{StaticResource GameControllerToCellValueConverter}">
-                    <Binding Path="GameController"></Binding>
-                    <Binding Path="GameController.GameLogic.Player2"></Binding>
-                    <Binding Source="{StaticResource CellIndex}"></Binding>
-                </MultiBinding>
+                <Binding Path="GameController.GameLogic[Player2, 6]"></Binding>
             </Label.Content>
         </Label>
 

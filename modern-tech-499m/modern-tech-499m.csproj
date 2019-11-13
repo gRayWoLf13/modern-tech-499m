@@ -77,7 +77,6 @@
     <Compile Include="Commands\StartNewGameCommand.cs" />
     <Compile Include="Commands\UndoRedoMoveCommand.cs" />
     <Compile Include="Commands\UpdateUsersTableCommand.cs" />
-    <Compile Include="Converters\GameControllerToCellValueConverter.cs" />
     <Compile Include="Converters\GameControllerToCommandParametersConverter.cs" />
     <Compile Include="ViewModels\AddUserViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
