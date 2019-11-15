@@ -2,13 +2,13 @@
 using System.Windows.Input;
 using modern_tech_499m.ViewModels;
 
-namespace modern_tech_499m.Commands
+namespace modern_tech_499m.Commands.UsersDatabaseViewModelCommands
 {
-    class UndoRedoMoveCommand : ICommand
+    internal class OpenAddUserViewCommand : ICommand
     {
-        private readonly MainWindowViewModel _viewModel;
+        private readonly UsersDatabaseViewModel _viewModel;
 
-        public UndoRedoMoveCommand(MainWindowViewModel viewModel)
+        public OpenAddUserViewCommand(UsersDatabaseViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -20,11 +20,7 @@ namespace modern_tech_499m.Commands
 
         public void Execute(object parameter)
         {
-            var param = Convert.ToBoolean(parameter);
-            if (param)
-                _viewModel.GameController?.UndoMove();
-            else
-                _viewModel.GameController?.RedoMove();
+            _viewModel.AddUserViewOpen = true;
         }
 
         public event EventHandler CanExecuteChanged

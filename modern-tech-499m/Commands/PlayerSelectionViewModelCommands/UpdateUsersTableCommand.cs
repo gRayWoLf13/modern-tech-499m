@@ -4,16 +4,16 @@ using System.Windows.Input;
 using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.ViewModels;
 
-namespace modern_tech_499m.Commands
+namespace modern_tech_499m.Commands.PlayerSelectionViewModelCommands
 {
-    internal class UpdateUsersTableCommand : ICommand
+    class UpdateUsersTableCommand : ICommand
     {
-        private readonly UsersDatabaseViewModel _viewModel;
+        private readonly PlayerSelectionViewModel _playerSelectionViewModel;
         private readonly IUserRepository _userRepository;
 
-        public UpdateUsersTableCommand(UsersDatabaseViewModel viewModel, IUserRepository userRepository)
+        public UpdateUsersTableCommand(PlayerSelectionViewModel playerSelectionViewModel, IUserRepository userRepository)
         {
-            _viewModel = viewModel;
+            _playerSelectionViewModel = playerSelectionViewModel;
             _userRepository = userRepository;
         }
 
@@ -24,8 +24,8 @@ namespace modern_tech_499m.Commands
 
         public void Execute(object parameter)
         {
-            _viewModel.Users = _userRepository.GetAll();
-            _viewModel.CurrentUser = _viewModel.Users.FirstOrDefault();
+            _playerSelectionViewModel.Users = _userRepository.GetAll();
+            _playerSelectionViewModel.CurrentUser = _playerSelectionViewModel.Users.FirstOrDefault();
         }
 
         public event EventHandler CanExecuteChanged

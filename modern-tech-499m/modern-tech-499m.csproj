@@ -69,21 +69,31 @@
     </ApplicationDefinition>
     <Compile Include="Behaviours\OpenCloseWindowBehavior.cs" />
     <Compile Include="BootStrapper.cs" />
-    <Compile Include="Commands\AddUserCommand.cs" />
-    <Compile Include="Commands\CellClickCommand.cs" />
-    <Compile Include="Commands\OpenAddUserViewCommand.cs" />
-    <Compile Include="Commands\DeleteCurrentUserCommand.cs" />
-    <Compile Include="Commands\OpenUsersDatabaseCommand.cs" />
-    <Compile Include="Commands\StartNewGameCommand.cs" />
-    <Compile Include="Commands\UndoRedoMoveCommand.cs" />
-    <Compile Include="Commands\UpdateUsersTableCommand.cs" />
+    <Compile Include="Commands\MainWindowViewModelCommands\SelectPlayerCommand.cs" />
+    <Compile Include="Commands\PlayerSelectionViewModelCommands\AddUserCommand.cs" />
+    <Compile Include="Commands\AddUserViewModelCommands\AddUserCommand.cs" />
+    <Compile Include="Commands\MainWindowViewModelCommands\CellClickCommand.cs" />
+    <Compile Include="Commands\UsersDatabaseViewModelCommands\OpenAddUserViewCommand.cs" />
+    <Compile Include="Commands\UsersDatabaseViewModelCommands\DeleteCurrentUserCommand.cs" />
+    <Compile Include="Commands\MainWindowViewModelCommands\OpenUsersDatabaseCommand.cs" />
+    <Compile Include="Commands\PlayerSelectionViewModelCommands\SelectAIPlayerCommand.cs" />
+    <Compile Include="Commands\MainWindowViewModelCommands\StartNewGameCommand.cs" />
+    <Compile Include="Commands\MainWindowViewModelCommands\UndoRedoMoveCommand.cs" />
+    <Compile Include="Commands\PlayerSelectionViewModelCommands\UpdateUsersTableCommand.cs" />
+    <Compile Include="Commands\UsersDatabaseViewModelCommands\UpdateUsersTableCommand.cs" />
     <Compile Include="Converters\GameControllerToCommandParametersConverter.cs" />
+    <Compile Include="PlayerService.cs" />
     <Compile Include="ViewModels\AddUserViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\IPlayerSelectionViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PlayerSelectionViewModel.cs" />
     <Compile Include="ViewModels\UsersDatabaseViewModel.cs" />
     <Compile Include="Views\AddUserView.xaml.cs">
       <DependentUpon>AddUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayerSelectionWindow.xaml.cs">
+      <DependentUpon>PlayerSelectionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UsersDatabaseView.xaml.cs">
       <DependentUpon>UsersDatabaseView.xaml</DependentUpon>
@@ -113,6 +123,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayerSelectionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

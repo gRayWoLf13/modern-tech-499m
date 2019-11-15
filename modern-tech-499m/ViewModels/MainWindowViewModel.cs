@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using modern_tech_499m.Commands;
+using modern_tech_499m.Commands.MainWindowViewModelCommands;
 using modern_tech_499m.Logic;
 
 namespace modern_tech_499m.ViewModels
@@ -17,7 +17,8 @@ namespace modern_tech_499m.ViewModels
             StartNewGameCommand = new StartNewGameCommand(this);
             UndoRedoMoveCommand = new UndoRedoMoveCommand(this);
             OpenUsersDatabaseCommand = new OpenUsersDatabaseCommand(this);
-            InitGame();
+            SelectPlayerCommand = new SelectPlayerCommand(this);
+           // InitGame();
         }
 
         private void InitGame()
@@ -50,9 +51,33 @@ namespace modern_tech_499m.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private IPlayer _player1;
+        public IPlayer Player1
+        {
+            get => _player1;
+            set
+            {
+                _player1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IPlayer _player2;
+        public IPlayer Player2
+        {
+            get => _player2;
+            set
+            {
+                _player2 = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand CellClickCommand { get; private set; }
         public ICommand StartNewGameCommand { get; private set; }
         public ICommand UndoRedoMoveCommand { get; private set; }
         public ICommand OpenUsersDatabaseCommand { get; private set; }
+        public ICommand SelectPlayerCommand { get; private set; }
     }
 }

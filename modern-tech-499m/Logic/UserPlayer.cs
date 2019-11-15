@@ -9,7 +9,7 @@ namespace modern_tech_499m.Logic
     class UserPlayer : IPlayer
     {
         public event EventHandler<CellGetterEventArgs> OnGetCell;
-        public IPlayer Enemy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IPlayer Enemy { get; set; }
         public string Name { get; set; }
 
         public bool CanUndoMoves { get; set; }

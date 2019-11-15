@@ -37,11 +37,17 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <Button Grid.Column="3" Content="User vs user" Command="{Binding StartNewGameCommand}" CommandParameter="UserVsUser"></Button>
-        <Button Grid.Column="4" Content="User vs AI" Command="{Binding StartNewGameCommand}" CommandParameter="UserVsAI"></Button>
-        <Button Grid.Column="5" Content="AI vs user" Command="{Binding StartNewGameCommand}" CommandParameter="AIVsUser"></Button>
-        <Button Grid.Column="6" Content="AI vs AI" Command="{Binding StartNewGameCommand}" CommandParameter="AIVsAI"></Button>
-
+        <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Command="{Binding SelectPlayerCommand}" CommandParameter="Player1" Content="Select player 1"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock>Player1:</TextBlock>
+            <TextBlock Text="{Binding Player1.Name}"/>
+        </StackPanel>
+        <Button Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="2" Command="{Binding SelectPlayerCommand}" CommandParameter="Player2" Content="Select player 2"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="2">
+            <TextBlock>Player2:</TextBlock>
+            <TextBlock Text="{Binding Player2.Name}"/>
+        </StackPanel>
+        <Button Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Command="{Binding StartNewGameCommand}">Start new game</Button>
         <Button Grid.Column="4" Grid.Row="1" Margin="10" Command="{Binding UndoRedoMoveCommand}" CommandParameter="True">Undo move</Button>
         <Button Grid.Column="5" Grid.Row="1" Margin="10" Command="{Binding UndoRedoMoveCommand}" CommandParameter="False">Redo move</Button>
 
@@ -239,6 +245,6 @@
             <TextBlock VerticalAlignment="Center" Background="PaleVioletRed" Text="{Binding GameController.CurrentPlayerInfo}"></TextBlock>
         </StackPanel>
 
-        <Button Grid.Row="5" Grid.Column="2" Margin="2" Command="{Binding OpenUsersDatabaseCommand}">Users database</Button>
+        <Button Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Command="{Binding OpenUsersDatabaseCommand}">Edit users database</Button>
     </Grid>
 </Window>

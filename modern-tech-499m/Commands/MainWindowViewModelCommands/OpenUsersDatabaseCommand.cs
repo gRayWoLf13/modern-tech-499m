@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using modern_tech_499m.ViewModels;
 
-namespace modern_tech_499m.Commands
+namespace modern_tech_499m.Commands.MainWindowViewModelCommands
 {
     class OpenUsersDatabaseCommand : ICommand
     {

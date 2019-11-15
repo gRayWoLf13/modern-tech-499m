@@ -22,9 +22,10 @@ namespace modern_tech_499m
             builder.RegisterType<MainWindowViewModel>().AsSelf();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-             builder.RegisterType<GameInfoRepository>().As<IGameInfoRepository>();
+            builder.RegisterType<GameInfoRepository>().As<IGameInfoRepository>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<DatabaseContextFactory>().As<IDatabaseContextFactory>();
+            builder.RegisterType<PlayerSelectionViewModel>().As<IPlayerSelectionViewModel>();
 
             _rootScope = builder.Build();
         }

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using modern_tech_499m.Commands;
+using modern_tech_499m.Commands.AddUserViewModelCommands;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
 

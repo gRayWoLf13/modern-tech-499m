@@ -1,24 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using modern_tech_499m.Commands.UsersDatabaseViewModelCommands;
+using modern_tech_499m.Commands.PlayerSelectionViewModelCommands;
+using modern_tech_499m.Logic;
 using modern_tech_499m.Repositories.Core;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
 
 namespace modern_tech_499m.ViewModels
 {
-    class UsersDatabaseViewModel : BaseViewModel
+    class PlayerSelectionViewModel : BaseViewModel, IPlayerSelectionViewModel
     {
         private IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
 
-        public UsersDatabaseViewModel(IUnitOfWork unitOfWork, IUserRepository userRepository)
+        public PlayerSelectionViewModel(IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
-            OpenAddUserViewCommand = new OpenAddUserViewCommand(this);
-            DeleteCurrentUserCommand = new DeleteCurrentUserCommand(this, _userRepository);
+            AddUserCommand = new AddUserCommand();
+            SelectAIPlayerCommand = new SelectAIPlayerCommand(this);
             UpdateUsersTableCommand = new UpdateUsersTableCommand(this, _userRepository);
             LoadUsers();
         }
@@ -47,23 +48,25 @@ namespace modern_tech_499m.ViewModels
             set
             {
                 _currentUser = value;
+                if (CurrentUser != null)
+                    SelectedPlayer = new UserPlayer(_currentUser.FullName);
                 OnPropertyChanged();
             }
         }
 
-        private bool _addUserViewOpen;
-        public bool AddUserViewOpen
+        private IPlayer _selectedPlayer;
+        public IPlayer SelectedPlayer
         {
-            get => _addUserViewOpen;
+            get => _selectedPlayer;
             set
             {
-                _addUserViewOpen = value;
+                _selectedPlayer = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICommand OpenAddUserViewCommand { get; private set; }
-        public ICommand DeleteCurrentUserCommand { get; private set; }
+        public ICommand AddUserCommand { get; private set; }
+        public ICommand SelectAIPlayerCommand { get; private set; }
         public ICommand UpdateUsersTableCommand { get; private set; }
     }
 }

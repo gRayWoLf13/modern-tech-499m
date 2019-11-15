@@ -6,7 +6,7 @@ using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.ViewModels;
 
-namespace modern_tech_499m.Commands
+namespace modern_tech_499m.Commands.AddUserViewModelCommands
 {
     internal class AddUserCommand : ICommand
     {
