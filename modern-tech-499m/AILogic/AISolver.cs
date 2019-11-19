@@ -3,39 +3,42 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Configuration;
-using System.Threading.Tasks;
+//using Newtonsoft.Json;
 
 namespace modern_tech_499m.AILogic
 {
     class AISolver
     {
-        private static readonly int _calculationDepth;
-        private static readonly int _cellsCount;
-        private static readonly Random rand = new Random();
-        private readonly GameLogic _logic;
-        private static readonly bool _useAlphaBetaProcedure;
+        public int CalculationDepth { get; }
+        public int CellsCount { get; }
+        private readonly Random _rand = new Random();
+        public bool UseAlphaBetaProcedure { get; }
 
-        static AISolver()
+        public AISolver(bool useDefaultSettings)
         {
-            string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
-            if (cellsCount == null || !int.TryParse(cellsCount, out _cellsCount))
-                _cellsCount = 6;
-            string calculationDepth = ConfigurationManager.AppSettings["CalculationDepth"];
-            if (calculationDepth == null || !int.TryParse(calculationDepth, out _calculationDepth))
-                _calculationDepth = 4;
-            string useAlphaBetaProcedure = ConfigurationManager.AppSettings["UseAlphaBetaProcedure"];
-            if (useAlphaBetaProcedure == null || !bool.TryParse(useAlphaBetaProcedure, out _useAlphaBetaProcedure))
-                _useAlphaBetaProcedure = false;
+            if (useDefaultSettings)
+            {
+                string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
+                if (cellsCount == null || !int.TryParse(cellsCount, out int count))
+                    CellsCount = 6;
+                else
+                    CellsCount = count;
+                string calculationDepth = ConfigurationManager.AppSettings["CalculationDepth"];
+                if (calculationDepth == null || !int.TryParse(calculationDepth, out int depth))
+                    CalculationDepth = 4;
+                else
+                    CalculationDepth = depth;
+                string useAlphaBetaProcedure = ConfigurationManager.AppSettings["UseAlphaBetaProcedure"];
+                if (useAlphaBetaProcedure == null || !bool.TryParse(useAlphaBetaProcedure, out bool alphaBeta))
+                    UseAlphaBetaProcedure = false;
+                else
+                    UseAlphaBetaProcedure = alphaBeta;
+            }
         }
 
-        public AISolver(GameLogic logic)
+        public int GetCell(GameLogic logic)
         {
-            _logic = logic;
-        }
-
-        public int GetCell()
-        {
-            SolvingTreeNode solvingTreeHead = CreateSolvingTree();
+            SolvingTreeNode solvingTreeHead = CreateSolvingTree(logic);
             LinkedListNode<SolvingTreeNode> currentChild = solvingTreeHead.ChildrenNodes.First;
             List<int> solvingVariants = new List<int>();
             while (currentChild != null)
@@ -47,23 +50,61 @@ namespace modern_tech_499m.AILogic
             foreach (var item in solvingVariants)
                 Debug.Write($"{item} ");
             Debug.WriteLine("");
-            return solvingVariants[rand.Next(solvingVariants.Count)];
+            return solvingVariants[_rand.Next(solvingVariants.Count)];
             //return solvingVariants[0];
         }
 
-        private SolvingTreeNode CreateSolvingTree()
+        //#region Serialization
+        //private class SerializableAISolver
+        //{
+        //    public int CalculationDepth { get; set; }
+        //    public int CellsCount { get; set; }
+        //    public Random Rand { get; set; }
+        //    public bool UseAlfaBetaFrocedure { get; set; }
+        //}
+
+        //public string Serialize()
+        //{
+        //    var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
+        //    return JsonConvert.SerializeObject(new SerializableAISolver
+        //    {
+        //        CalculationDepth = CalculationDepth,
+        //        CellsCount = CellsCount,
+        //        Rand = _rand,
+        //        UseAlfaBetaFrocedure = UseAlphaBetaProcedure
+        //    }, settings);
+        //}
+
+        //public static AISolver Deserialize(string data)
+        //{
+        //    var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
+        //    var result = JsonConvert.DeserializeObject<SerializableAISolver>(data, settings);
+        //    return new AISolver(result);
+        //}
+
+        ////Private constructor for deserialization
+        //private AISolver(SerializableAISolver obj)
+        //{
+        //    CalculationDepth = obj.CalculationDepth;
+        //    CellsCount = obj.CellsCount;
+        //    _rand = obj.Rand;
+        //    UseAlphaBetaProcedure = obj.UseAlfaBetaFrocedure;
+        //}
+        //#endregion
+
+        private SolvingTreeNode CreateSolvingTree(GameLogic logic)
         {
             Stack<SolvingTreeNode> treeNodes = new Stack<SolvingTreeNode>();
             SolvingTreeNode head = new SolvingTreeNode()
             {
-                CurrentGameState = _logic.Clone() as GameLogic,
+                CurrentGameState = logic.Clone() as GameLogic,
                 ParentNode = null,
-                GameMoveOwner = _logic.CurrentPlayer,
+                GameMoveOwner = logic.CurrentPlayer,
                 ChildrenNodes = new LinkedList<SolvingTreeNode>(),
                 TreeNodeDepth = 0
             };
 
-            AddChildrenNodes(head);
+            AddChildrenNodes(head, logic);
             LinkedListNode<SolvingTreeNode> currentHeadChild = head.ChildrenNodes.Last;
             while (currentHeadChild != null)
             {
@@ -73,7 +114,7 @@ namespace modern_tech_499m.AILogic
             do
             {
                 SolvingTreeNode currentNode = treeNodes.Pop();
-                if (AddChildrenNodes(currentNode))
+                if (AddChildrenNodes(currentNode, logic))
                 {
                     SolvingTreeNode tmpNode = currentNode;
                     (bool continueToParent, bool checkNeeded) pushingResult = TryPushWeightToParentCells(tmpNode);
@@ -118,7 +159,7 @@ namespace modern_tech_499m.AILogic
             int value = currentChild.Value.GameStateWeight.Value;
 
             bool checkNeeded = false;
-            if (_useAlphaBetaProcedure)
+            if (UseAlphaBetaProcedure)
                 checkNeeded = TrySetPreviewWeightForNode(cellParent, value);
 
             currentChild = currentChild.Next;
@@ -131,7 +172,7 @@ namespace modern_tech_499m.AILogic
                 else
                     value = Math.Min(value, currentChild.Value.GameStateWeight.Value);
 
-                if (_useAlphaBetaProcedure)
+                if (UseAlphaBetaProcedure)
                 {
                     var tmpCheck = TrySetPreviewWeightForNode(currentNode, value);
                     if (!checkNeeded)
@@ -175,7 +216,7 @@ namespace modern_tech_499m.AILogic
 
         private bool CheckTreeNodeToStopCalculation(SolvingTreeNode treeNode)
         {
-            if (treeNode.TreeNodeDepth == _calculationDepth)
+            if (treeNode.TreeNodeDepth == CalculationDepth)
                 return false;
             int? parentPreviewWeight = treeNode.ParentNode.PreviewGameStateWeight;
             if (!parentPreviewWeight.HasValue)
@@ -194,21 +235,21 @@ namespace modern_tech_499m.AILogic
             }
         }
 
-        private bool AddChildrenNodes(SolvingTreeNode treeNode)
+        private bool AddChildrenNodes(SolvingTreeNode treeNode, GameLogic logic)
         {
-            if (treeNode.TreeNodeDepth == _calculationDepth)
+            if (treeNode.TreeNodeDepth == CalculationDepth)
             {
-                treeNode.GameStateWeight = GetWeightFunctionValue(_logic.CurrentPlayer, treeNode.CurrentGameState);
+                treeNode.GameStateWeight = GetWeightFunctionValue(logic.CurrentPlayer, treeNode.CurrentGameState, logic);
                 treeNode.PreviewGameStateWeight = treeNode.GameStateWeight;
                 return true;
             }
-            for(int i = 0; i < _cellsCount; i++)
+            for(int i = 0; i < CellsCount; i++)
             {
                 GameLogic logicCopy = treeNode.CurrentGameState.Clone() as GameLogic;
                 MoveResult moveResult = logicCopy.MakeMove(treeNode.GameMoveOwner, i);
                 if (moveResult == MoveResult.ImpossibleMove)
                     continue;
-                IPlayer childMoveOwner = _logic.GetOtherPlayer(treeNode.GameMoveOwner);
+                IPlayer childMoveOwner = logic.GetOtherPlayer(treeNode.GameMoveOwner);
                 SolvingTreeNode childNode = new SolvingTreeNode()
                 {
                     CurrentGameState = logicCopy,
@@ -222,27 +263,27 @@ namespace modern_tech_499m.AILogic
             }
             if (treeNode.ChildrenNodes.Count == 0)
             {
-                treeNode.GameStateWeight = GetWeightFunctionValue(_logic.CurrentPlayer, treeNode.CurrentGameState);
+                treeNode.GameStateWeight = GetWeightFunctionValue(logic.CurrentPlayer, treeNode.CurrentGameState, logic);
                 treeNode.PreviewGameStateWeight = treeNode.GameStateWeight;
                 return true;
             }
             return false;
         }
 
-        private int GetWeightFunctionValue(IPlayer currentPlayer, GameLogic gameLogic)
+        private int GetWeightFunctionValue(IPlayer currentPlayer, GameLogic gameLogic, GameLogic oldLogic)
         {
             IPlayer player, enemy;
-            if (currentPlayer.Equals(_logic.Player1))
+            if (currentPlayer.Equals(oldLogic.Player1))
             {
-                player = _logic.Player1;
-                enemy = _logic.Player2;
+                player = oldLogic.Player1;
+                enemy = oldLogic.Player2;
             }
             else
             {
-                player = _logic.Player2;
-                enemy = _logic.Player1;
+                player = oldLogic.Player2;
+                enemy = oldLogic.Player1;
             }
-            return gameLogic[player, _cellsCount] - gameLogic[enemy, _cellsCount];
+            return gameLogic[player, CellsCount] - gameLogic[enemy, CellsCount];
         }
     }
 }

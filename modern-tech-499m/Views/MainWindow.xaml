@@ -245,6 +245,8 @@
             <TextBlock VerticalAlignment="Center" Background="PaleVioletRed" Text="{Binding GameController.CurrentPlayerInfo}"></TextBlock>
         </StackPanel>
 
-        <Button Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="2" Command="{Binding OpenUsersDatabaseCommand}">Edit users database</Button>
+        <Button Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Margin="2" Command="{Binding OpenUsersDatabaseCommand}">Edit users database</Button>
+        <Button Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Margin="30, 2" Command="{Binding SaveGameCommand}">Save game</Button>
+        <Button Grid.Row="5" Grid.Column="6" Grid.ColumnSpan="2" Margin="2" Command="{Binding OpenGamesDatabaseCommand}">Open games database</Button>
     </Grid>
 </Window>

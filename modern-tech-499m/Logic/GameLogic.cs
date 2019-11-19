@@ -1,14 +1,16 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using Newtonsoft.Json;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("modern_tech_499m.Tests")]
 namespace modern_tech_499m.Logic
 {
     internal class GameLogic : ICloneable
     {
-        public static readonly int CellsCount;
+        public readonly int CellsCount;
         private List<Cell> field;
         private Stack<Move> undoMovesHistory;
         private Stack<Move> redoMovesHistory;
@@ -16,27 +18,10 @@ namespace modern_tech_499m.Logic
         public IPlayer Player1 { get; }
         public IPlayer Player2 { get; }
         public IPlayer CurrentPlayer { get; private set; }
+        public bool GameEnded { get; private set; }
+        public int Score => field[CellsCount].Value - field[field.Count - 1].Value;
         private int initialValue;
-        private static List<int> _availableValuesToStealEnemyPoints;
-
-        static GameLogic()
-        {
-            string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
-            if (cellsCount == null || !int.TryParse(cellsCount, out CellsCount))
-                CellsCount = 6;
-            string availableValuesToStealEnemyPoints = ConfigurationManager.AppSettings["AvailableValuesToStealEnemyPoints"];
-            if (availableValuesToStealEnemyPoints == null)
-                _availableValuesToStealEnemyPoints = new List<int>() { 2, 3 };
-            else
-            {
-                string[] splittedValues = availableValuesToStealEnemyPoints.Split(new char[] { ' ', ',', ';' });
-                bool isCorrect = splittedValues.All(item => int.TryParse(item, out int value) && value > 0);
-                if (isCorrect)
-                    _availableValuesToStealEnemyPoints = Array.ConvertAll(splittedValues, item => int.Parse(item)).ToList();
-                else
-                    _availableValuesToStealEnemyPoints = new List<int>() { 2, 3 };
-            }
-        }
+        private List<int> _availableValuesToStealEnemyPoints;
 
         public IPlayer GetOtherPlayer(IPlayer player)
         {
@@ -45,8 +30,27 @@ namespace modern_tech_499m.Logic
             return player.Equals(Player1) ? Player2 : Player1;
         }
 
-        public GameLogic(int initialValue, IPlayer player1, IPlayer player2, IPlayer firstPlayer)
+        public GameLogic(int initialValue, IPlayer player1, IPlayer player2, IPlayer firstPlayer, bool useDefaultSettings = true)
         {
+            if (useDefaultSettings)
+            {
+                string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
+                if (cellsCount == null || !int.TryParse(cellsCount, out CellsCount))
+                    CellsCount = 6;
+                string availableValuesToStealEnemyPoints = ConfigurationManager.AppSettings["AvailableValuesToStealEnemyPoints"];
+                if (availableValuesToStealEnemyPoints == null)
+                    _availableValuesToStealEnemyPoints = new List<int> { 2, 3 };
+                else
+                {
+                    string[] splittedValues = availableValuesToStealEnemyPoints.Split(new char[] { ' ', ',', ';' });
+                    bool isCorrect = splittedValues.All(item => int.TryParse(item, out int value) && value > 0);
+                    if (isCorrect)
+                        _availableValuesToStealEnemyPoints = Array.ConvertAll(splittedValues, item => int.Parse(item)).ToList();
+                    else
+                        _availableValuesToStealEnemyPoints = new List<int> { 2, 3 };
+                }
+            }
+
             if (player1 == null || player2 == null)
                 throw new ArgumentNullException("One of the players is null");
             if (!firstPlayer.Equals(player1) && !firstPlayer.Equals(player2))
@@ -57,12 +61,32 @@ namespace modern_tech_499m.Logic
             undoMovesHistory = new Stack<Move>();
             redoMovesHistory = new Stack<Move>();
             this.initialValue = initialValue;
+            GameEnded = false;
             CreateField(initialValue);
         }
 
         [Obsolete]
-        public GameLogic(IPlayer player1, IPlayer player2, IPlayer firstPlayer, int[] initialValues, int endingCellPlayer1Value, int endingCellPlayer2Value)
+        public GameLogic(IPlayer player1, IPlayer player2, IPlayer firstPlayer, int[] initialValues, int endingCellPlayer1Value, int endingCellPlayer2Value, bool useDefaultSettings = true)
         {
+            if (useDefaultSettings)
+            {
+                string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
+                if (cellsCount == null || !int.TryParse(cellsCount, out CellsCount))
+                    CellsCount = 6;
+                string availableValuesToStealEnemyPoints = ConfigurationManager.AppSettings["AvailableValuesToStealEnemyPoints"];
+                if (availableValuesToStealEnemyPoints == null)
+                    _availableValuesToStealEnemyPoints = new List<int> { 2, 3 };
+                else
+                {
+                    string[] splittedValues = availableValuesToStealEnemyPoints.Split(new char[] { ' ', ',', ';' });
+                    bool isCorrect = splittedValues.All(item => int.TryParse(item, out int value) && value > 0);
+                    if (isCorrect)
+                        _availableValuesToStealEnemyPoints = Array.ConvertAll(splittedValues, item => int.Parse(item)).ToList();
+                    else
+                        _availableValuesToStealEnemyPoints = new List<int> { 2, 3 };
+                }
+            }
+
             if (player1 == null || player2 == null)
                 throw new ArgumentNullException("One of the players is null");
             if (initialValues.Length != CellsCount * 2)
@@ -75,6 +99,7 @@ namespace modern_tech_499m.Logic
             undoMovesHistory = new Stack<Move>();
             redoMovesHistory = new Stack<Move>();
             initialValue = CreateField(initialValues, endingCellPlayer1Value, endingCellPlayer2Value) / 2 / CellsCount;
+            GameEnded = false;
         }
 
         public object Clone()
@@ -121,7 +146,7 @@ namespace modern_tech_499m.Logic
 
         public MoveResult MakeMove(IPlayer player, int cellIndex)
         {
-            if (player != CurrentPlayer)
+            if (!player.Equals(CurrentPlayer))
                 return MoveResult.ImpossibleMove;
             if (cellIndex < 0 || cellIndex >= CellsCount)
                 return MoveResult.ImpossibleMove;
@@ -143,13 +168,16 @@ namespace modern_tech_499m.Logic
                 result = MakeSingleMove(player, indexOnField);
             }
 
-            Dictionary<Cell, int> cellValuesChanges = GetFieldValuesChanges(gameFieldCopy);
-            Move madeMove = new Move(CurrentPlayer, cellValuesChanges);
+            List<KeyValuePair<Cell, int>> cellValuesChanges = GetFieldValuesChanges(gameFieldCopy);
+            Move madeMove = new Move(CurrentPlayer, cellValuesChanges, result.moveResult);
             undoMovesHistory.Push(madeMove);
             redoMovesHistory.Clear();
 
             if (CheckGameEnding())
+            {
+                GameEnded = true;
                 return MoveResult.GameEnded;
+            }
             CurrentPlayer = GetOtherPlayer(CurrentPlayer);
             return MoveResult.EndedMove;
         }
@@ -178,6 +206,7 @@ namespace modern_tech_499m.Logic
                 UndoCellsValues(lastMove.CellValuesChanges);
                 CurrentPlayer = lastMove.MoveOwner;
             }
+            GameEnded = false;
             return true;
         }
 
@@ -200,8 +229,63 @@ namespace modern_tech_499m.Logic
                 RedoCellsValues(lastMove.CellValuesChanges);
                 CurrentPlayer = GetOtherPlayer(lastMove.MoveOwner);
             }
+            if (lastMove.Result == MoveResult.GameEnded)
+                GameEnded = true;
             return true;
         }
+
+        #region Serialization
+        private class SerializableGameLogic
+        {
+            public int CellsCount { get; set; }
+            public List<Cell> Field { get; set; }
+            public Stack<Move> UndoMovesHistory { get; set; }
+            public Stack<Move> RedoMovesHistory { get; set; }
+            public IPlayer Player1 { get; set; }
+            public IPlayer Player2 { get; set; }
+            public IPlayer CurrentPlayer { get; set; }
+            public int InitialValue { get; set; }
+            public List<int> AvailableValuesToStealEnemyPoints { get; set; }
+
+        }
+        public string Serialize()
+        {
+            var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Objects};
+            return JsonConvert.SerializeObject(new SerializableGameLogic
+            {
+                CellsCount = CellsCount,
+                Field = field,
+                UndoMovesHistory = undoMovesHistory,
+                RedoMovesHistory = redoMovesHistory,
+                Player1 = Player1,
+                Player2 = Player2,
+                CurrentPlayer = CurrentPlayer,
+                InitialValue = initialValue,
+                AvailableValuesToStealEnemyPoints = _availableValuesToStealEnemyPoints
+            }, settings);
+        }
+
+        public static GameLogic Deserialize(string data)
+        {
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
+            var result = JsonConvert.DeserializeObject<SerializableGameLogic>(data, settings);
+            return new GameLogic(result);
+        }
+
+        //Private constructor for deserialization
+        private GameLogic(SerializableGameLogic obj)
+        {
+            CellsCount = obj.CellsCount;
+            field = obj.Field;
+            undoMovesHistory = obj.UndoMovesHistory;
+            redoMovesHistory = obj.RedoMovesHistory;
+            Player1 = obj.Player1;
+            Player2 = obj.Player2;
+            CurrentPlayer = obj.CurrentPlayer;
+            initialValue = obj.InitialValue;
+            _availableValuesToStealEnemyPoints = obj.AvailableValuesToStealEnemyPoints;
+        }
+        #endregion
 
         [Obsolete]
         private int CreateField(int[] initialvalues, int endingCellPlayer1Value, int endingCellPlayer2Value)
@@ -326,22 +410,23 @@ namespace modern_tech_499m.Logic
             return copy;
         }
 
-        private Dictionary<Cell, int> GetFieldValuesChanges(int[] previousFieldValues)
+        private List<KeyValuePair<Cell, int>> GetFieldValuesChanges(int[] previousFieldValues)
         {
-            Dictionary<Cell, int> fieldValuesChanges = new Dictionary<Cell, int>();
+            List<KeyValuePair<Cell, int>> fieldValuesChanges = new List<KeyValuePair<Cell, int>>();
             for (int i = 0; i < field.Count; i++)
                 if (previousFieldValues[i] != field[i].Value)
-                    fieldValuesChanges.Add(field[i], field[i].Value - previousFieldValues[i]);
+                    fieldValuesChanges.Add(new KeyValuePair<Cell, int>(field[i],
+                        field[i].Value - previousFieldValues[i]));
             return fieldValuesChanges;
         }
 
-        private void UndoCellsValues(Dictionary<Cell, int> deltaValues)
+        private void UndoCellsValues(List<KeyValuePair<Cell, int>> deltaValues)
         {
             foreach (var keyValuePair in deltaValues)
                 keyValuePair.Key.Value -= keyValuePair.Value;
         }
 
-        private void RedoCellsValues(Dictionary<Cell, int> deltaValues)
+        private void RedoCellsValues(List<KeyValuePair<Cell, int>> deltaValues)
         {
             foreach (var keyValuePair in deltaValues)
                 keyValuePair.Key.Value += keyValuePair.Value;

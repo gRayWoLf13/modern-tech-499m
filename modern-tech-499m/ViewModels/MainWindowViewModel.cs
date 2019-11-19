@@ -6,28 +6,23 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using modern_tech_499m.Commands.MainWindowViewModelCommands;
 using modern_tech_499m.Logic;
+using modern_tech_499m.Repositories.Core.Repositories;
 
 namespace modern_tech_499m.ViewModels
 {
     class MainWindowViewModel : BaseViewModel
     {
-        public MainWindowViewModel()
+        public IGameInfoRepository GameInfoRepository { get; }
+        public MainWindowViewModel(IGameInfoRepository gameInfoRepository)
         {
+            GameInfoRepository = gameInfoRepository;
             CellClickCommand = new CellClickCommand(this);
             StartNewGameCommand = new StartNewGameCommand(this);
             UndoRedoMoveCommand = new UndoRedoMoveCommand(this);
             OpenUsersDatabaseCommand = new OpenUsersDatabaseCommand(this);
             SelectPlayerCommand = new SelectPlayerCommand(this);
-           // InitGame();
-        }
-
-        private void InitGame()
-        {
-            IPlayer player1 = new UserPlayer("Player1");
-            IPlayer player2 = new UserPlayer("Player2");
-            var logic = new GameLogic(6, player1, player2, player1);
-            GameController = new GameController(logic);
-            GameController.RunGame();
+            OpenGamesDatabaseCommand = new OpenGamesDatabaseCommand(this);
+            SaveGameCommand = new SaveGameCommand(this);
         }
 
         private GameController _gameController;
@@ -37,6 +32,7 @@ namespace modern_tech_499m.ViewModels
             set
             {
                 _gameController = value;
+                SyncInfoWithLoadedGameLogic();
                 OnPropertyChanged();
             }
         }
@@ -74,10 +70,18 @@ namespace modern_tech_499m.ViewModels
             }
         }
 
-        public ICommand CellClickCommand { get; private set; }
-        public ICommand StartNewGameCommand { get; private set; }
-        public ICommand UndoRedoMoveCommand { get; private set; }
-        public ICommand OpenUsersDatabaseCommand { get; private set; }
-        public ICommand SelectPlayerCommand { get; private set; }
+        public ICommand CellClickCommand { get; }
+        public ICommand StartNewGameCommand { get; }
+        public ICommand UndoRedoMoveCommand { get; }
+        public ICommand OpenUsersDatabaseCommand { get; }
+        public ICommand SelectPlayerCommand { get; }
+        public ICommand OpenGamesDatabaseCommand { get; }
+        public ICommand SaveGameCommand { get; }
+
+        private void SyncInfoWithLoadedGameLogic()
+        {
+            Player1 = GameController.GameLogic.Player1;
+            Player2 = GameController.GameLogic.Player2;
+        }
     }
 }

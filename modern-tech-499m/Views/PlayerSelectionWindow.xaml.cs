@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using modern_tech_499m.Logic;
 using modern_tech_499m.ViewModels;
 
 namespace modern_tech_499m.Views
@@ -11,7 +12,7 @@ namespace modern_tech_499m.Views
         public PlayerSelectionWindow()
         {
             InitializeComponent();
-            DataContext = BootStrapper.Resolve<IPlayerSelectionViewModel>();
+            DataContext = BootStrapper.Resolve<IEntitySelectionViewModel<IPlayer>>();
         }
     }
 }

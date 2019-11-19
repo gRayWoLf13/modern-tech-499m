@@ -6,28 +6,40 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using modern_tech_499m.Repositories.Core.Domain;
+using modern_tech_499m.Repositories.Core.Repositories;
 
 namespace modern_tech_499m
 {
     class GameController : INotifyPropertyChanged
     {
         public GameLogic GameLogic { get; private set; }
+        private readonly IGameInfoRepository _gameInfoRepository;
         private bool _gameStopPending;
 
         //private Action<string> updateField;
         //private Action<IPlayer> showGameEnding;
         //private Action<IPlayer> showPlayerWorkingMessage, stopPlayerWorkingMessage;
 
-        public GameController(GameLogic gameLogic/*, Action<string> updateField,
+        public GameController(GameLogic gameLogic, IGameInfoRepository gameInfoRepository/*, Action<string> updateField,
             Action<IPlayer> showGameEnding, Action<IPlayer> showPlayerWorkingMessage, Action<IPlayer> stopPlayerWorkingMessage*/)
         {
-            this.GameLogic = gameLogic;
+            _gameInfoRepository = gameInfoRepository;
+            GameLogic = gameLogic;
             //this.updateField = updateField;
             //this.showGameEnding = showGameEnding;
             //this.showPlayerWorkingMessage = showPlayerWorkingMessage;
             //this.stopPlayerWorkingMessage = stopPlayerWorkingMessage;
-            this.GameLogic.Player1.OnGetCell += new EventHandler<CellGetterEventArgs>(RecieveCellNumber);
-            this.GameLogic.Player2.OnGetCell += new EventHandler<CellGetterEventArgs>(RecieveCellNumber);
+            GameLogic.Player1.OnGetCell += RecieveCellNumber;
+            GameLogic.Player2.OnGetCell += RecieveCellNumber;
+        }
+
+        public GameController(GameInfo info, IGameInfoRepository repository)
+        {
+            _gameInfoRepository = repository;
+            LoadGame(info);
+            GameLogic.Player1.OnGetCell += RecieveCellNumber;
+            GameLogic.Player2.OnGetCell += RecieveCellNumber;
         }
 
         private string _lastStatus;
@@ -86,6 +98,26 @@ namespace modern_tech_499m
             }
             else
                 LastStatus = "Can't redo";
+        }
+
+        public void SaveGame()
+        {
+            _gameInfoRepository.Add(new GameInfo
+            {
+                GameDate = DateTime.Now,
+                GameFinished = GameLogic.GameEnded,
+                InternalGameData = GameLogic.Serialize(),
+                Player1Id = GameLogic.Player1.Id,
+                Player2Id = GameLogic.Player2.Id,
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //InternalSolverData = (GameLogic.Player1 as AIPlayer)?.Solver.Serialize() ?? (GameLogic.Player2 as AIPlayer)?.Solver.Serialize(),
+                Score = GameLogic.Score
+            });
+        }
+
+        private void LoadGame(GameInfo info)
+        {
+            GameLogic = GameLogic.Deserialize(info.InternalGameData);
         }
 
         private void MakeGameStep()

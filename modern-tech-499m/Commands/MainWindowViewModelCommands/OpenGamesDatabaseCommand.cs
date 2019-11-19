@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Windows.Input;
-using modern_tech_499m.Logic;
 using modern_tech_499m.ViewModels;
 
-namespace modern_tech_499m.Commands.PlayerSelectionViewModelCommands
+namespace modern_tech_499m.Commands.MainWindowViewModelCommands
 {
-    class SelectAIPlayerCommand : ICommand
+    class OpenGamesDatabaseCommand : ICommand
     {
-        private readonly PlayerSelectionViewModel _playerSelectionViewModel;
+        private readonly MainWindowViewModel _viewModel;
 
-        public SelectAIPlayerCommand(PlayerSelectionViewModel playerSelectionViewModel)
+        public OpenGamesDatabaseCommand(MainWindowViewModel viewModel)
         {
-            _playerSelectionViewModel = playerSelectionViewModel;
+            _viewModel = viewModel;
         }
 
         public bool CanExecute(object parameter)
@@ -21,7 +20,8 @@ namespace modern_tech_499m.Commands.PlayerSelectionViewModelCommands
 
         public void Execute(object parameter)
         {
-            _playerSelectionViewModel.SelectedEntity = new AIPlayer("AI player");
+            var gameInfo = Services.SelectGameInfo();
+            _viewModel.GameController = new GameController(gameInfo, _viewModel.GameInfoRepository);
         }
 
         public event EventHandler CanExecuteChanged

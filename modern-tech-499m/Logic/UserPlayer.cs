@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using modern_tech_499m.Repositories.Core.Domain;
 
 namespace modern_tech_499m.Logic
 {
@@ -11,13 +12,16 @@ namespace modern_tech_499m.Logic
         public event EventHandler<CellGetterEventArgs> OnGetCell;
         public IPlayer Enemy { get; set; }
         public string Name { get; set; }
-
         public bool CanUndoMoves { get; set; }
 
-        public UserPlayer(string name)
+        public User User { get; set; }
+        public int? Id => User.Id;
+
+        public UserPlayer(string name, User currentUser)
         {
             Name = name;
             CanUndoMoves = true;
+            User = currentUser;
         }
 
         public void GetCell(GameLogic gameLogic)

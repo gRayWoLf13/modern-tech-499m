@@ -56,6 +56,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\modern-tech-499m.Repositories\modern-tech-499m.Repositories.csproj">
+      <Project>{52c1fbd4-3aee-484f-8a97-cc76838517ac}</Project>
+      <Name>modern-tech-499m.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\modern-tech-499m\modern-tech-499m.csproj">
       <Project>{054f4337-4f65-492e-97ca-ca9836e8e1b5}</Project>
       <Name>modern-tech-499m</Name>

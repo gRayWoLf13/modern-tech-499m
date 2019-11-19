@@ -9,7 +9,7 @@ using modern_tech_499m.Repositories.Core.Repositories;
 
 namespace modern_tech_499m.ViewModels
 {
-    class PlayerSelectionViewModel : BaseViewModel, IPlayerSelectionViewModel
+    class PlayerSelectionViewModel : BaseViewModel, IEntitySelectionViewModel<IPlayer>
     {
         private IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
@@ -49,18 +49,18 @@ namespace modern_tech_499m.ViewModels
             {
                 _currentUser = value;
                 if (CurrentUser != null)
-                    SelectedPlayer = new UserPlayer(_currentUser.FullName);
+                    SelectedEntity = new UserPlayer(_currentUser.FullName, CurrentUser);
                 OnPropertyChanged();
             }
         }
 
-        private IPlayer _selectedPlayer;
-        public IPlayer SelectedPlayer
+        private IPlayer _selectedEntity;
+        public IPlayer SelectedEntity
         {
-            get => _selectedPlayer;
+            get => _selectedEntity;
             set
             {
-                _selectedPlayer = value;
+                _selectedEntity = value;
                 OnPropertyChanged();
             }
         }

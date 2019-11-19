@@ -12,7 +12,7 @@ namespace modern_tech_499m.Commands.PlayerSelectionViewModelCommands
 
         public void Execute(object parameter)
         {
-            PlayerService.AddNewUser();
+            Services.AddNewUser();
         }
 
         public event EventHandler CanExecuteChanged

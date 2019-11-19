@@ -190,10 +190,20 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
 
         public IEnumerable<User> GetUserFromGame(int id)
         {
-            var getUsersSql =
-                $"select * from Users where Id IN (select Player1Id, Player2Id from GameInfo where Id = {id})";
-            var users = GetAll(getUsersSql);
-            return users;
+            var getUsers1Sql =
+                $"select * from Users where Id IN (select Player1Id from GameInfo where Id = {id})";
+            var users1 = GetAll(getUsers1Sql);
+            var getUsers2Sql = $"select * from Users where Id IN (select Player2Id from GameInfo where Id = {id})";
+            var users2 = GetAll(getUsers2Sql);
+            foreach (var user in users1)
+            {
+                yield return user;
+            }
+
+            foreach (var user in users2)
+            {
+                yield return user;
+            }
         }
     }
 }

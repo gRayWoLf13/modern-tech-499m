@@ -1,10 +1,13 @@
 ﻿using System;
 using Autofac;
+using modern_tech_499m.Logic;
 using modern_tech_499m.Repositories.Core;
+using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.Repositories.Persistence;
 using modern_tech_499m.Repositories.Persistence.Repositories;
 using modern_tech_499m.ViewModels;
+using modern_tech_499m.Views;
 
 namespace modern_tech_499m
 {
@@ -25,7 +28,8 @@ namespace modern_tech_499m
             builder.RegisterType<GameInfoRepository>().As<IGameInfoRepository>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<DatabaseContextFactory>().As<IDatabaseContextFactory>();
-            builder.RegisterType<PlayerSelectionViewModel>().As<IPlayerSelectionViewModel>();
+            builder.RegisterType<PlayerSelectionViewModel>().As<IEntitySelectionViewModel<IPlayer>>();
+            builder.RegisterType<GameInfoSelectionViewModel>().As<IEntitySelectionViewModel<GameInfo>>();
 
             _rootScope = builder.Build();
         }
