@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:gameInfoDomain="clr-namespace:modern_tech_499m.Repositories.Core.Domain;assembly=modern-tech-499m.Repositories"
+        xmlns:converters="clr-namespace:modern_tech_499m.Converters"
         mc:Ignorable="d"
         Title="GameInfoSelectionWindow" Height="400" Width="500">
+    <Window.Resources>
+        <converters:WrappedGameInfoToPropertyConverter x:Key="WrappedGameInfoToPropertyConverter"></converters:WrappedGameInfoToPropertyConverter>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -23,14 +27,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" Margin="5">
-                            <TextBlock FontSize="8" Text="{Binding GameInfo.Id}"/>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="10" Text="{Binding Player1Name}"/>
-                                <TextBlock FontSize="10"> vs </TextBlock>
-                                <TextBlock FontSize="10" Text="{Binding Player2Name}"/>
-                            </StackPanel>
-                            <TextBlock FontSize="11" Text="{Binding GameInfo.GameFinished}" FontStyle="Italic"/>
-                            <TextBlock FontSize="15" Text="{Binding GameInfo.Score}" FontWeight="Bold"></TextBlock>
+                            <TextBlock FontSize="08" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=Id}"/>
+                            <TextBlock FontSize="14" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=PlayerNames}" FontWeight="Bold"/>
+                            <TextBlock FontSize="11" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=GameFinished}" FontStyle="Italic"/>
+                            <TextBlock FontSize="15" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=Score}" FontWeight="Bold"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

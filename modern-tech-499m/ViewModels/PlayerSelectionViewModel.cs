@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using modern_tech_499m.Commands.PlayerSelectionViewModelCommands;
@@ -49,7 +50,7 @@ namespace modern_tech_499m.ViewModels
             {
                 _currentUser = value;
                 if (CurrentUser != null)
-                    SelectedEntity = new UserPlayer(_currentUser.FullName, CurrentUser);
+                    SelectedEntity = new UserPlayer(_currentUser.FullName, CurrentUser, Guid.Empty);
                 OnPropertyChanged();
             }
         }

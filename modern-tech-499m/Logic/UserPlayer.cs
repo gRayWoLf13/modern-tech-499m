@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using modern_tech_499m.Repositories.Core.Domain;
 
 namespace modern_tech_499m.Logic
 {
     class UserPlayer : IPlayer
     {
+        public Guid GlobalId { get; }
         public event EventHandler<CellGetterEventArgs> OnGetCell;
         public IPlayer Enemy { get; set; }
         public string Name { get; set; }
@@ -17,8 +14,9 @@ namespace modern_tech_499m.Logic
         public User User { get; set; }
         public int? Id => User.Id;
 
-        public UserPlayer(string name, User currentUser)
+        public UserPlayer(string name, User currentUser, Guid globalId)
         {
+            GlobalId = globalId.Equals(Guid.Empty) ? Guid.NewGuid() : globalId;
             Name = name;
             CanUndoMoves = true;
             User = currentUser;
@@ -33,6 +31,21 @@ namespace modern_tech_499m.Logic
                 return;
             CellGetterEventArgs eventArgs = new CellGetterEventArgs(cellNumber);
             OnGetCell(this, eventArgs);
+        }
+
+        public bool Equals(IPlayer other)
+        {
+            return GlobalId.Equals(other?.GlobalId);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as IPlayer);
+        }
+
+        public override int GetHashCode()
+        {
+            return GlobalId.GetHashCode();
         }
     }
 }

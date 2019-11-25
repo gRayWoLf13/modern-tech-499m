@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using modern_tech_499m.Repositories.Core;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
@@ -84,13 +83,13 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
 
         public override User Get(int id)
         {
-            string sql = "select * from Users where Id = @Id";
+            string sql = "select Id, BirthDate, FirstName, LastName, Patronymic from Users where Id = @Id";
             return GetById(id, sql);
         }
 
         public override IEnumerable<User> GetAll()
         {
-            string sql = "select * from Users";
+            string sql = "select Id, BirthDate, FirstName, LastName, Patronymic from Users";
             return GetAll(sql);
         }
 
@@ -191,9 +190,9 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
         public IEnumerable<User> GetUserFromGame(int id)
         {
             var getUsers1Sql =
-                $"select * from Users where Id IN (select Player1Id from GameInfo where Id = {id})";
+                $"select Id, BirthDate, FirstName, LastName, Patronymic from Users where Id IN (select Player1Id from GameInfo where Id = {id})";
             var users1 = GetAll(getUsers1Sql);
-            var getUsers2Sql = $"select * from Users where Id IN (select Player2Id from GameInfo where Id = {id})";
+            var getUsers2Sql = $"select Id, BirthDate, FirstName, LastName, Patronymic from Users where Id IN (select Player2Id from GameInfo where Id = {id})";
             var users2 = GetAll(getUsers2Sql);
             foreach (var user in users1)
             {

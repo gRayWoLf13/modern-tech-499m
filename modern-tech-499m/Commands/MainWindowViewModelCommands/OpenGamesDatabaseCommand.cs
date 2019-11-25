@@ -21,7 +21,8 @@ namespace modern_tech_499m.Commands.MainWindowViewModelCommands
         public void Execute(object parameter)
         {
             var gameInfo = Services.SelectGameInfo();
-            _viewModel.GameController = new GameController(gameInfo, _viewModel.GameInfoRepository);
+            if (gameInfo != null)
+                _viewModel.GameController = new GameController(gameInfo, _viewModel.GameInfoRepository);
         }
 
         public event EventHandler CanExecuteChanged

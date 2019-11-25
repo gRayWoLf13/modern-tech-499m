@@ -6,12 +6,15 @@
         xmlns:local="clr-namespace:modern_tech_499m.Views"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:modern_tech_499m.Behaviours"
-        xmlns:userDomain="clr-namespace:modern_tech_499m.Repositories.Core.Domain;assembly=modern-tech-499m.Repositories"
+        xmlns:converters="clr-namespace:modern_tech_499m.Converters"
         mc:Ignorable="d"
         Title="Users database" Height="400" Width="400">
     <i:Interaction.Behaviors>
         <behaviors:OpenCloseWindowBehavior WindowType="local:AddUserView" Open="{Binding AddUserViewOpen, Mode=TwoWay}"></behaviors:OpenCloseWindowBehavior>
     </i:Interaction.Behaviors>
+    <Window.Resources>
+        <converters:UserToPropertyConverter x:Key="UserToPropertyConverter"></converters:UserToPropertyConverter>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -28,9 +31,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" Margin="5">
-                            <TextBlock FontSize="8" Text="{Binding (userDomain:User.Id)}"/>
-                            <TextBlock FontSize="14" Text="{Binding (userDomain:User.FullName)}"/>
-                            <TextBlock FontSize="11" Text="{Binding (userDomain:User.BirthDate), StringFormat=dd-MM-yyyy}" FontStyle="Italic"/>
+                            <TextBlock FontSize="8" Text="{Binding Converter={StaticResource UserToPropertyConverter}, ConverterParameter=Id}"/>
+                            <TextBlock FontSize="14" Text="{Binding Converter={StaticResource UserToPropertyConverter}, ConverterParameter=FullName}"/>
+                            <TextBlock FontSize="11" Text="{Binding Converter={StaticResource UserToPropertyConverter}, ConverterParameter=BirthDate}" FontStyle="Italic"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -3,9 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:userDomain="clr-namespace:modern_tech_499m.Repositories.Core.Domain;assembly=modern-tech-499m.Repositories"
+        xmlns:converters="clr-namespace:modern_tech_499m.Converters"
         mc:Ignorable="d"
         Title="PlayerSelectionWindow" Height="400" Width="500">
+    <Window.Resources>
+        <converters:UserToPropertyConverter x:Key="UserToPropertyConverter"></converters:UserToPropertyConverter>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -23,9 +26,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" Margin="5">
-                            <TextBlock FontSize="8" Text="{Binding (userDomain:User.Id)}"/>
-                            <TextBlock FontSize="14" Text="{Binding (userDomain:User.FullName)}"/>
-                            <TextBlock FontSize="11" Text="{Binding (userDomain:User.BirthDate), StringFormat=dd-MM-yyyy}" FontStyle="Italic"/>
+                            <TextBlock FontSize="8" Text="{Binding Converter={StaticResource UserToPropertyConverter}, ConverterParameter=Id}"/>
+                            <TextBlock FontSize="14" Text="{Binding Converter={StaticResource UserToPropertyConverter}, ConverterParameter=FullName}"/>
+                            <TextBlock FontSize="11" Text="{Binding Converter={StaticResource UserToPropertyConverter}, ConverterParameter=BirthDate}" FontStyle="Italic"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

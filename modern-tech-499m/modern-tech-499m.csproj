@@ -47,6 +47,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -86,6 +90,8 @@
     <Compile Include="Commands\PlayerSelectionViewModelCommands\UpdateUsersTableCommand.cs" />
     <Compile Include="Commands\UsersDatabaseViewModelCommands\UpdateUsersTableCommand.cs" />
     <Compile Include="Converters\GameControllerToCommandParametersConverter.cs" />
+    <Compile Include="Converters\UserToPropertyConverter.cs" />
+    <Compile Include="Converters\WrappedGameInfoToPropertyConverter.cs" />
     <Compile Include="Services.cs" />
     <Compile Include="ViewModels\AddUserViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

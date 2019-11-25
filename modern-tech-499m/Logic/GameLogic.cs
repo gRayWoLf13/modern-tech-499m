@@ -267,7 +267,7 @@ namespace modern_tech_499m.Logic
 
         public static GameLogic Deserialize(string data)
         {
-            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects};
             var result = JsonConvert.DeserializeObject<SerializableGameLogic>(data, settings);
             return new GameLogic(result);
         }

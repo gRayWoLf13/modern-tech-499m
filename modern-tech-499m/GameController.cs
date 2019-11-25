@@ -17,19 +17,10 @@ namespace modern_tech_499m
         private readonly IGameInfoRepository _gameInfoRepository;
         private bool _gameStopPending;
 
-        //private Action<string> updateField;
-        //private Action<IPlayer> showGameEnding;
-        //private Action<IPlayer> showPlayerWorkingMessage, stopPlayerWorkingMessage;
-
-        public GameController(GameLogic gameLogic, IGameInfoRepository gameInfoRepository/*, Action<string> updateField,
-            Action<IPlayer> showGameEnding, Action<IPlayer> showPlayerWorkingMessage, Action<IPlayer> stopPlayerWorkingMessage*/)
+        public GameController(GameLogic gameLogic, IGameInfoRepository gameInfoRepository)
         {
             _gameInfoRepository = gameInfoRepository;
             GameLogic = gameLogic;
-            //this.updateField = updateField;
-            //this.showGameEnding = showGameEnding;
-            //this.showPlayerWorkingMessage = showPlayerWorkingMessage;
-            //this.stopPlayerWorkingMessage = stopPlayerWorkingMessage;
             GameLogic.Player1.OnGetCell += RecieveCellNumber;
             GameLogic.Player2.OnGetCell += RecieveCellNumber;
         }
@@ -81,7 +72,6 @@ namespace modern_tech_499m
             if (GameLogic.UndoMove())
             {
                 LastStatus = "Undo";
-                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 OnPropertyChanged(nameof(GameLogic));
             }
             else
@@ -93,7 +83,6 @@ namespace modern_tech_499m
             if (GameLogic.RedoMove())
             {
                 LastStatus = "Redo";
-                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 OnPropertyChanged(nameof(GameLogic));
             }
             else
@@ -109,8 +98,6 @@ namespace modern_tech_499m
                 InternalGameData = GameLogic.Serialize(),
                 Player1Id = GameLogic.Player1.Id,
                 Player2Id = GameLogic.Player2.Id,
-                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                //InternalSolverData = (GameLogic.Player1 as AIPlayer)?.Solver.Serialize() ?? (GameLogic.Player2 as AIPlayer)?.Solver.Serialize(),
                 Score = GameLogic.Score
             });
         }
@@ -123,7 +110,6 @@ namespace modern_tech_499m
         private void MakeGameStep()
         {
             CurrentPlayerInfo = $"Waiting for player '{GameLogic.CurrentPlayer.Name}' to make move";
-            //showPlayerWorkingMessage(gameLogic.CurrentPlayer);
             GameLogic.CurrentPlayer.GetCell(GameLogic);
         }
 
@@ -134,7 +120,6 @@ namespace modern_tech_499m
             if (moveResult == MoveResult.GameEnded)
             {
                 //TODO - Show message box via service
-                //showGameEnding(sender as IPlayer);
                 CurrentPlayerInfo = "Game ended";
                 return;
             }
@@ -146,11 +131,8 @@ namespace modern_tech_499m
             if (moveResult != MoveResult.ImpossibleMove)
             {
                 CurrentPlayerInfo = string.Empty;
-                //stopPlayerWorkingMessage(sender as IPlayer);
             }
             MakeGameStep();
-
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             OnPropertyChanged(nameof(GameLogic));
         }
 

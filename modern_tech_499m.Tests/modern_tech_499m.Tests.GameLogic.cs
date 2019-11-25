@@ -13,7 +13,7 @@ namespace modern_tech_499m.Tests
         [TestMethod]
         public void FieldCreation()
         {
-            IPlayer player1 = new UserPlayer("player1", null), player2 = new AIPlayer("player2");
+            IPlayer player1 = new UserPlayer("player1", null, Guid.Empty), player2 = new AIPlayer("player2", Guid.Empty);
             GameLogic logic = new GameLogic(10, player1, player2, player1);
             PrivateObject prLogic = new PrivateObject(logic);
             List<Cell> resultField = prLogic.GetField("field") as List<Cell>;
@@ -31,7 +31,7 @@ namespace modern_tech_499m.Tests
         [TestMethod]
         public void GeneralStartMove1()
         {
-            IPlayer player1 = new UserPlayer("player1", null), player2 = new UserPlayer("player2", null);
+            IPlayer player1 = new UserPlayer("player1", null, Guid.Empty), player2 = new UserPlayer("player2", null, Guid.Empty);
             GameLogic logic = new GameLogic(6, player1, player2, player1);
             MoveResult move = logic.MakeMove(player1, 0);
             PrivateObject prLogic = new PrivateObject(logic);
@@ -44,7 +44,7 @@ namespace modern_tech_499m.Tests
         [TestMethod]
         public void WrongPlayerStartMove()
         {
-            IPlayer player1 = new UserPlayer("player1", null), player2 = new UserPlayer("player2", null);
+            IPlayer player1 = new UserPlayer("player1", null, Guid.Empty), player2 = new UserPlayer("player2", null, Guid.Empty);
             GameLogic logic = new GameLogic(6, player1, player2, player1);
             MoveResult move = logic.MakeMove(player2, 0);
             PrivateObject prLogic = new PrivateObject(logic);
@@ -57,7 +57,7 @@ namespace modern_tech_499m.Tests
         [TestMethod]
         public void WrongCellNumberMove()
         {
-            IPlayer player1 = new UserPlayer("player1", null), player2 = new UserPlayer("player2", null);
+            IPlayer player1 = new UserPlayer("player1", null, Guid.Empty), player2 = new UserPlayer("player2", null, Guid.Empty);
             GameLogic logic = new GameLogic(6, player1, player2, player1);
             MoveResult move = logic.MakeMove(player1, 7);
             PrivateObject prLogic = new PrivateObject(logic);
@@ -70,7 +70,7 @@ namespace modern_tech_499m.Tests
         [TestMethod]
         public void CycleMove1()
         {
-            IPlayer player1 = new UserPlayer("player1", null), player2 = new UserPlayer("player2", null);
+            IPlayer player1 = new UserPlayer("player1", null, Guid.Empty), player2 = new UserPlayer("player2", null, Guid.Empty);
             GameLogic logic = new GameLogic(player1, player2, player1, new int[] {3, 4, 6, 2, 4, 14, 4, 7, 10, 2, 0, 1 }, 0, 0);
             MoveResult move = logic.MakeMove(player1, 5);
             PrivateObject prLogic = new PrivateObject(logic);
@@ -83,7 +83,7 @@ namespace modern_tech_499m.Tests
         [TestMethod]
         public void ContinuousMove1()
         {
-            IPlayer player1 = new UserPlayer("player1", null), player2 = new UserPlayer("player2", null);
+            IPlayer player1 = new UserPlayer("player1", null, Guid.Empty), player2 = new UserPlayer("player2", null, Guid.Empty);
             GameLogic logic = new GameLogic(player1, player2, player1, new int[] { 3, 4, 6, 2, 4, 11, 4, 7, 10, 2, 0, 1 }, 0, 0);
             MoveResult move = logic.MakeMove(player1, 5);
             PrivateObject prLogic = new PrivateObject(logic);
@@ -96,7 +96,7 @@ namespace modern_tech_499m.Tests
         [TestMethod]
         public void ContinuousMove2()
         {
-            IPlayer player1 = new UserPlayer("player1", null), player2 = new UserPlayer("player2", null);
+            IPlayer player1 = new UserPlayer("player1", null, Guid.Empty), player2 = new UserPlayer("player2", null, Guid.Empty);
             GameLogic logic = new GameLogic(player1, player2, player1, new int[] { 3, 4, 6, 2, 4, 8, 4, 7, 10, 2, 0, 1 }, 0, 0);
             MoveResult move = logic.MakeMove(player1, 5);
             PrivateObject prLogic = new PrivateObject(logic);
@@ -109,7 +109,7 @@ namespace modern_tech_499m.Tests
         [TestMethod]
         public void MoveWithStealigValues1()
         {
-            IPlayer player1 = new UserPlayer("player1", null), player2 = new UserPlayer("player2", null);
+            IPlayer player1 = new UserPlayer("player1", null, Guid.Empty), player2 = new UserPlayer("player2", null, Guid.Empty);
             GameLogic logic = new GameLogic(player1, player2, player1, new int[] { 1, 0, 1, 0, 6, 5, 3, 1, 2, 1, 4, 3 }, 0, 0);
             MoveResult move = logic.MakeMove(player1, 5);
             PrivateObject prLogic = new PrivateObject(logic);

@@ -21,7 +21,7 @@ namespace modern_tech_499m.Commands.PlayerSelectionViewModelCommands
 
         public void Execute(object parameter)
         {
-            _playerSelectionViewModel.SelectedEntity = new AIPlayer("AI player");
+            _playerSelectionViewModel.SelectedEntity = new AIPlayer("AI player", Guid.Empty);
         }
 
         public event EventHandler CanExecuteChanged

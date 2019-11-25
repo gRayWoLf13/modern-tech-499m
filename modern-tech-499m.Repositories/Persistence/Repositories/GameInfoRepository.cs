@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
-using System.Threading.Tasks;
 using modern_tech_499m.Repositories.Core;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
@@ -104,13 +102,13 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
 
         public override GameInfo Get(int id)
         {
-            string sql = "select * from GameInfo where Id = @Id";
+            string sql = "select Id, GameDate, Player1Id, Player2Id, Score, GameFinished, InternalGameData, InternalSolverData from GameInfo where Id = @Id";
             return GetById(id, sql);
         }
 
         public override IEnumerable<GameInfo> GetAll()
         {
-            string sql = "select * from GameInfo";
+            string sql = "select Id, GameDate, Player1Id, Player2Id, Score, GameFinished, InternalGameData, InternalSolverData from GameInfo";
             return GetAll(sql);
         }
 
