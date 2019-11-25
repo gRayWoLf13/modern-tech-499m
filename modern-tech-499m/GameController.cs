@@ -1,24 +1,24 @@
 ﻿using modern_tech_499m.Logic;
-using modern_tech_499m.AILogic;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
+using NLog;
 
 namespace modern_tech_499m
 {
     class GameController : INotifyPropertyChanged
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public GameLogic GameLogic { get; private set; }
         private readonly IGameInfoRepository _gameInfoRepository;
         private bool _gameStopPending;
 
         public GameController(GameLogic gameLogic, IGameInfoRepository gameInfoRepository)
         {
+            _logger.Debug(
+                $"Game controller constructor called with parameters gameLogic = {gameLogic}, iGameInfoRepository = {gameInfoRepository}");
             _gameInfoRepository = gameInfoRepository;
             GameLogic = gameLogic;
             GameLogic.Player1.OnGetCell += RecieveCellNumber;
@@ -27,6 +27,8 @@ namespace modern_tech_499m
 
         public GameController(GameInfo info, IGameInfoRepository repository)
         {
+            _logger.Debug(
+                $"Game controller constructor called with parameters gameInfo = {info}, iGameInfoRepository = {repository}");
             _gameInfoRepository = repository;
             LoadGame(info);
             GameLogic.Player1.OnGetCell += RecieveCellNumber;
@@ -57,6 +59,7 @@ namespace modern_tech_499m
 
         public void RunGame()
         {
+            _logger.Debug("Run game method called");
             _gameStopPending = false;
             LastStatus = "Game starting";
             MakeGameStep();
@@ -64,11 +67,13 @@ namespace modern_tech_499m
 
         public void StopGame()
         {
+            _logger.Debug("Stop game method called");
             _gameStopPending = true;
         }
 
         public void UndoMove()
         {
+            _logger.Debug("Undo move method called");
             if (GameLogic.UndoMove())
             {
                 LastStatus = "Undo";
@@ -80,6 +85,7 @@ namespace modern_tech_499m
 
         public void RedoMove()
         {
+            _logger.Debug("Redo move method called");
             if (GameLogic.RedoMove())
             {
                 LastStatus = "Redo";
@@ -91,6 +97,7 @@ namespace modern_tech_499m
 
         public void SaveGame()
         {
+            _logger.Debug("Save game method called");
             _gameInfoRepository.Add(new GameInfo
             {
                 GameDate = DateTime.Now,
@@ -104,6 +111,7 @@ namespace modern_tech_499m
 
         private void LoadGame(GameInfo info)
         {
+            _logger.Debug("Load game method called");
             GameLogic = GameLogic.Deserialize(info.InternalGameData);
         }
 

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Windows.Input;
 using modern_tech_499m.ViewModels;
+using NLog;
 
 namespace modern_tech_499m.Commands.MainWindowViewModelCommands
 {
     class SaveGameCommand : ICommand
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly MainWindowViewModel _viewModel;
 
         public SaveGameCommand(MainWindowViewModel viewModel)
@@ -20,6 +22,7 @@ namespace modern_tech_499m.Commands.MainWindowViewModelCommands
 
         public void Execute(object parameter)
         {
+            _logger.Debug("Save game command called");
             _viewModel.GameController.SaveGame();
         }
 

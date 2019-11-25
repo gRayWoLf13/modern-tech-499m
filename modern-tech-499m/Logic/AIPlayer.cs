@@ -1,10 +1,12 @@
 ﻿using System;
 using modern_tech_499m.AILogic;
+using NLog;
 
 namespace modern_tech_499m.Logic
 {
     internal class AIPlayer : IPlayer
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public Guid GlobalId { get; }
         public event EventHandler<CellGetterEventArgs> OnGetCell;
         public IPlayer Enemy { get; set; }
@@ -17,6 +19,7 @@ namespace modern_tech_499m.Logic
 
         public AIPlayer(string name, Guid globalId)
         {
+            _logger.Debug($"AI player constructor called with name = {name}, GUID = {globalId}");
             GlobalId = globalId.Equals(Guid.Empty) ? Guid.NewGuid() : globalId;
             Name = name;
             CanUndoMoves = false;
@@ -25,6 +28,7 @@ namespace modern_tech_499m.Logic
 
         public void GetCell(GameLogic gameLogic)
         {
+            _logger.Debug("AI player get cell method called");
             int cellNumber = Solver.GetCell(gameLogic);
             if (OnGetCell == null)
                 return;

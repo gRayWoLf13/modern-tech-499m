@@ -5,15 +5,17 @@ using System.Windows.Input;
 using modern_tech_499m.Commands.AddUserViewModelCommands;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
+using NLog;
 
 namespace modern_tech_499m.ViewModels
 {
     class AddUserViewModel : INotifyPropertyChanged
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IUserRepository _userRepository;
-
         public AddUserViewModel(IUserRepository userRepository)
         {
+            _logger.Debug("Add user view movel constructor called");
             _userRepository = userRepository;
             AddUserCommand = new AddUserCommand(this, userRepository);
             NewUser = new User() {BirthDate = DateTime.Today};

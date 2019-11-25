@@ -3,11 +3,13 @@ using System.Linq;
 using System.Windows.Input;
 using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.ViewModels;
+using NLog;
 
 namespace modern_tech_499m.Commands.GameInfoSelectionViewModelCommands
 {
     class UpdateGamesCommand : ICommand
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly GameInfoSelectionViewModel _playerSelectionViewModel;
         private readonly IGameInfoRepository _gameInfoRepository;
 
@@ -24,6 +26,7 @@ namespace modern_tech_499m.Commands.GameInfoSelectionViewModelCommands
 
         public void Execute(object parameter)
         {
+            _logger.Debug("Update games command called");
             _playerSelectionViewModel.LoadGames();
             _playerSelectionViewModel.CurrentGameInfoWrapper =
                 _playerSelectionViewModel.WrappedGameInfos.FirstOrDefault();

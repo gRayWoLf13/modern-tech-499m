@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
+using NLog;
 
 namespace modern_tech_499m.ViewModels
 {
     class GameInfoSelectionViewModel : BaseViewModel, IEntitySelectionViewModel<GameInfo>
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IGameInfoRepository _gameInfoRepository;
         private readonly IUserRepository _userRepository;
 
         public GameInfoSelectionViewModel(IGameInfoRepository gameInfoRepository, IUserRepository userRepository)
         {
+            _logger.Debug("Game info selection view model constructor called");
             _gameInfoRepository = gameInfoRepository;
             _userRepository = userRepository;
             LoadGames();

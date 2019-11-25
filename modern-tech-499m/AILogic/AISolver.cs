@@ -1,14 +1,14 @@
 ﻿using modern_tech_499m.Logic;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Configuration;
-//using Newtonsoft.Json;
+using NLog;
 
 namespace modern_tech_499m.AILogic
 {
     class AISolver
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public int CalculationDepth { get; }
         public int CellsCount { get; }
         private readonly Random _rand = new Random();
@@ -18,6 +18,7 @@ namespace modern_tech_499m.AILogic
         {
             if (useDefaultSettings)
             {
+                _logger.Debug("AI solver constructor called with default settings");
                 string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
                 if (cellsCount == null || !int.TryParse(cellsCount, out int count))
                     CellsCount = 6;
@@ -47,50 +48,12 @@ namespace modern_tech_499m.AILogic
                     solvingVariants.Add(currentChild.Value.ParentCellNumber);
                 currentChild = currentChild.Next;
             }
-            foreach (var item in solvingVariants)
-                Debug.Write($"{item} ");
-            Debug.WriteLine("");
-            return solvingVariants[_rand.Next(solvingVariants.Count)];
+
+            int cellNumber = _rand.Next(solvingVariants.Count);
+            _logger.Info($"AI solver have choosen cell number {cellNumber}");
+            return solvingVariants[cellNumber];
             //return solvingVariants[0];
         }
-
-        //#region Serialization
-        //private class SerializableAISolver
-        //{
-        //    public int CalculationDepth { get; set; }
-        //    public int CellsCount { get; set; }
-        //    public Random Rand { get; set; }
-        //    public bool UseAlfaBetaFrocedure { get; set; }
-        //}
-
-        //public string Serialize()
-        //{
-        //    var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
-        //    return JsonConvert.SerializeObject(new SerializableAISolver
-        //    {
-        //        CalculationDepth = CalculationDepth,
-        //        CellsCount = CellsCount,
-        //        Rand = _rand,
-        //        UseAlfaBetaFrocedure = UseAlphaBetaProcedure
-        //    }, settings);
-        //}
-
-        //public static AISolver Deserialize(string data)
-        //{
-        //    var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
-        //    var result = JsonConvert.DeserializeObject<SerializableAISolver>(data, settings);
-        //    return new AISolver(result);
-        //}
-
-        ////Private constructor for deserialization
-        //private AISolver(SerializableAISolver obj)
-        //{
-        //    CalculationDepth = obj.CalculationDepth;
-        //    CellsCount = obj.CellsCount;
-        //    _rand = obj.Rand;
-        //    UseAlphaBetaProcedure = obj.UseAlfaBetaFrocedure;
-        //}
-        //#endregion
 
         private SolvingTreeNode CreateSolvingTree(GameLogic logic)
         {
@@ -133,6 +96,7 @@ namespace modern_tech_499m.AILogic
                     currentChild = currentChild.Previous;
                 }
             } while (treeNodes.Count > 0);
+            _logger.Debug("Solving tree created");
             return head;
         }
 

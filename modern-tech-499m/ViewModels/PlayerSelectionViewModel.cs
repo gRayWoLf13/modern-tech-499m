@@ -7,16 +7,19 @@ using modern_tech_499m.Logic;
 using modern_tech_499m.Repositories.Core;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
+using NLog;
 
 namespace modern_tech_499m.ViewModels
 {
     class PlayerSelectionViewModel : BaseViewModel, IEntitySelectionViewModel<IPlayer>
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
 
         public PlayerSelectionViewModel(IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
+            _logger.Debug("Player selection view model constructor called");
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             AddUserCommand = new AddUserCommand();

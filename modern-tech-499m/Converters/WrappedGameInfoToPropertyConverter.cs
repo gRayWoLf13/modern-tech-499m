@@ -2,13 +2,16 @@
 using System.Globalization;
 using System.Windows.Data;
 using modern_tech_499m.ViewModels;
+using NLog;
 
 namespace modern_tech_499m.Converters
 {
     class WrappedGameInfoToPropertyConverter : IValueConverter
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            _logger.Debug($"Wrapped game info to property conversion called with parameter {parameter}");
             if (value is GameInfoSelectionViewModel.GameInfoWrapper wrappedInfo)
             {
                 switch (parameter?.ToString())
@@ -29,7 +32,9 @@ namespace modern_tech_499m.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotSupportedException();
+            var exception = new NotSupportedException();
+            _logger.Fatal(exception, "Wrapped game info to property reverse convertion called");
+            throw exception;
         }
     }
 }

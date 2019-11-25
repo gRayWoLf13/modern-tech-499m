@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows.Input;
 using modern_tech_499m.Logic;
-using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.ViewModels;
+using NLog;
 
 namespace modern_tech_499m.Commands.MainWindowViewModelCommands
 {
     class StartNewGameCommand : ICommand
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly MainWindowViewModel _viewModel;
 
         public StartNewGameCommand(MainWindowViewModel viewModel)
@@ -22,6 +23,7 @@ namespace modern_tech_499m.Commands.MainWindowViewModelCommands
 
         public void Execute(object parameter)
         {
+            _logger.Debug("Start new game command called");
             GameLogic logic = new GameLogic(6, _viewModel.Player1, _viewModel.Player2, _viewModel.Player1);
             _viewModel.GameController?.StopGame();
             _viewModel.GameController = new GameController(logic, _viewModel.GameInfoRepository);

@@ -5,11 +5,13 @@ using System.Windows.Input;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.ViewModels;
+using NLog;
 
 namespace modern_tech_499m.Commands.AddUserViewModelCommands
 {
     internal class AddUserCommand : ICommand
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly AddUserViewModel _viewModel;
         private readonly IUserRepository _userRepository;
 
@@ -28,6 +30,7 @@ namespace modern_tech_499m.Commands.AddUserViewModelCommands
 
         public void Execute(object parameter)
         {
+            _logger.Debug("Add user command called");
             _userRepository.Add(_viewModel.NewUser);
             _viewModel.NewUser = new User() {BirthDate = DateTime.Today};
         }

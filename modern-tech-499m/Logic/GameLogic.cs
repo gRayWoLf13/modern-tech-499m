@@ -1,15 +1,16 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using Newtonsoft.Json;
+using NLog;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("modern_tech_499m.Tests")]
 namespace modern_tech_499m.Logic
 {
     internal class GameLogic : ICloneable
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public readonly int CellsCount;
         private List<Cell> field;
         private Stack<Move> undoMovesHistory;
@@ -32,6 +33,7 @@ namespace modern_tech_499m.Logic
 
         public GameLogic(int initialValue, IPlayer player1, IPlayer player2, IPlayer firstPlayer, bool useDefaultSettings = true)
         {
+            _logger.Debug($"Game logic main constructor called with{(useDefaultSettings ? "" : " no")} default settings");
             if (useDefaultSettings)
             {
                 string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
@@ -52,11 +54,19 @@ namespace modern_tech_499m.Logic
             }
 
             if (player1 == null || player2 == null)
-                throw new ArgumentNullException("One of the players is null");
+            {
+                var exception = new ArgumentNullException("One of the players is null");
+                _logger.Fatal(exception, "Exception in game logic constructor");
+                throw exception;
+            }
             if (!firstPlayer.Equals(player1) && !firstPlayer.Equals(player2))
-                throw new ArgumentException("First player is incorrect");
-            this.Player1 = player1;
-            this.Player2 = player2;
+            {
+                var exception = new ArgumentException("First player is incorrect");
+                _logger.Fatal(exception, "Exception in game logic constructor");
+                throw exception;
+            }
+            Player1 = player1;
+            Player2 = player2;
             CurrentPlayer = firstPlayer;
             undoMovesHistory = new Stack<Move>();
             redoMovesHistory = new Stack<Move>();
@@ -68,6 +78,7 @@ namespace modern_tech_499m.Logic
         [Obsolete]
         public GameLogic(IPlayer player1, IPlayer player2, IPlayer firstPlayer, int[] initialValues, int endingCellPlayer1Value, int endingCellPlayer2Value, bool useDefaultSettings = true)
         {
+            _logger.Debug($"Game logic obsolete constructor called with{(useDefaultSettings ? "" : " no")} default settings");
             if (useDefaultSettings)
             {
                 string cellsCount = ConfigurationManager.AppSettings["CellsCount"];
@@ -88,13 +99,25 @@ namespace modern_tech_499m.Logic
             }
 
             if (player1 == null || player2 == null)
-                throw new ArgumentNullException("One of the players is null");
+            {
+                var exception = new ArgumentNullException("One of the players is null");
+                _logger.Fatal(exception, "Exception in game logic constructor");
+                throw exception;
+            }
             if (initialValues.Length != CellsCount * 2)
-                throw new ArgumentException("Initial values array size is incorrect");
+            {
+                var exception = new ArgumentException("Initial values array size is incorrect");
+                _logger.Fatal(exception, "Exception in game logic constructor");
+                throw exception;
+            }
             if (!firstPlayer.Equals(player1) && !firstPlayer.Equals(player2))
-                throw new ArgumentException("First player is incorrect");
-            this.Player1 = player1;
-            this.Player2 = player2;
+            {
+                var exception = new ArgumentException("First player is incorrect");
+                _logger.Fatal(exception, "Exception in game logic constructor");
+                throw exception;
+            }
+            Player1 = player1;
+            Player2 = player2;
             CurrentPlayer = firstPlayer;
             undoMovesHistory = new Stack<Move>();
             redoMovesHistory = new Stack<Move>();
@@ -104,6 +127,7 @@ namespace modern_tech_499m.Logic
 
         public object Clone()
         {
+            _logger.Debug("Game logic clone method called");
             int[] initialValues = new int[CellsCount * 2];
             for (int i = 0; i < CellsCount; i++)
                 initialValues[i] = field[i].Value;
@@ -136,7 +160,12 @@ namespace modern_tech_499m.Logic
                     case "Player2":
                         pl = Player2;
                         break;
-                    default: throw new ArgumentException(nameof(player));
+                    default:
+                    {
+                        var exception = new ArgumentException(nameof(player));
+                        _logger.Fatal(exception, "Cell value getter called");
+                        throw exception;
+                    }
                 }
                 return GetCellValue(pl, cellIndex);
             }
@@ -146,6 +175,7 @@ namespace modern_tech_499m.Logic
 
         public MoveResult MakeMove(IPlayer player, int cellIndex)
         {
+            _logger.Debug($"Make move called with parameters {player} {cellIndex}");
             if (!player.Equals(CurrentPlayer))
                 return MoveResult.ImpossibleMove;
             if (cellIndex < 0 || cellIndex >= CellsCount)
@@ -184,6 +214,7 @@ namespace modern_tech_499m.Logic
 
         public bool UndoMove()
         {
+            _logger.Debug("Undo move called");
             if (!CurrentPlayer.CanUndoMoves)
                 return false;
             if (undoMovesHistory.Count == 0)
@@ -212,6 +243,7 @@ namespace modern_tech_499m.Logic
 
         public bool RedoMove()
         {
+            _logger.Debug("Redo move called");
             if (!CurrentPlayer.CanUndoMoves)
                 return false;
             if (redoMovesHistory.Count == 0)
@@ -250,6 +282,7 @@ namespace modern_tech_499m.Logic
         }
         public string Serialize()
         {
+            _logger.Debug("Game logic Serialize method called");
             var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Objects};
             return JsonConvert.SerializeObject(new SerializableGameLogic
             {
@@ -290,6 +323,7 @@ namespace modern_tech_499m.Logic
         [Obsolete]
         private int CreateField(int[] initialvalues, int endingCellPlayer1Value, int endingCellPlayer2Value)
         {
+            _logger.Debug("Create field from mjltiple values method called");
             field = new List<Cell>();
             int counter = 0;
             for (int i = 0; i < CellsCount; i++)
@@ -309,6 +343,7 @@ namespace modern_tech_499m.Logic
 
         private void CreateField(int initialValue)
         {
+            _logger.Debug("Create field from single value method called");
             field = new List<Cell>();
             for (int i = 0; i < CellsCount; i++)
             {

@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using modern_tech_499m.Commands.MainWindowViewModelCommands;
 using modern_tech_499m.Logic;
 using modern_tech_499m.Repositories.Core.Repositories;
+using NLog;
 
 namespace modern_tech_499m.ViewModels
 {
     class MainWindowViewModel : BaseViewModel
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public IGameInfoRepository GameInfoRepository { get; }
         public MainWindowViewModel(IGameInfoRepository gameInfoRepository)
         {
+            _logger.Debug("Main window view model constructor called");
             GameInfoRepository = gameInfoRepository;
             CellClickCommand = new CellClickCommand(this);
             StartNewGameCommand = new StartNewGameCommand(this);

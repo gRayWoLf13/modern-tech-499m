@@ -1,10 +1,12 @@
 ﻿using System;
 using modern_tech_499m.Repositories.Core.Domain;
+using NLog;
 
 namespace modern_tech_499m.Logic
 {
     class UserPlayer : IPlayer
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public Guid GlobalId { get; }
         public event EventHandler<CellGetterEventArgs> OnGetCell;
         public IPlayer Enemy { get; set; }
@@ -16,6 +18,7 @@ namespace modern_tech_499m.Logic
 
         public UserPlayer(string name, User currentUser, Guid globalId)
         {
+            _logger.Debug($"User player constructor called with name = {name}, GUID = {globalId}");
             GlobalId = globalId.Equals(Guid.Empty) ? Guid.NewGuid() : globalId;
             Name = name;
             CanUndoMoves = true;
@@ -27,6 +30,7 @@ namespace modern_tech_499m.Logic
 
         public void MakeMove(int cellNumber)
         {
+            _logger.Debug($"User player make move method called with parameter {cellNumber}");
             if (OnGetCell == null)
                 return;
             CellGetterEventArgs eventArgs = new CellGetterEventArgs(cellNumber);
