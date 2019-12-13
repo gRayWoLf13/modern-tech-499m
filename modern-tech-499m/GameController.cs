@@ -1,86 +1,156 @@
 ﻿using modern_tech_499m.Logic;
-using modern_tech_499m.AILogic;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using modern_tech_499m.Repositories.Core.Domain;
+using modern_tech_499m.Repositories.Core.Repositories;
+using NLog;
 
 namespace modern_tech_499m
 {
-    class GameController
+    class GameController : INotifyPropertyChanged
     {
-        public GameLogic gameLogic;
-        private bool gameStopPending;
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        public GameLogic GameLogic { get; private set; }
+        private readonly IGameInfoRepository _gameInfoRepository;
+        private bool _gameStopPending;
 
-        private Action<string> updateField;
-        private Action<IPlayer> showGameEnding;
-        private Action<IPlayer> showPlayerWorkingMessage, stopPlayerWorkingMessage;
-
-        public GameController(GameLogic gameLogic, Action<string> updateField,
-            Action<IPlayer> showGameEnding, Action<IPlayer> showPlayerWorkingMessage, Action<IPlayer> stopPlayerWorkingMessage)
+        public GameController(GameLogic gameLogic, IGameInfoRepository gameInfoRepository)
         {
-            this.gameLogic = gameLogic;
-            this.updateField = updateField;
-            this.showGameEnding = showGameEnding;
-            this.showPlayerWorkingMessage = showPlayerWorkingMessage;
-            this.stopPlayerWorkingMessage = stopPlayerWorkingMessage;
-            this.gameLogic.Player1.OnGetCell += new EventHandler<CellGetterEventArgs>(RecieveCellNumber);
-            this.gameLogic.Player2.OnGetCell += new EventHandler<CellGetterEventArgs>(RecieveCellNumber);
+            _logger.Debug(
+                $"Game controller constructor called with parameters gameLogic = {gameLogic}, iGameInfoRepository = {gameInfoRepository}");
+            _gameInfoRepository = gameInfoRepository;
+            GameLogic = gameLogic;
+            GameLogic.Player1.OnGetCell += RecieveCellNumber;
+            GameLogic.Player2.OnGetCell += RecieveCellNumber;
+        }
+
+        public GameController(GameInfo info, IGameInfoRepository repository)
+        {
+            _logger.Debug(
+                $"Game controller constructor called with parameters gameInfo = {info}, iGameInfoRepository = {repository}");
+            _gameInfoRepository = repository;
+            LoadGame(info);
+            GameLogic.Player1.OnGetCell += RecieveCellNumber;
+            GameLogic.Player2.OnGetCell += RecieveCellNumber;
+        }
+
+        private string _lastStatus;
+        public string LastStatus
+        {
+            get => _lastStatus;
+            set
+            {
+                _lastStatus = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _currentPlayerInfo;
+        public string CurrentPlayerInfo
+        {
+            get => _currentPlayerInfo;
+            set
+            {
+                _currentPlayerInfo = value;
+                OnPropertyChanged();
+            }
         }
 
         public void RunGame()
         {
-            gameStopPending = false;
-            updateField("Game starting");
+            _logger.Debug("Run game method called");
+            _gameStopPending = false;
+            LastStatus = "Game starting";
             MakeGameStep();
         }
 
         public void StopGame()
         {
-            gameStopPending = true;
+            _logger.Debug("Stop game method called");
+            _gameStopPending = true;
         }
 
         public void UndoMove()
         {
-            if (gameLogic.UndoMove())
-                updateField("Undo");
+            _logger.Debug("Undo move method called");
+            if (GameLogic.UndoMove())
+            {
+                LastStatus = "Undo";
+                OnPropertyChanged(nameof(GameLogic));
+            }
             else
-                updateField("Can't undo");
+                LastStatus = "Can't undo";
         }
 
         public void RedoMove()
         {
-            if (gameLogic.RedoMove())
-                updateField("Redo");
+            _logger.Debug("Redo move method called");
+            if (GameLogic.RedoMove())
+            {
+                LastStatus = "Redo";
+                OnPropertyChanged(nameof(GameLogic));
+            }
             else
-                updateField("Can't redo");
+                LastStatus = "Can't redo";
+        }
+
+        public void SaveGame()
+        {
+            _logger.Debug("Save game method called");
+            _gameInfoRepository.Add(new GameInfo
+            {
+                GameDate = DateTime.Now,
+                GameFinished = GameLogic.GameEnded,
+                InternalGameData = GameLogic.Serialize(),
+                Player1Id = GameLogic.Player1.Id,
+                Player2Id = GameLogic.Player2.Id,
+                Score = GameLogic.Score
+            });
+        }
+
+        private void LoadGame(GameInfo info)
+        {
+            _logger.Debug("Load game method called");
+            GameLogic = GameLogic.Deserialize(info.InternalGameData);
         }
 
         private void MakeGameStep()
         {
-            showPlayerWorkingMessage(gameLogic.CurrentPlayer);
-            gameLogic.CurrentPlayer.GetCell(gameLogic);
+            CurrentPlayerInfo = $"Waiting for player '{GameLogic.CurrentPlayer.Name}' to make move";
+            GameLogic.CurrentPlayer.GetCell(GameLogic);
         }
 
         private void RecieveCellNumber(object sender, CellGetterEventArgs eventArgs)
         {
-            MoveResult moveResult = gameLogic.MakeMove(sender as IPlayer, eventArgs.CellNumber);
-            updateField(Enum.GetName(typeof(MoveResult), moveResult));
+            MoveResult moveResult = GameLogic.MakeMove(sender as IPlayer, eventArgs.CellNumber);
+            LastStatus = Enum.GetName(typeof(MoveResult), moveResult);
             if (moveResult == MoveResult.GameEnded)
             {
-                showGameEnding(sender as IPlayer);
+                //TODO - Show message box via service
+                CurrentPlayerInfo = "Game ended";
                 return;
             }
-            if (gameStopPending)
+            if (_gameStopPending)
             {
-                updateField("Game interrupted");
+                LastStatus = "Game interrupted";
                 return;
             }
             if (moveResult != MoveResult.ImpossibleMove)
             {
-                stopPlayerWorkingMessage(sender as IPlayer);
+                CurrentPlayerInfo = string.Empty;
             }
             MakeGameStep();
+            OnPropertyChanged(nameof(GameLogic));
         }
+
+        #region INotifyPropertyChanged implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }

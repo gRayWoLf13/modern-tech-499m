@@ -1,0 +1,43 @@
+﻿<Window x:Class="modern_tech_499m.Views.GameInfoSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gameInfoDomain="clr-namespace:modern_tech_499m.Repositories.Core.Domain;assembly=modern-tech-499m.Repositories"
+        xmlns:converters="clr-namespace:modern_tech_499m.Converters"
+        mc:Ignorable="d"
+        Title="GameInfoSelectionWindow" Height="400" Width="500">
+    <Window.Resources>
+        <converters:WrappedGameInfoToPropertyConverter x:Key="WrappedGameInfoToPropertyConverter"></converters:WrappedGameInfoToPropertyConverter>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="3">
+            <ListView ItemsSource="{Binding WrappedGameInfos}" SelectedItem="{Binding CurrentGameInfoWrapper}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <TextBlock FontSize="08" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=Id}"/>
+                            <TextBlock FontSize="14" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=PlayerNames}" FontWeight="Bold"/>
+                            <TextBlock FontSize="11" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=GameFinished}" FontStyle="Italic"/>
+                            <TextBlock FontSize="15" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=Score}" FontWeight="Bold"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom">Current game id:</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding SelectedEntity.Id}"></TextBlock>
+        <Button Grid.Row="0" Grid.Column="2" Margin="5" Command="{Binding UpdateGamesCommand}">Update games</Button>
+    </Grid>
+</Window>

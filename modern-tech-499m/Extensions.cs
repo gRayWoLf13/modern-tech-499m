@@ -17,7 +17,7 @@ namespace modern_tech_499m
             }
         }
 
-        public static IEnumerable<T> ReverceCycle<T> (this List<T> list, int index = 0)
+        public static IEnumerable<T> ReverseCycle<T> (this List<T> list, int index = 0)
         {
             int count = list.Count;
             if (index < 0 || index >= count)

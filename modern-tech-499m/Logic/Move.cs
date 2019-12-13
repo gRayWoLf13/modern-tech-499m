@@ -1,32 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace modern_tech_499m.Logic
 {
     class Move
     {
-        public IPlayer _moveOwner;
-        public Dictionary<Cell, int> _cellValuesChanges;
+        public IPlayer MoveOwner { get; }
+        public List<KeyValuePair<Cell, int>> CellValuesChanges { get; }
+        public MoveResult Result { get; }
 
-        public Move(IPlayer moveOwner, Dictionary<Cell, int> cellValuesChanges)
+        public Move(IPlayer moveOwner, List<KeyValuePair<Cell, int>> cellValuesChanges, MoveResult result)
         {
-            _moveOwner = moveOwner;
-            _cellValuesChanges = cellValuesChanges;
-        }
-
-        public IPlayer MoveOwner
-        {
-            get => _moveOwner;
-            private set => _moveOwner = value;
-        }
-
-        public Dictionary<Cell, int> CellValuesChanges
-        {
-            get => _cellValuesChanges;
-            private set => _cellValuesChanges = value;
+            MoveOwner = moveOwner;
+            CellValuesChanges = cellValuesChanges;
+            Result = result;
         }
     }
 }
