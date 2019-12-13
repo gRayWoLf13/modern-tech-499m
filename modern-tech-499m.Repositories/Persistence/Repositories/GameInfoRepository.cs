@@ -26,23 +26,22 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
         protected override List<GameInfo> Maps(SQLiteDataReader reader)
         {
             List<GameInfo> infos = new List<GameInfo>();
-            if (reader.HasRows)
+            if (!reader.HasRows)
+                return infos;
+            while (reader.Read())
             {
-                while (reader.Read())
+                GameInfo info = new GameInfo
                 {
-                    GameInfo info = new GameInfo
-                    {
-                        Id = Convert.ToInt32(reader[nameof(GameInfo.Id)].ToString()),
-                        GameDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(GameInfo.GameDate)].ToString())),
-                        Player1Id = StringToNullableInt(reader[nameof(GameInfo.Player1Id)].ToString()),
-                        Player2Id = StringToNullableInt(reader[nameof(GameInfo.Player2Id)].ToString()),
-                        Score = Convert.ToInt32(reader[nameof(GameInfo.Score)].ToString()),
-                        GameFinished = Convert.ToInt32(reader[nameof(GameInfo.GameFinished)].ToString()) == 1,
-                        InternalGameData = reader[nameof(GameInfo.InternalGameData)].ToString(),
-                        InternalSolverData = reader[nameof(GameInfo.InternalSolverData)].ToString()
-                    };
-                    infos.Add(info);
-                }
+                    Id = Convert.ToInt32(reader[nameof(GameInfo.Id)].ToString()),
+                    GameDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(GameInfo.GameDate)].ToString())),
+                    Player1Id = StringToNullableInt(reader[nameof(GameInfo.Player1Id)].ToString()),
+                    Player2Id = StringToNullableInt(reader[nameof(GameInfo.Player2Id)].ToString()),
+                    Score = Convert.ToInt32(reader[nameof(GameInfo.Score)].ToString()),
+                    GameFinished = Convert.ToInt32(reader[nameof(GameInfo.GameFinished)].ToString()) == 1,
+                    InternalGameData = reader[nameof(GameInfo.InternalGameData)].ToString(),
+                    InternalSolverData = reader[nameof(GameInfo.InternalSolverData)].ToString()
+                };
+                infos.Add(info);
             }
             return infos;
         }
@@ -50,20 +49,18 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
         protected override GameInfo Map(SQLiteDataReader reader)
         {
             GameInfo info = new GameInfo();
-            if (reader.HasRows)
-            {
-                if (reader.Read())
-                {
-                    info.Id = Convert.ToInt32(reader[nameof(GameInfo.Id)].ToString());
-                    info.GameDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(GameInfo.GameDate)].ToString()));
-                    info.Player1Id = StringToNullableInt(reader[nameof(GameInfo.Player1Id)].ToString());
-                    info.Player2Id = StringToNullableInt(reader[nameof(GameInfo.Player2Id)].ToString());
-                    info.Score = Convert.ToInt32(reader[nameof(GameInfo.Score)].ToString());
-                    info.GameFinished = Convert.ToInt32(reader[nameof(GameInfo.GameFinished)].ToString()) == 1;
-                    info.InternalGameData = reader[nameof(GameInfo.InternalGameData)].ToString();
-                    info.InternalSolverData = reader[nameof(GameInfo.InternalSolverData)].ToString();
-                }
-            }
+            if (!reader.HasRows)
+                return info;
+            if (!reader.Read())
+                return info;
+            info.Id = Convert.ToInt32(reader[nameof(GameInfo.Id)].ToString());
+            info.GameDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(GameInfo.GameDate)].ToString()));
+            info.Player1Id = StringToNullableInt(reader[nameof(GameInfo.Player1Id)].ToString());
+            info.Player2Id = StringToNullableInt(reader[nameof(GameInfo.Player2Id)].ToString());
+            info.Score = Convert.ToInt32(reader[nameof(GameInfo.Score)].ToString());
+            info.GameFinished = Convert.ToInt32(reader[nameof(GameInfo.GameFinished)].ToString()) == 1;
+            info.InternalGameData = reader[nameof(GameInfo.InternalGameData)].ToString();
+            info.InternalSolverData = reader[nameof(GameInfo.InternalSolverData)].ToString();
             return info;
         }
 
@@ -118,91 +115,68 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             return allGameInfos.Where(predicate);
         }
 
-        public override GameInfo SingleOrDefault(Func<GameInfo, bool> predicate)
-        {
-            var allGameInfos = GetAll();
-            return allGameInfos.SingleOrDefault(predicate);
-        }
-
         public override void Add(GameInfo entity)
         {
-            try
+            TryExecuteAnyAction(() =>
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
-                string insertSql = "Insert into GameInfo (GameDate, Player1Id, Player2Id, Score, GameFinished, InternalGameData, InternalSolverData) VALUES (@GameDate, @Player1Id, @Player2Id, @Score, @GameFinished, @InternalGameData, @InternalSolverData)";
+                string insertSql =
+                    "Insert into GameInfo (GameDate, Player1Id, Player2Id, Score, GameFinished, InternalGameData, InternalSolverData) VALUES (@GameDate, @Player1Id, @Player2Id, @Score, @GameFinished, @InternalGameData, @InternalSolverData)";
                 Insert(entity, insertSql, transaction);
                 _unitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            });
         }
 
         public override void AddRange(IEnumerable<GameInfo> entities)
         {
-            try
+            TryExecuteAnyAction(() =>
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 StringBuilder insertSql = new StringBuilder(
                     "Insert into GameInfo (GameDate, Player1Id, Player2Id, Score, GameFinished, InternalGameData, InternalSolverData) VALUES ");
                 int counter = 0;
-                foreach (var entity in entities)
+                foreach (var _ in entities)
                 {
                     insertSql.Append(
                         $"(@GameDate{counter}, @Player1Id{counter}, @Player2Id{counter}, @Score{counter}, @GameFinished{counter}, @InternalGameData{counter}, @InternalSolverData{counter}), ");
                     counter++;
                 }
-                insertSql.Remove(insertSql.Length - 1, 1);
+
+                insertSql.Remove(insertSql.Length - 2, 2);
                 InsertMany(entities, insertSql.ToString(), transaction);
                 _unitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            });
         }
 
         public override void Remove(GameInfo entity)
         {
-            try
+            TryExecuteAnyAction(() =>
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 string deleteSql = "Delete from GameInfo where Id = @Id";
                 Delete(entity, deleteSql, transaction);
                 _unitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            });
         }
 
         public override void RemoveRange(IEnumerable<GameInfo> entities)
         {
-            int counter = 0;
-            try
+            TryExecuteAnyAction(() =>
             {
+                int counter = 0;
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 StringBuilder deleteSql = new StringBuilder("Delete from GameInfo where Id IN (");
-                foreach (var entity in entities)
+                foreach (var _ in entities)
                 {
                     deleteSql.Append($@"Id{counter}, ");
+                    counter++;
                 }
 
                 deleteSql.Remove(deleteSql.Length - 2, 2);
                 deleteSql.Append(")");
                 DeleteMany(entities, deleteSql.ToString(), transaction);
                 _unitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            });
         }
 
         public IEnumerable<GameInfo> GetTopScoreGames(int count)

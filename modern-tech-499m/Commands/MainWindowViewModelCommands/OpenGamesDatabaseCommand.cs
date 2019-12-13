@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows.Input;
 using modern_tech_499m.ViewModels;
+using NLog;
 
 namespace modern_tech_499m.Commands.MainWindowViewModelCommands
 {
     class OpenGamesDatabaseCommand : ICommand
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly MainWindowViewModel _viewModel;
-
         public OpenGamesDatabaseCommand(MainWindowViewModel viewModel)
         {
             _viewModel = viewModel;
@@ -20,6 +21,7 @@ namespace modern_tech_499m.Commands.MainWindowViewModelCommands
 
         public void Execute(object parameter)
         {
+            _logger.Debug("Open games databse command called");
             var gameInfo = Services.SelectGameInfo();
             if (gameInfo != null)
                 _viewModel.GameController = new GameController(gameInfo, _viewModel.GameInfoRepository);

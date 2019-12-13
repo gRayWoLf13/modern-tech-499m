@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Windows.Input;
+using NLog;
 
 namespace modern_tech_499m.Commands.PlayerSelectionViewModelCommands
 {
     class AddUserCommand : ICommand
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public bool CanExecute(object parameter)
         {
             return true;
@@ -12,6 +14,7 @@ namespace modern_tech_499m.Commands.PlayerSelectionViewModelCommands
 
         public void Execute(object parameter)
         {
+            _logger.Debug("Add user command called");
             Services.AddNewUser();
         }
 

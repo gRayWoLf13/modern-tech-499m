@@ -7,13 +7,15 @@ using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.Repositories.Persistence;
 using modern_tech_499m.Repositories.Persistence.Repositories;
 using modern_tech_499m.ViewModels;
-using modern_tech_499m.Views;
+using NLog;
 
 namespace modern_tech_499m
 {
     public static class BootStrapper
     {
         private static ILifetimeScope _rootScope;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public static void Start()
         {
             if (_rootScope != null)
@@ -32,11 +34,13 @@ namespace modern_tech_499m
             builder.RegisterType<GameInfoSelectionViewModel>().As<IEntitySelectionViewModel<GameInfo>>();
 
             _rootScope = builder.Build();
+            _logger.Debug("Bootsrapper started");
         }
 
         public static void Stop()
         {
             _rootScope.Dispose();
+            _logger.Debug("Bootstrapper stopped");
         }
 
         public static T Resolve<T>()

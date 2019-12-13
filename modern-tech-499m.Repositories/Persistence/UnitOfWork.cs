@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using modern_tech_499m.Repositories.Core;
 
 namespace modern_tech_499m.Repositories.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private IDatabaseContextFactory _factory;
+        private readonly IDatabaseContextFactory _factory;
         private IDatabaseContext _context;
         public SQLiteTransaction Transaction { get; private set; }
 
@@ -30,7 +26,7 @@ namespace modern_tech_499m.Repositories.Persistence
         {
             if (Transaction != null)
             {
-                throw new NullReferenceException("Previous transaction was not finished");
+                throw new ArgumentException("Previous transaction was not finished", nameof(Transaction));
             }
             Transaction = _context.Connection.BeginTransaction();
             return Transaction;
@@ -52,7 +48,7 @@ namespace modern_tech_499m.Repositories.Persistence
             }
             else
             {
-                throw new NullReferenceException("Transaction not opened");
+                throw new ArgumentException("Transaction not opened", nameof(Transaction));
             }
         }
     }
