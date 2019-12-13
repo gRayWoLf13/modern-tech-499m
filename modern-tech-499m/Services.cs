@@ -14,7 +14,7 @@ namespace modern_tech_499m
             _logger.Debug("Select player method called");
             var userWindow = new PlayerSelectionWindow();
             userWindow.ShowDialog();
-            return (userWindow.DataContext as IEntitySelectionViewModel<IPlayer>).SelectedEntity;
+            return ((IEntitySelectionViewModel<IPlayer>) userWindow.DataContext).SelectedEntity;
         }
 
         public static void AddNewUser()
@@ -29,7 +29,7 @@ namespace modern_tech_499m
             _logger.Debug("Select game info method called");
             var gameInfo = new GameInfoSelectionWindow();
             gameInfo.ShowDialog();
-            return (gameInfo.DataContext as IEntitySelectionViewModel<GameInfo>).SelectedEntity;
+            return ((IEntitySelectionViewModel<GameInfo>) gameInfo.DataContext).SelectedEntity;
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Reflection;
 
 namespace modern_tech_499m.Repositories.Persistence
 {
@@ -29,18 +28,16 @@ namespace modern_tech_499m.Repositories.Persistence
                         MemberName = propertyName
                     },
                     results);
-                if (!result)
-                {
-                    var validationResult = results.First();
-                    error = validationResult.ErrorMessage;
-                }
+                if (result) 
+                    return error;
+                var validationResult = results.First();
+                error = validationResult.ErrorMessage;
                 return error;
             }
         }
         private object GetValue(string propertyName)
         {
-            PropertyInfo propInfo = GetType().GetProperty(propertyName);
-            return propInfo.GetValue(this);
+            return GetType().GetProperty(propertyName)?.GetValue(this);
         }
     }
 }

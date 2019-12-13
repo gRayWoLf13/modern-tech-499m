@@ -17,20 +17,19 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
         protected override List<User> Maps(SQLiteDataReader reader)
         {
             List<User> users = new List<User>();
-            if (reader.HasRows)
+            if (!reader.HasRows)
+                return users;
+            while (reader.Read())
             {
-                while (reader.Read())
+                User user = new User
                 {
-                    User user = new User()
-                    {
-                        Id = Convert.ToInt32(reader[nameof(User.Id)].ToString()),
-                        BirthDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(User.BirthDate)].ToString())),
-                        FirstName = reader[nameof(User.FirstName)].ToString(),
-                        LastName = reader[nameof(User.LastName)].ToString(),
-                        Patronymic = reader[nameof(User.Patronymic)].ToString()
-                    };
-                    users.Add(user);
-                }
+                    Id = Convert.ToInt32(reader[nameof(User.Id)].ToString()),
+                    BirthDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(User.BirthDate)].ToString())),
+                    FirstName = reader[nameof(User.FirstName)].ToString(),
+                    LastName = reader[nameof(User.LastName)].ToString(),
+                    Patronymic = reader[nameof(User.Patronymic)].ToString()
+                };
+                users.Add(user);
             }
 
             return users;
@@ -39,17 +38,15 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
         protected override User Map(SQLiteDataReader reader)
         { 
             User user = new User();
-            if (reader.HasRows)
-            {
-                if (reader.Read())
-                {
-                    user.Id = Convert.ToInt32(reader[nameof(User.Id)].ToString());
-                    user.BirthDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(User.BirthDate)].ToString()));
-                    user.FirstName = reader[nameof(User.FirstName)].ToString();
-                    user.LastName = reader[nameof(User.LastName)].ToString();
-                    user.Patronymic = reader[nameof(User.Patronymic)].ToString();
-                }
-            }
+            if (!reader.HasRows)
+                return user;
+            if (!reader.Read())
+                return user;
+            user.Id = Convert.ToInt32(reader[nameof(User.Id)].ToString());
+            user.BirthDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(User.BirthDate)].ToString()));
+            user.FirstName = reader[nameof(User.FirstName)].ToString();
+            user.LastName = reader[nameof(User.LastName)].ToString();
+            user.Patronymic = reader[nameof(User.Patronymic)].ToString();
 
             return user;
         }
@@ -73,10 +70,10 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             int counter = 0;
             foreach (var entity in entities)
             {
-                cmd.Parameters.AddWithValue(nameof(User.BirthDate), entity.BirthDate.ToOADate());
-                cmd.Parameters.AddWithValue(nameof(User.FirstName), entity.FirstName);
-                cmd.Parameters.AddWithValue(nameof(User.LastName), entity.LastName);
-                cmd.Parameters.AddWithValue(nameof(User.Patronymic), entity.Patronymic);
+                cmd.Parameters.AddWithValue($"{nameof(User.BirthDate)}{counter}", entity.BirthDate.ToOADate());
+                cmd.Parameters.AddWithValue($"{nameof(User.FirstName)}{counter}", entity.FirstName);
+                cmd.Parameters.AddWithValue($"{nameof(User.LastName)}{counter}", entity.LastName);
+                cmd.Parameters.AddWithValue($"{nameof(User.Patronymic)}{counter}", entity.Patronymic);
                 counter++;
             }
         }
@@ -99,92 +96,67 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             return allUsers.Where(predicate);
         }
 
-        public override User SingleOrDefault(Func<User, bool> predicate)
-        {
-            var allUsers = GetAll();
-            return allUsers.SingleOrDefault(predicate);
-        }
-
         public override void Add(User entity)
         {
-            try
+            TryExecuteAnyAction(() =>
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 string insertSql =
                     "insert into Users (BirthDate, FirstName, LastName, Patronymic) VALUES (@BirthDate, @FirstName, @LastName, @Patronymic)";
                 Insert(entity, insertSql, transaction);
                 _unitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            });
         }
 
         public override void AddRange(IEnumerable<User> entities)
         {
-            try
+            TryExecuteAnyAction(() =>
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 StringBuilder insertSql = new StringBuilder(
                     "Insert into Users (BirthDate, FirstName, LastName, Patronymic) VALUES ");
                 int counter = 0;
-                foreach (var entity in entities)
+                foreach (var _ in entities)
                 {
                     insertSql.Append(
                         $"(@BirthDate{counter}, @FirstName{counter}, @LastName{counter}, @Patronymic{counter}), ");
                     counter++;
                 }
-                insertSql.Remove(insertSql.Length - 1, 1);
+                insertSql.Remove(insertSql.Length - 2, 2);
                 InsertMany(entities, insertSql.ToString(), transaction);
                 _unitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            });
         }
 
         public override void Remove(User entity)
         {
-            try
+            TryExecuteAnyAction(() =>
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 string deleteSql = "Delete from Users where Id = @Id";
                 Delete(entity, deleteSql, transaction);
                 _unitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            });
         }
 
         public override void RemoveRange(IEnumerable<User> entities)
         {
-            int counter = 0;
-            try
+            TryExecuteAnyAction(() =>
             {
+                int counter = 0;
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 StringBuilder deleteSql = new StringBuilder("Delete from Users where Id IN (");
-                foreach (var entity in entities)
+                foreach (var _ in entities)
                 {
                     deleteSql.Append($@"Id{counter}, ");
+                    counter++;
                 }
 
                 deleteSql.Remove(deleteSql.Length - 2, 2);
                 deleteSql.Append(")");
                 DeleteMany(entities, deleteSql.ToString(), transaction);
                 _unitOfWork.Commit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            });
         }
 
         public IEnumerable<User> GetUserFromGame(int id)
