@@ -12,9 +12,6 @@
     <i:Interaction.Behaviors>
         <behaviors:OpenCloseWindowBehavior WindowType="local:AddUserView" Open="{Binding AddUserViewOpen, Mode=TwoWay}"></behaviors:OpenCloseWindowBehavior>
     </i:Interaction.Behaviors>
-    <Window.Resources>
-        <converters:UserToPropertyConverter x:Key="UserToPropertyConverter"></converters:UserToPropertyConverter>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -31,9 +28,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" Margin="5">
-                            <TextBlock FontSize="8" Text="{Binding Converter={StaticResource UserToPropertyConverter}, ConverterParameter=Id}"/>
-                            <TextBlock FontSize="14" Text="{Binding Converter={StaticResource UserToPropertyConverter}, ConverterParameter=FullName}"/>
-                            <TextBlock FontSize="11" Text="{Binding Converter={StaticResource UserToPropertyConverter}, ConverterParameter=BirthDate}" FontStyle="Italic"/>
+                            <TextBlock FontSize="8" Text="{Binding Converter={converters:UserToPropertyConverter}, ConverterParameter=Id}"/>
+                            <TextBlock FontSize="14" Text="{Binding Converter={converters:UserToPropertyConverter}, ConverterParameter=FullName}"/>
+                            <TextBlock FontSize="11" Text="{Binding Converter={converters:UserToPropertyConverter}, ConverterParameter=BirthDate}" FontStyle="Italic"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

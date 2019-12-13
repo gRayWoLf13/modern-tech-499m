@@ -92,6 +92,8 @@
     <Compile Include="Commands\MainWindowViewModelCommands\UndoRedoMoveCommand.cs" />
     <Compile Include="Commands\PlayerSelectionViewModelCommands\UpdateUsersTableCommand.cs" />
     <Compile Include="Commands\UsersDatabaseViewModelCommands\UpdateUsersTableCommand.cs" />
+    <Compile Include="Converters\BaseConverter.cs" />
+    <Compile Include="Converters\BaseMultiConverter.cs" />
     <Compile Include="Converters\GameControllerToCommandParametersConverter.cs" />
     <Compile Include="Converters\UserToPropertyConverter.cs" />
     <Compile Include="Converters\WrappedGameInfoToPropertyConverter.cs" />

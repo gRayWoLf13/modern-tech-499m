@@ -7,9 +7,6 @@
         xmlns:converters="clr-namespace:modern_tech_499m.Converters"
         mc:Ignorable="d"
         Title="GameInfoSelectionWindow" Height="400" Width="500">
-    <Window.Resources>
-        <converters:WrappedGameInfoToPropertyConverter x:Key="WrappedGameInfoToPropertyConverter"></converters:WrappedGameInfoToPropertyConverter>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -27,10 +24,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" Margin="5">
-                            <TextBlock FontSize="08" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=Id}"/>
-                            <TextBlock FontSize="14" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=PlayerNames}" FontWeight="Bold"/>
-                            <TextBlock FontSize="11" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=GameFinished}" FontStyle="Italic"/>
-                            <TextBlock FontSize="15" Text="{Binding Converter={StaticResource WrappedGameInfoToPropertyConverter}, ConverterParameter=Score}" FontWeight="Bold"/>
+                            <TextBlock FontSize="08" Text="{Binding Converter={converters:WrappedGameInfoToPropertyConverter}, ConverterParameter=Id}"/>
+                            <TextBlock FontSize="14" Text="{Binding Converter={converters:WrappedGameInfoToPropertyConverter}, ConverterParameter=PlayerNames}" FontWeight="Bold"/>
+                            <TextBlock FontSize="11" Text="{Binding Converter={converters:WrappedGameInfoToPropertyConverter}, ConverterParameter=GameFinished}" FontStyle="Italic"/>
+                            <TextBlock FontSize="15" Text="{Binding Converter={converters:WrappedGameInfoToPropertyConverter}, ConverterParameter=Score}" FontWeight="Bold"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
