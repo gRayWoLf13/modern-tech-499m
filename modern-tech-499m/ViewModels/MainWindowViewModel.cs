@@ -2,6 +2,7 @@
 using modern_tech_499m.Commands.MainWindowViewModelCommands;
 using modern_tech_499m.Logic;
 using modern_tech_499m.Repositories.Core.Repositories;
+using modern_tech_499m.ViewModels.Base;
 using NLog;
 
 namespace modern_tech_499m.ViewModels

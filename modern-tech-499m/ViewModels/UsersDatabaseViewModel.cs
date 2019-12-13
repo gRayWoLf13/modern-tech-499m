@@ -5,6 +5,7 @@ using modern_tech_499m.Commands.UsersDatabaseViewModelCommands;
 using modern_tech_499m.Repositories.Core;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
+using modern_tech_499m.ViewModels.Base;
 using NLog;
 
 namespace modern_tech_499m.ViewModels

@@ -9,7 +9,12 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviours="clr-namespace:modern_tech_499m.Behaviours"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800">
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}"></WindowChrome>
+    </WindowChrome.WindowChrome>
+
     <i:Interaction.Behaviors>
         <behaviours:OpenCloseWindowBehavior WindowType="local:UsersDatabaseView" Open="{Binding UsersDatabaseViewOpen, Mode=TwoWay}"></behaviours:OpenCloseWindowBehavior>
     </i:Interaction.Behaviors>
