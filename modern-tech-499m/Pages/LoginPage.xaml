@@ -1,4 +1,4 @@
-﻿<Page x:Class="modern_tech_499m.Pages.LoginPage"
+﻿<local:BasePage x:Class="modern_tech_499m.Pages.LoginPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -38,10 +38,10 @@
                         <TextBox Tag="Username"/>
 
                         <!-- Password -->
-                        <TextBox Tag="Password" Margin="0 0 0 30"/>
+                        <PasswordBox Tag="Password" Margin="0 0 0 30"/>
 
                         <!-- Next button -->
-                        <Button Content="Next" HorizontalAlignment="Center"></Button>
+                        <Button Content="Next" HorizontalAlignment="Center" Click="ButtonBase_OnClick"></Button>
                     </StackPanel>
                 </Border>
 
@@ -50,4 +50,4 @@
             </StackPanel>
         </ScrollViewer>
     </Grid>
-</Page>
+</local:BasePage>

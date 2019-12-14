@@ -75,6 +75,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Animation\PageAnimation.cs" />
+    <Compile Include="Animation\PageAnimations.cs" />
+    <Compile Include="Animation\StoryboardHelpers.cs" />
+    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Behaviours\OpenCloseWindowBehavior.cs" />
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Commands\GameInfoSelectionViewModelCommands\UpdateGamesCommand.cs" />
@@ -95,11 +100,13 @@
     <Compile Include="Commands\UsersDatabaseViewModelCommands\UpdateUsersTableCommand.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BaseMultiConverter.cs" />
+    <Compile Include="Converters\AttachedPropertyValueConverter.cs" />
     <Compile Include="Converters\GameControllerToCommandParametersConverter.cs" />
     <Compile Include="Converters\PageValueConverter.cs" />
     <Compile Include="Converters\UserToPropertyConverter.cs" />
     <Compile Include="Converters\WrappedGameInfoToPropertyConverter.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
+    <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
