@@ -17,4 +17,28 @@
     <Color x:Key="ForegroundLight">#ffffff</Color>
     <SolidColorBrush x:Key="ForegroundLightBrush" Color="{StaticResource ForegroundLight}"/>
 
+    <Color x:Key="ForegroundDark">#bdbdbd</Color>
+    <SolidColorBrush x:Key="ForegroundDarkBrush" Color="{StaticResource ForegroundDark}"/>
+
+    <Color x:Key="ForegroundBlue">#3099c5</Color>
+    <SolidColorBrush x:Key="ForegroundBlueBrush" Color="{StaticResource ForegroundBlue}"/>
+
+    <Color x:Key="ForegroundOrange">#ff8800</Color>
+    <SolidColorBrush x:Key="ForegroundOrangeBrush" Color="{StaticResource ForegroundOrange}"/>
+
+    <Color x:Key="ForegroundRed">#ff4747</Color>
+    <SolidColorBrush x:Key="ForegroundRedBrush" Color="{StaticResource ForegroundRed}"/>
+
+    <Color x:Key="ForegroundGreen">#00c541</Color>
+    <SolidColorBrush x:Key="ForegroundGreenBrush" Color="{StaticResource ForegroundGreen}"/>
+
+    <Color x:Key="ForegroundPurple">#9932cc</Color>
+    <SolidColorBrush x:Key="ForegroundPurpleBrush" Color="{StaticResource ForegroundPurple}"/>
+
+    <Color x:Key="ForegroundTeal">#008080</Color>
+    <SolidColorBrush x:Key="ForegroundTealBrush" Color="{StaticResource ForegroundTeal}"/>
+    
+    <Color x:Key="ForegroundNavy">#000080</Color>
+    <SolidColorBrush x:Key="ForegroundNavyBrush" Color="{StaticResource ForegroundNavy}"/>
+
 </ResourceDictionary>

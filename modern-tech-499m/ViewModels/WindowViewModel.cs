@@ -42,10 +42,12 @@ namespace modern_tech_499m.ViewModels
         /// </summary>
         public double WindowMinimumHeight { get; set; } = 400;
 
+        public bool Borderless => _window.WindowState == WindowState.Maximized;
+
         /// <summary>
         /// The size of the resize border around the window
         /// </summary>
-        public int ResizeBorder { get; set; } = 6;
+        public int ResizeBorder => Borderless ? 0 : 6;
 
         /// <summary>
         /// The size of the resize border around the window taking into account outer margin
@@ -55,14 +57,14 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// The padding of the content of the main window
         /// </summary>
-        public Thickness InnerContentPadding => new Thickness(ResizeBorder);
+        public Thickness InnerContentPadding => new Thickness(0);
 
         /// <summary>
         /// The margin around the window to allow a drop shadow
         /// </summary>
         public int OuterMarginSize
         {
-            get => _window.WindowState == WindowState.Maximized ? 0 : _outerMarginSize;
+            get => Borderless ? 0 : _outerMarginSize;
             set => _outerMarginSize = value;
         }
 
@@ -76,7 +78,7 @@ namespace modern_tech_499m.ViewModels
         /// </summary>
         public int WindowRadius
         {
-            get => _window.WindowState == WindowState.Maximized ? 0 : _windowRadius;
+            get => Borderless ? 0 : _windowRadius;
             set => _windowRadius = value;
         }
 
@@ -91,6 +93,11 @@ namespace modern_tech_499m.ViewModels
         public int TitleHeight { get; set; } = 42;
 
         public GridLength TitleHeightGridLength => new GridLength(TitleHeight + ResizeBorder);
+
+        /// <summary>
+        /// The current page of the application
+        /// </summary>
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
         #endregion
 
         #region Commands

@@ -96,8 +96,13 @@
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BaseMultiConverter.cs" />
     <Compile Include="Converters\GameControllerToCommandParametersConverter.cs" />
+    <Compile Include="Converters\PageValueConverter.cs" />
     <Compile Include="Converters\UserToPropertyConverter.cs" />
     <Compile Include="Converters\WrappedGameInfoToPropertyConverter.cs" />
+    <Compile Include="DataModels\ApplicationPage.cs" />
+    <Compile Include="Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services.cs" />
     <Compile Include="ViewModels\AddUserViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
@@ -123,6 +128,10 @@
       <DependentUpon>UsersDatabaseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowResizer.cs" />
+    <Page Include="Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -203,6 +212,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="Images\Logo\logo-small.png" />
+    <Resource Include="Images\Backgrounds\emoji-background.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
