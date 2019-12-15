@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:modern_tech_499m.Views"
         xmlns:converters ="clr-namespace:modern_tech_499m.Converters"
-        xmlns:controld="clr-namespace:modern_tech_499m.UserControls"
+        xmlns:control="clr-namespace:modern_tech_499m.UserControls"
+        xmlns:viewmodels="clr-namespace:modern_tech_499m.ViewModels"
+        xmlns:attachedProperties="clr-namespace:modern_tech_499m.AttachedProperties"
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
@@ -20,7 +22,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
                         <!-- Outer border with the dropshadow margin-->
-                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                        <Border Margin="{Binding OuterMarginSizeThickness, FallbackValue=10}">
                             <!-- Main window outline -->
                             <Grid>
 
@@ -90,7 +92,9 @@
                                     </Grid>
 
                                     <!-- Page content -->
-                                    <Border Grid.Row="1" Padding="{Binding InnerContentPadding}" Background="{StaticResource ForegroundPurpleBrush}">
+                                    <Border Grid.Row="1" Padding="{Binding InnerContentPadding}"
+                                            Background="{StaticResource ForegroundPurpleBrush}"
+                                            ClipToBounds="True">
                                         <Border>
                                             <Border.Background>
                                                 <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="../Images/Backgrounds/emoji-background.png"></ImageBrush>
@@ -117,13 +121,19 @@
     </WindowChrome.WindowChrome>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <controld:SideMenuContol>
+        <control:SideMenuContol Width="300" attachedProperties:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible,
+            Source={x:Static viewmodels:ViewModelLocator.Instance}}">
             <Button>hhhhhey!</Button>
-        </controld:SideMenuContol>
-        <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={converters:PageValueConverter}}"></Frame>
+        </control:SideMenuContol>
+        <Frame Grid.Column="1"
+               x:Name="MainFrame"
+               Content="{Binding ApplicationViewModel.CurrentPage, 
+                        Source={x:Static viewmodels:ViewModelLocator.Instance}, 
+                        Converter={converters:PageValueConverter}}"
+               Background="Transparent"/>
     </Grid>
 </Window>

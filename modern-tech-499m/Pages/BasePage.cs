@@ -15,7 +15,7 @@ namespace modern_tech_499m.Pages
     /// Base page for all pages gain base functionality
     /// </summary>
     public class BasePage<TViewModel> : Page
-    where TViewModel : BaseViewModel, new()
+    where TViewModel : BaseViewModel
     {
         #region Private member
 

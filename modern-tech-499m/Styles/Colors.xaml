@@ -41,6 +41,9 @@
     <Color x:Key="ForegroundLightPurple">#b558e4</Color>
     <SolidColorBrush x:Key="ForegroundLightPurpleBrush" Color="{StaticResource ForegroundLightPurple}"/>
 
+    <Color x:Key="ForegroundVeryLightPurple">#f0cef7</Color>
+    <SolidColorBrush x:Key="ForegroundVeryLightPurpleBrush" Color="{StaticResource ForegroundVeryLightPurple}"/>
+
     <Color x:Key="ForegroundTeal">#008080</Color>
     <SolidColorBrush x:Key="ForegroundTealBrush" Color="{StaticResource ForegroundTeal}"/>
     

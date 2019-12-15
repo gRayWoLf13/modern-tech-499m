@@ -46,6 +46,11 @@ namespace modern_tech_499m.ViewModels
         /// </summary>
         public ICommand LoginCommand { get; set; }
 
+        /// <summary>
+        /// The command to register for a new user
+        /// </summary>
+        public ICommand RegisterCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -57,6 +62,7 @@ namespace modern_tech_499m.ViewModels
         {
             //Create commands
             LoginCommand = new RelayParameterizedCommand( async parameter => await Login(parameter));
+            RegisterCommand = new RelayCommand(async () => await RegisterAsync());
         }
 
         #endregion
@@ -75,6 +81,18 @@ namespace modern_tech_499m.ViewModels
                 var username = Username;
                 var value = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
+        }
+
+        /// <summary>
+        /// Takes the user to the register page
+        /// </summary>
+        /// <returns></returns>
+        public async Task RegisterAsync()
+        {
+            // Go to register page
+           BootStrapper.Resolve<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
+
+            await Task.Delay(1);
         }
     }
 }

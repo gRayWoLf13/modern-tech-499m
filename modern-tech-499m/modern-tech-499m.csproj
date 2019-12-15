@@ -82,9 +82,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animation\PageAnimation.cs" />
+    <Compile Include="Animation\FrameworkElementAnimations.cs" />
     <Compile Include="Animation\PageAnimations.cs" />
     <Compile Include="Animation\StoryboardHelpers.cs" />
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\FrameworkElementAttachedProperties.cs" />
     <Compile Include="AttachedProperties\IsBusyProperty.cs" />
     <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Behaviours\OpenCloseWindowBehavior.cs" />
@@ -109,33 +111,54 @@
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BaseMultiConverter.cs" />
     <Compile Include="Converters\AttachedPropertyValueConverter.cs" />
+    <Compile Include="Converters\FirstBoolValueToTwoValuesConverter.cs" />
     <Compile Include="Converters\GameControllerToCommandParametersConverter.cs" />
+    <Compile Include="Converters\IoCConverter.cs" />
     <Compile Include="Converters\PageValueConverter.cs" />
     <Compile Include="Converters\UserToPropertyConverter.cs" />
     <Compile Include="Converters\WrappedGameInfoToPropertyConverter.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
     <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Pages\GameInfoSelectionPage.xaml.cs">
+      <DependentUpon>GameInfoSelectionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RegisterPage.xaml.cs">
+      <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Security\SecureStringHelpers.cs" />
     <Compile Include="Services.cs" />
+    <Compile Include="UserControls\GameInfoListControl.xaml.cs">
+      <DependentUpon>GameInfoListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\GameInfoListItemControl.xaml.cs">
+      <DependentUpon>GameInfoListItemControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SideMenuContol.xaml.cs">
       <DependentUpon>SideMenuContol.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AddUserViewModel.cs" />
+    <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\IHavePassword.cs" />
+    <Compile Include="ViewModels\Design\GameInfoListDesignModel.cs" />
+    <Compile Include="ViewModels\Design\GameInfoListItemDesignModel.cs" />
+    <Compile Include="ViewModels\GameInfoListItemViewModel.cs" />
+    <Compile Include="ViewModels\GameInfoListViewModel.cs" />
+    <Compile Include="ViewModels\GameInfoSelectionPageViewModel.cs" />
     <Compile Include="ViewModels\GameInfoSelectionViewModel.cs" />
     <Compile Include="ViewModels\IEntitySelectionViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PlayerSelectionViewModel.cs" />
     <Compile Include="ViewModels\UsersDatabaseViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Views\AddUserView.xaml.cs">
       <DependentUpon>AddUserView.xaml</DependentUpon>
@@ -153,9 +176,17 @@
       <DependentUpon>UsersDatabaseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowResizer.cs" />
+    <Page Include="Pages\GameInfoSelectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\GamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RegisterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
@@ -174,6 +205,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Text.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\GameInfoListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\GameInfoListItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

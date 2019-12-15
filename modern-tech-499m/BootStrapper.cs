@@ -34,6 +34,10 @@ namespace modern_tech_499m
             builder.RegisterType<GameInfoSelectionViewModel>().As<IEntitySelectionViewModel<GameInfo>>();
 
             builder.RegisterType<LoginViewModel>().AsSelf();
+            builder.RegisterType<GameInfoSelectionPageViewModel>().AsSelf();
+
+
+            builder.RegisterType<ApplicationViewModel>().SingleInstance();
 
 
             _rootScope = builder.Build();

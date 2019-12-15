@@ -1,4 +1,4 @@
-﻿<local:BasePage x:Class="modern_tech_499m.Pages.LoginPage"
+﻿<local:BasePage x:Class="modern_tech_499m.Pages.RegisterPage"
                 x:TypeArguments="viewmodels:LoginViewModel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -28,7 +28,7 @@
                     <StackPanel>
 
                         <!-- Signup header -->
-                        <TextBlock Text="Sign in" FontSize="{StaticResource FontSizeLarge}"
+                        <TextBlock Text="Sign up" FontSize="{StaticResource FontSizeLarge}"
                                    FontFamily="{StaticResource LatoRegular}"
                                    Foreground="{StaticResource ForegroundPurpleBrush}"/>
 
@@ -46,7 +46,7 @@
 
                         <!-- Next button -->
                         <Button
-                            Content="Login"
+                            Content="Register"
                             mainNamespace:IsBusyProperty.Value="{Binding LoginIsRunning}"
                             HorizontalAlignment="Center"
                             Command="{Binding LoginCommand}"
@@ -55,7 +55,7 @@
                 </Border>
 
                 <Button Style="{StaticResource TextButton}"
-                        Content="Create new account"
+                        Content="I already have an account"
                         HorizontalAlignment="Center"
                         Command="{Binding RegisterCommand}"></Button>
 

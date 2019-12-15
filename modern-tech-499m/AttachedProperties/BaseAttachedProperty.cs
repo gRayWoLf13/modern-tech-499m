@@ -18,6 +18,11 @@ namespace modern_tech_499m
         /// </summary>
         public event Action<DependencyObject, DependencyPropertyChangedEventArgs> ValueChanged = (sender, e) => { };
 
+        /// <summary>
+        /// Fired when the value changes, even when the value is the same
+        /// </summary>
+        public event Action<DependencyObject, object> ValueUpdated = (sender, value) => { };
+
         #endregion
 
         #region Public properties
@@ -34,7 +39,15 @@ namespace modern_tech_499m
         /// <summary>
         /// The attached property for this class
         /// </summary>
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached("Value", typeof(TProperty), typeof(BaseAttachedProperty<TParent, TProperty>), new PropertyMetadata(OnValuePropertyChanged));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached(
+            "Value",
+            typeof(TProperty),
+            typeof(BaseAttachedProperty<TParent, TProperty>),
+            new UIPropertyMetadata(
+                default(TProperty),
+                new PropertyChangedCallback(OnValuePropertyChanged),
+                new CoerceValueCallback(OnValuePropertyUpdated))
+        );
 
         /// <summary>
         /// The callback event when the <see cref="ValueProperty"/> is changed
@@ -48,6 +61,22 @@ namespace modern_tech_499m
 
             //Call event listeners
             Instance.ValueChanged(d, e);
+        }
+
+        /// <summary>
+        /// The callback event when the <see cref="ValueProperty"/> is changed
+        /// </summary>
+        /// <param name="d">The UI element that had it's property changed</param>
+        /// <param name="e">The argument for the event</param>
+        private static object OnValuePropertyUpdated(DependencyObject d, object value)
+        {
+            //Call the parent function
+            Instance.OnValueUpdated(d, value); 
+
+            //Call event listeners
+            Instance.ValueUpdated(d, value);
+
+            return value;
         }
 
         /// <summary>
@@ -74,6 +103,13 @@ namespace modern_tech_499m
         /// <param name="sender">The UI element that this property was changed for</param>
         /// <param name="e">The arguments for this event</param>
         public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) { }
+
+        /// <summary>
+        /// The method that is called when any attached property of this type changed, even when the value is the same
+        /// </summary>
+        /// <param name="sender">The UI element that this property was changed for</param>
+        /// <param name="e">The arguments for this event</param>
+        public virtual void OnValueUpdated(DependencyObject sender, object value) { }
 
         #endregion
     }

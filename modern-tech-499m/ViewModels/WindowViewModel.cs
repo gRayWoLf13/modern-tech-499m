@@ -93,11 +93,6 @@ namespace modern_tech_499m.ViewModels
         public int TitleHeight { get; set; } = 42;
 
         public GridLength TitleHeightGridLength => new GridLength(TitleHeight + ResizeBorder);
-
-        /// <summary>
-        /// The current page of the application
-        /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Game;
         #endregion
 
         #region Commands

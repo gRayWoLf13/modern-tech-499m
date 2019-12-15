@@ -35,6 +35,6 @@
         </ScrollViewer>
         <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom">Current game id:</TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding SelectedEntity.Id}"></TextBlock>
-        <Button Grid.Row="0" Grid.Column="2" Margin="5" Command="{Binding UpdateGamesCommand}">Update games</Button>
+        <Button Style="{x:Null}" Grid.Row="0" Grid.Column="2" Margin="5" Command="{Binding UpdateGamesCommand}">Update games</Button>
     </Grid>
 </Window>
