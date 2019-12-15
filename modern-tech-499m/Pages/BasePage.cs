@@ -7,14 +7,25 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using modern_tech_499m.Animation;
+using modern_tech_499m.ViewModels.Base;
 
 namespace modern_tech_499m.Pages
 {
     /// <summary>
     /// Base page for all pages gain base functionality
     /// </summary>
-    public class BasePage : Page
+    public class BasePage<TViewModel> : Page
+    where TViewModel : BaseViewModel, new()
     {
+        #region Private member
+
+        /// <summary>
+        /// The viewmodel associated with the page
+        /// </summary>
+        private TViewModel _viewModel;
+
+        #endregion
+
         #region Public properties
 
         /// <summary>
@@ -32,6 +43,26 @@ namespace modern_tech_499m.Pages
         /// </summary>
         public double SlideSeconds { get; set; } = 0.8;
 
+        /// <summary>
+        /// ViewModel associated with the page
+        /// </summary>
+        public TViewModel ViewModel
+        {
+            get => _viewModel;
+            set
+            {
+                //If nothing was changed, return
+                if (_viewModel == value)
+                    return;
+
+                //Update the value
+                _viewModel = value;
+
+                //Set the data context
+                DataContext = _viewModel;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -44,6 +75,9 @@ namespace modern_tech_499m.Pages
 
             //Listen out for the page loading
              Loaded += BasePage_Loaded;
+
+             //Resolve preregistered generic viewmodel from bootstrapper
+             ViewModel = BootStrapper.Resolve<TViewModel>();
         }
 
         #endregion

@@ -33,6 +33,9 @@ namespace modern_tech_499m
             builder.RegisterType<PlayerSelectionViewModel>().As<IEntitySelectionViewModel<IPlayer>>();
             builder.RegisterType<GameInfoSelectionViewModel>().As<IEntitySelectionViewModel<GameInfo>>();
 
+            builder.RegisterType<LoginViewModel>().AsSelf();
+
+
             _rootScope = builder.Build();
             _logger.Debug("Bootsrapper started");
         }
