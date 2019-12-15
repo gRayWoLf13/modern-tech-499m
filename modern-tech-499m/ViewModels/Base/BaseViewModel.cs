@@ -7,7 +7,6 @@ using PropertyChanged;
 
 namespace modern_tech_499m.ViewModels.Base
 {
-    //[AddINotifyPropertyChangedInterface]
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged implementation

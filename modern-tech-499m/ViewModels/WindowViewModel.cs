@@ -36,11 +36,11 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// Minimum width of the window
         /// </summary>
-        public double WindowMinimumWidth { get; set; } = 400;
+        public double WindowMinimumWidth { get; set; } = 800;
         /// <summary>
         /// Minimum height of the window
         /// </summary>
-        public double WindowMinimumHeight { get; set; } = 400;
+        public double WindowMinimumHeight { get; set; } = 500;
 
         public bool Borderless => _window.WindowState == WindowState.Maximized;
 
@@ -97,7 +97,7 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Game;
         #endregion
 
         #region Commands

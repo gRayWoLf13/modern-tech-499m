@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:modern_tech_499m.Views"
         xmlns:converters ="clr-namespace:modern_tech_499m.Converters"
+        xmlns:controld="clr-namespace:modern_tech_499m.UserControls"
         WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
@@ -115,6 +116,14 @@
         />
     </WindowChrome.WindowChrome>
     <Grid>
-        <Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={converters:PageValueConverter}}"></Frame>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <controld:SideMenuContol>
+            <Button>hhhhhey!</Button>
+        </controld:SideMenuContol>
+        <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={converters:PageValueConverter}}"></Frame>
     </Grid>
 </Window>

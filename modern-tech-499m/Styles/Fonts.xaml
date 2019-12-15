@@ -24,5 +24,10 @@
     <system:Double x:Key="FontSizeRegular">20</system:Double>
     <system:Double x:Key="FontSizeSmall">14</system:Double>
     <system:Double x:Key="FontSizeLarge">30</system:Double>
+
+    <system:String x:Key="FontAwesomeUsersDatabaseIcon">&#xf0c0;</system:String>
+    <system:String x:Key="FontAwesomeGamesDatabaseIcon">&#xf11b;</system:String>
+    <system:String x:Key="FontAwesomeSettingsIcon">&#xf185;</system:String>
+    <system:String x:Key="FontAwesomeSpinningIcon">&#xf110;</system:String>
     
 </ResourceDictionary>

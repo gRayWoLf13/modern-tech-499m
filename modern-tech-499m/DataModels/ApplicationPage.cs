@@ -8,6 +8,11 @@
         /// <summary>
         /// Login page
         /// </summary>
-        Login = 0
+        Login = 0,
+
+        /// <summary>
+        /// Main game page
+        /// </summary>
+        Game
     }
 }

@@ -14,6 +14,9 @@ namespace modern_tech_499m.Converters
                 case ApplicationPage.Login:
                     return new LoginPage();
 
+                case ApplicationPage.Game:
+                    return new GamePage();
+
                 default:
                     Debugger.Break();
                     return null;
