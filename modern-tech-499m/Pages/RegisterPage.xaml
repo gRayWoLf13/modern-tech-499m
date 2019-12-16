@@ -28,7 +28,7 @@
                     <StackPanel>
 
                         <!-- Signup header -->
-                        <TextBlock Text="Sign up" FontSize="{StaticResource FontSizeLarge}"
+                        <TextBlock Text="Sign up" FontSize="{StaticResource FontSizeXXLarge}"
                                    FontFamily="{StaticResource LatoRegular}"
                                    Foreground="{StaticResource ForegroundPurpleBrush}"/>
 

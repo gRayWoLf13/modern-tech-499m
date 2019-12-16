@@ -38,7 +38,7 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="2*"/>
                                         </Grid.RowDefinitions>
-                                        <Viewbox
+                                        <Grid
                                             Grid.Row="0"
                                             Grid.Column="0"
                                             HorizontalAlignment="Left"
@@ -47,8 +47,8 @@
 
                                             <!-- Game score circle -->
                                             <Border
-                                                CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                        >
+                                                MinWidth="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                                CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
                                                 <Border.Background>
                                                     <MultiBinding Converter="{converter:FirstBoolValueToTwoValuesConverter}">
                                                         <Binding ElementName="Control" Path="DataContext.WasGameFinished"
@@ -61,10 +61,10 @@
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"
                                                    Foreground="{StaticResource BackgroundLightBrush}"
-                                                   FontSize="100"
+                                                   FontSize="{StaticResource FontSizeRegular}"
                                                    FontFamily="{StaticResource LatoBold}"></TextBlock>
                                             </Border>
-                                        </Viewbox>
+                                        </Grid>
 
                                         <!-- Game type picture background -->
                                         <Border
@@ -79,7 +79,7 @@
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        Foreground="{StaticResource ForegroundLightBrush}"
-                                                       FontSize="{StaticResource FontSizeAverage}"
+                                                       FontSize="{StaticResource FontSizeXLarge}"
                                                        FontFamily="{StaticResource LatoRegular}"/>
                                         </Border>
 
@@ -92,12 +92,12 @@
                            TextTrimming="CharacterEllipsis"
                            FontFamily="{StaticResource LatoThin}"
                            Foreground="{StaticResource ForegroundPurpleBrush}"
-                           FontSize="{StaticResource FontSizeRegular}"/>
+                           FontSize="{StaticResource FontSizeLarge}"/>
                                     <TextBlock Text="{Binding Player2Name}"
                            TextTrimming="CharacterEllipsis"
                            FontFamily="{StaticResource LatoThin}"
                            Foreground="{StaticResource ForegroundPurpleBrush}"
-                           FontSize="{StaticResource FontSizeRegular}"/>
+                           FontSize="{StaticResource FontSizeLarge}"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

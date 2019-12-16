@@ -46,7 +46,7 @@ namespace modern_tech_499m.ViewModels
                 new GameInfoListItemViewModel()
                 {
                     GameType = "UvU",
-                    GameScore = -8,
+                    GameScore = -80,
                     WasGameFinished = false,
                     Player1Name = "First winner",
                     Player2Name = "Second loser",

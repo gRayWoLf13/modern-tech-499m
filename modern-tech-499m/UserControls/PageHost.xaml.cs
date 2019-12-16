@@ -43,7 +43,6 @@ namespace modern_tech_499m.UserControls
         public PageHost()
         {
             InitializeComponent();
-           // CurrentPage = new LoginPage();
         }
 
         #region Property changed events

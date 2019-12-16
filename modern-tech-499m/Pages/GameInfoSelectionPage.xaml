@@ -22,7 +22,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Style="{StaticResource HeaderText}"
                        Foreground="{StaticResource ForegroundTealBrush}"
-                       FontSize="{StaticResource FontSizeLarge}"
+                       FontSize="{StaticResource FontSizeXXLarge}"
                        FontFamily="{StaticResource LatoBoldItalic}"
                        Text="Saved games list:"></TextBlock>
 

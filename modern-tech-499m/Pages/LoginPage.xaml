@@ -28,14 +28,14 @@
                     <StackPanel>
 
                         <!-- Signup header -->
-                        <TextBlock Text="Sign in" FontSize="{StaticResource FontSizeLarge}"
+                        <TextBlock Text="Sign in" FontSize="{StaticResource FontSizeXXLarge}"
                                    FontFamily="{StaticResource LatoRegular}"
                                    Foreground="{StaticResource ForegroundPurpleBrush}"/>
 
                         <!-- Signup subtext -->
                         <TextBlock Text="Here the game begins"
                                    Foreground="{StaticResource ForegroundDarkBrush}"
-                                   FontSize="{StaticResource FontSizeRegular}"
+                                   FontSize="{StaticResource FontSizeLarge}"
                                    Margin="0 0 0 20"/>
 
                         <!-- Username -->
