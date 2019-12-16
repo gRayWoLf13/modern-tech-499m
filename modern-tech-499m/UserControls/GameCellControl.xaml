@@ -23,7 +23,9 @@
                                 CornerRadius="30"
                                 MinWidth="40"
                                 MinHeight="40"
-                                Background="{StaticResource ForegroundLightBrush}">
+                                Background="{StaticResource ForegroundLightTealBrush}"
+                                BorderThickness="2"
+                                BorderBrush="{StaticResource ForegroundVeryDarkBrush}">
 
                             <!-- Cell value text -->
                             <Viewbox>
@@ -33,7 +35,7 @@
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
                                            Foreground="{StaticResource ForegroundPurpleBrush}"
-                                           FontSize="{StaticResource FontSizeXXXLarge}"
+                                           FontSize="{StaticResource FontSizeXLarge}"
                                            FontFamily="{StaticResource LatoBold}">
 
                                     <!-- Text render transform to do the text change visual event -->
@@ -95,7 +97,7 @@
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="buttonShadowEffect" Storyboard.TargetProperty="Opacity" Duration="0:0:1" To="0" AutoReverse="False"/>
-                                            <ColorAnimation To="{StaticResource ForegroundLight}" Duration="0:0:1" Storyboard.TargetName="background" Storyboard.TargetProperty="Background.Color"/>
+                                            <ColorAnimation To="{StaticResource ForegroundLightTeal}" Duration="0:0:1" Storyboard.TargetName="background" Storyboard.TargetProperty="Background.Color"/>
                                             <ColorAnimation To="{StaticResource ForegroundPurple}" Duration="0:0:1" Storyboard.TargetName="foreground" Storyboard.TargetProperty="Foreground.Color"/>
                                         </Storyboard>
                                     </BeginStoryboard>

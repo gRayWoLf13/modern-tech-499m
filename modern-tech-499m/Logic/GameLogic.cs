@@ -8,7 +8,7 @@ using NLog;
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("modern_tech_499m.Tests")]
 namespace modern_tech_499m.Logic
 {
-    internal class GameLogic : ICloneable
+    public class GameLogic : ICloneable
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public readonly int CellsCount;
@@ -367,16 +367,16 @@ namespace modern_tech_499m.Logic
             {
                 if (value == 0)
                     break;
-                if (cell.Owner != player && cell.IsEndingCell)
+                if (!cell.Owner.Equals(player) && cell.IsEndingCell)
                     continue;
-                if (!passedEnemyCell && cell.Owner != player && !cell.IsEndingCell)
+                if (!passedEnemyCell && !cell.Owner.Equals(player) && !cell.IsEndingCell)
                     passedEnemyCell = true;
                 lastCell = cell;
                 cell.Value++;
                 value--;
             }
-            bool endedOnPlayerCell = lastCell.Owner == player && !lastCell.IsEndingCell;
-            bool endedOnEnemyCell = lastCell.Owner != player && !lastCell.IsEndingCell;
+            bool endedOnPlayerCell = lastCell.Owner.Equals(player) && !lastCell.IsEndingCell;
+            bool endedOnEnemyCell = !lastCell.Owner.Equals(player) && !lastCell.IsEndingCell;
             if (passedEnemyCell && endedOnPlayerCell && lastCell.Value > 1)
                 return (MoveResult.ContinuousMove, lastCell.Number);
             if (endedOnEnemyCell && _availableValuesToStealEnemyPoints.Contains(lastCell.Value))

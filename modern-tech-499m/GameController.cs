@@ -8,7 +8,7 @@ using NLog;
 
 namespace modern_tech_499m
 {
-    class GameController : INotifyPropertyChanged
+    public class GameController : INotifyPropertyChanged
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public GameLogic GameLogic { get; private set; }

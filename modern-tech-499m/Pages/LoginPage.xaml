@@ -47,6 +47,7 @@
                         <!-- Next button -->
                         <Button
                             Content="Login"
+                            IsDefault="True"
                             mainNamespace:IsBusyProperty.Value="{Binding LoginIsRunning}"
                             HorizontalAlignment="Center"
                             Command="{Binding LoginCommand}"

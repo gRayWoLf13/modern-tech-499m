@@ -24,7 +24,11 @@ namespace modern_tech_499m.Commands
         /// <summary>
         /// The event fired when the <see cref="CanExecute(object)"/> value has changed
         /// </summary>
-        public event EventHandler CanExecuteChanged = (sender, e) => { };
+        public event EventHandler CanExecuteChanged
+        {
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
+        }
 
         #endregion
 

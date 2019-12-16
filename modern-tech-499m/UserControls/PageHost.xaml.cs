@@ -69,7 +69,17 @@ namespace modern_tech_499m.UserControls
 
             //Animate out previous page(not awaiting for it) when the loaded event fires right after this call due to moving frames
             if (oldPageContent is BasePage oldPage)
+            {
+                //Tell the page to animate out
                 oldPage.ShouldAnimateOut = true;
+
+                //Once t's done, remove it
+                Task.Delay(TimeSpan.FromSeconds(oldPage.SlideSeconds)).ContinueWith(t =>
+                {
+                    //Remove old page
+                    Application.Current.Dispatcher.Invoke(() => oldPageFrame.Content = null);
+                });
+            }
 
             //Set the new page content
             newPageFrame.Content = e.NewValue;
