@@ -1,5 +1,5 @@
 ﻿<local:BasePage x:Class="modern_tech_499m.Pages.RegisterPage"
-                x:TypeArguments="viewmodels:LoginViewModel"
+                x:TypeArguments="viewmodels:RegisterViewModel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -47,9 +47,9 @@
                         <!-- Next button -->
                         <Button
                             Content="Register"
-                            mainNamespace:IsBusyProperty.Value="{Binding LoginIsRunning}"
+                            mainNamespace:IsBusyProperty.Value="{Binding RegisterIsRunning}"
                             HorizontalAlignment="Center"
-                            Command="{Binding LoginCommand}"
+                            Command="{Binding RegisterCommand}"
                             CommandParameter="{Binding ElementName=Page}"/>
                     </StackPanel>
                 </Border>
@@ -57,7 +57,7 @@
                 <Button Style="{StaticResource TextButton}"
                         Content="I already have an account"
                         HorizontalAlignment="Center"
-                        Command="{Binding RegisterCommand}"></Button>
+                        Command="{Binding LoginCommand}"></Button>
 
             </StackPanel>
         </ScrollViewer>

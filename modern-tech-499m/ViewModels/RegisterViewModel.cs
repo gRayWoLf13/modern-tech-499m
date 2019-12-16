@@ -11,7 +11,7 @@ using modern_tech_499m.ViewModels.Base;
 
 namespace modern_tech_499m.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    public class RegisterViewModel : BaseViewModel
     {
         #region Private members
 
@@ -28,9 +28,9 @@ namespace modern_tech_499m.ViewModels
         public string Username { get; set; }
 
         /// <summary>
-        /// A flag indicating if login command is running
+        /// A flag indicating if register command is running
         /// </summary>
-        public bool LoginIsRunning { get; set; }
+        public bool RegisterIsRunning { get; set; }
 
         /// <summary>
         /// The password of the user
@@ -58,42 +58,37 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// Default constructor
         /// </summary>
-        public LoginViewModel()
+        public RegisterViewModel()
         {
             //Create commands
-            LoginCommand = new RelayParameterizedCommand( async parameter => await Login(parameter));
-            RegisterCommand = new RelayCommand(async () => await RegisterAsync());
+            RegisterCommand = new RelayParameterizedCommand( async parameter => await Register(parameter));
+            LoginCommand = new RelayCommand(async () => await LoginAsync());
         }
 
         #endregion
 
         /// <summary>
-        /// Attempts to log the user in
+        /// Attempts to register a new user
         /// </summary>
         /// <param name="parameter">The secure string passed in from the view</param>
         /// <returns></returns>
-        public async Task Login(object parameter)
+        public async Task Register(object parameter)
         {
-            await RunCommand(() => LoginIsRunning, async () =>
+            await RunCommand(() => RegisterIsRunning, async () =>
             {
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                await Task.Delay(TimeSpan.FromSeconds(5));
 
-                //Go to game info selection page
-                BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.GameInfoSelection);
-
-                //var username = Username;
-                //var value = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
         }
 
         /// <summary>
-        /// Takes the user to the register page
+        /// Takes the user to the login page
         /// </summary>
         /// <returns></returns>
-        public async Task RegisterAsync()
+        public async Task LoginAsync()
         {
             // Go to register page
-            BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
+            BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Login);
 
             await Task.Delay(1);
         }

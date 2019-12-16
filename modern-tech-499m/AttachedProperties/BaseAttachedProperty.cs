@@ -9,7 +9,7 @@ namespace modern_tech_499m
     /// <typeparam name="TParent"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
     public abstract class BaseAttachedProperty<TParent, TProperty>
-    where TParent : BaseAttachedProperty<TParent, TProperty>, new()
+    where TParent : new()
     {
         #region Public events
 
@@ -57,10 +57,10 @@ namespace modern_tech_499m
         private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //Call the parent function
-            Instance.OnValueChanged(d, e);
+            (Instance as BaseAttachedProperty<TParent, TProperty>)?.OnValueChanged(d, e);
 
             //Call event listeners
-            Instance.ValueChanged(d, e);
+            (Instance as BaseAttachedProperty<TParent, TProperty>)?.ValueChanged(d, e);
         }
 
         /// <summary>
@@ -71,10 +71,10 @@ namespace modern_tech_499m
         private static object OnValuePropertyUpdated(DependencyObject d, object value)
         {
             //Call the parent function
-            Instance.OnValueUpdated(d, value); 
+            (Instance as BaseAttachedProperty<TParent, TProperty>)?.OnValueUpdated(d, value); 
 
             //Call event listeners
-            Instance.ValueUpdated(d, value);
+            (Instance as BaseAttachedProperty<TParent, TProperty>)?.ValueUpdated(d, value);
 
             return value;
         }

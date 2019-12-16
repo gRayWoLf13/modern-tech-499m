@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using modern_tech_499m.Animation;
 
-namespace modern_tech_499m.AttachedProperties
+namespace modern_tech_499m
 {
     /// <summary>
     /// A base class to run any animation method when a boolean is set to true

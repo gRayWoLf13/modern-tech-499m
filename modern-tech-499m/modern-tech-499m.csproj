@@ -87,6 +87,7 @@
     <Compile Include="Animation\StoryboardHelpers.cs" />
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
     <Compile Include="AttachedProperties\FrameworkElementAttachedProperties.cs" />
+    <Compile Include="AttachedProperties\NoFrameHistoryAttachedProperty.cs" />
     <Compile Include="AttachedProperties\IsBusyProperty.cs" />
     <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
     <Compile Include="Behaviours\OpenCloseWindowBehavior.cs" />
@@ -140,6 +141,9 @@
     <Compile Include="UserControls\GameInfoListItemControl.xaml.cs">
       <DependentUpon>GameInfoListItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PageHost.xaml.cs">
+      <DependentUpon>PageHost.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SideMenuContol.xaml.cs">
       <DependentUpon>SideMenuContol.xaml</DependentUpon>
     </Compile>
@@ -154,6 +158,7 @@
     <Compile Include="ViewModels\GameInfoSelectionPageViewModel.cs" />
     <Compile Include="ViewModels\GameInfoSelectionViewModel.cs" />
     <Compile Include="ViewModels\IEntitySelectionViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PlayerSelectionViewModel.cs" />
@@ -213,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\GameInfoListItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PageHost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

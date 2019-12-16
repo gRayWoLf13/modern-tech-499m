@@ -14,20 +14,10 @@ namespace modern_tech_499m.Pages
     /// <summary>
     /// Base page for all pages gain base functionality
     /// </summary>
-    public class BasePage<TViewModel> : Page
-    where TViewModel : BaseViewModel
+    public class BasePage : Page
     {
-        #region Private member
-
-        /// <summary>
-        /// The viewmodel associated with the page
-        /// </summary>
-        private TViewModel _viewModel;
-
-        #endregion
 
         #region Public properties
-
         /// <summary>
         /// The animation to play when the page is first loaded
         /// </summary>
@@ -42,6 +32,105 @@ namespace modern_tech_499m.Pages
         /// The time any slide animation takes
         /// </summary>
         public double SlideSeconds { get; set; } = 0.8;
+
+        /// <summary>
+        /// A flag to indicate if this page should animate out on load
+        /// useful for when we are moving the page to another frame
+        /// </summary>
+        public bool ShouldAnimateOut { get; set; }
+        #endregion
+
+        #region Constructor
+
+        public BasePage()
+        {
+            //If we are animation in, hide to begin with
+            if (PageLoadAnimation != PageAnimation.None)
+                Visibility = Visibility.Collapsed;
+
+            //Listen out for the page loading
+            Loaded += BasePage_Loaded;
+        }
+
+        #endregion
+
+        #region Animation load/unload
+
+        /// <summary>
+        /// Once the page is loaded, perform any required animation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BasePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            //If we are setup to animate out on load
+            if (ShouldAnimateOut)
+                //Animate out
+                await AnimateOut();
+            //Otherwise...
+            else
+                //Animate the page in
+                await AnimateIn();
+
+        }
+
+        /// <summary>
+        /// Animations in this page
+        /// </summary>
+        public async Task AnimateIn()
+        {
+            if (PageLoadAnimation == PageAnimation.None)
+                return;
+
+            switch (PageLoadAnimation)
+            {
+                case PageAnimation.SlideAndFadeInFromRight:
+
+                    //Start the animation
+                    await this.SlideAndFadeInFromRight(SlideSeconds);
+
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Animates the page out
+        /// </summary>
+        public async Task AnimateOut()
+        {
+            if (PageUnloadAnimation == PageAnimation.None)
+                return;
+
+            switch (PageUnloadAnimation)
+            {
+                case PageAnimation.SlideAndFadeOutToLeft:
+
+                    //Start the animation
+                    await this.SlideAndFadeOutToLeft(SlideSeconds);
+
+                    break;
+            }
+        }
+        #endregion
+    }
+
+    /// <summary>
+    /// A base page with added viewmodel support
+    /// </summary>
+    /// <typeparam name="TViewModel"></typeparam>
+    public class BasePage<TViewModel> : BasePage
+    where TViewModel : BaseViewModel
+    {
+        #region Private member
+
+        /// <summary>
+        /// The viewmodel associated with the page
+        /// </summary>
+        private TViewModel _viewModel;
+
+        #endregion
+
+        #region Public properties
 
         /// <summary>
         /// ViewModel associated with the page
@@ -69,71 +158,10 @@ namespace modern_tech_499m.Pages
 
         public BasePage()
         {
-            //If we are animation in, hide to begin with
-            if (PageLoadAnimation != PageAnimation.None)
-                Visibility = Visibility.Collapsed;
-
-            //Listen out for the page loading
-             Loaded += BasePage_Loaded;
-
-             //Resolve preregistered generic viewmodel from bootstrapper
-             ViewModel = BootStrapper.Resolve<TViewModel>();
+            //Resolve preregistered generic viewmodel from bootstrapper
+            ViewModel = BootStrapper.Resolve<TViewModel>();
         }
 
-        #endregion
-
-        #region Animation load/unload
-
-        /// <summary>
-        /// Once the page is loaded, perform any required animation
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void BasePage_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Animate the page in
-            await AnimateIn();
-
-        }
-
-        /// <summary>
-        /// Animations in this page
-        /// </summary>
-        public async Task AnimateIn()
-        {
-            if (PageLoadAnimation == PageAnimation.None)
-                return;
-
-            switch (PageLoadAnimation)
-            {
-                case PageAnimation.SlideAndFadeInFromRight:
-
-                    //Start the animation
-                    await this.SlideAndFadeInFromRight(SlideSeconds);
-
-                    break;
-            }
-        }
-
-
-        /// <summary>
-        /// Animates the page out
-        /// </summary>
-        public async Task AnimateOut()
-        {
-            if (PageUnloadAnimation == PageAnimation.None)
-                return;
-
-            switch (PageUnloadAnimation)
-            {
-                case PageAnimation.SlideAndFadeOutToLeft:
-
-                    //Start the animation
-                    await this.SlideAndFadeOutToLeft(SlideSeconds);
-
-                    break;
-            }
-        }
         #endregion
     }
 }
