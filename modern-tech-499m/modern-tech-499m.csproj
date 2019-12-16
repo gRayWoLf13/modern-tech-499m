@@ -135,6 +135,9 @@
     </Compile>
     <Compile Include="Security\SecureStringHelpers.cs" />
     <Compile Include="Services.cs" />
+    <Compile Include="UserControls\GameCellControl.xaml.cs">
+      <DependentUpon>GameCellControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\GameInfoListControl.xaml.cs">
       <DependentUpon>GameInfoListControl.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,7 @@
     <Compile Include="ViewModels\GameInfoListViewModel.cs" />
     <Compile Include="ViewModels\GameInfoSelectionPageViewModel.cs" />
     <Compile Include="ViewModels\GameInfoSelectionViewModel.cs" />
+    <Compile Include="ViewModels\GamePageViewModel.cs" />
     <Compile Include="ViewModels\IEntitySelectionViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -210,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Text.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\GameCellControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

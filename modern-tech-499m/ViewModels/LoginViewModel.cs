@@ -93,7 +93,9 @@ namespace modern_tech_499m.ViewModels
         public async Task RegisterAsync()
         {
             // Go to register page
-            BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
+           // BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
+
+           BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Game);
 
             await Task.Delay(1);
         }

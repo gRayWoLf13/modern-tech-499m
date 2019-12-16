@@ -12,13 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using modern_tech_499m.ViewModels;
 
 namespace modern_tech_499m.Pages
 {
     /// <summary>
     /// Interaction logic for GamePage.xaml
     /// </summary>
-    public partial class GamePage : Page
+    public partial class GamePage : BasePage<GamePageViewModel>
     {
         public GamePage()
         {

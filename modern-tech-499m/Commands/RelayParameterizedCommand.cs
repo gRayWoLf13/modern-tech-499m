@@ -15,6 +15,8 @@ namespace modern_tech_499m.Commands
         /// </summary>
         private Action<object> _action;
 
+        private Func<object, bool> _canExecute;
+
         #endregion
 
         #region Public Events
@@ -31,9 +33,10 @@ namespace modern_tech_499m.Commands
         /// <summary>
         /// Default constructor
         /// </summary>
-        public RelayParameterizedCommand(Action<object> action)
+        public RelayParameterizedCommand(Action<object> action, Func<object, bool> canExecute = null)
         {
             _action = action;
+            _canExecute = canExecute;
         }
 
         #endregion
@@ -47,7 +50,7 @@ namespace modern_tech_499m.Commands
         /// <returns></returns>
         public bool CanExecute(object parameter)
         {
-            return true;
+            return _canExecute?.Invoke(parameter) ?? true;
         }
 
         /// <summary>
