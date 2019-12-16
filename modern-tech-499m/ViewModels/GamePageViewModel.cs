@@ -42,14 +42,16 @@ namespace modern_tech_499m.ViewModels
                 }
             }, parameter => GameController != null && Player1 != null && Player2 != null);
 
-            StartNewGameCommand = new RelayParameterizedCommand(parameter =>
+            /*StartNewGameCommand = new RelayParameterizedCommand(parameter =>
             {
                 _logger.Debug("Start new game command called");
                 GameLogic logic = new GameLogic(6, Player1, Player2, Player1);
                 GameController?.StopGame();
                 GameController = new GameController(logic, GameInfoRepository);
                 GameController.RunGame();
-            }, parameter => Player1 != null && Player2 != null);
+            }, parameter => Player1 != null && Player2 != null);*/
+
+            StartNewGameCommand = new RelayParameterizedCommand( p => BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.GameInfoSelection), p => true);
 
             UndoRedoMoveCommand = new RelayParameterizedCommand(parameter =>
             {
@@ -68,10 +70,12 @@ namespace modern_tech_499m.ViewModels
                 switch (param)
                 {
                     case "Player1":
-                        Player1 = Services.SelectPlayer();
+                        // Player1 = Services.SelectPlayer();
+                        BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Login);
                         break;
                     case "Player2":
-                        Player2 = Services.SelectPlayer();
+                        //Player2 = Services.SelectPlayer();
+                        BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
                         break;
                     default:
                         {
