@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:modern_tech_499m.UserControls"
+             xmlns:viewmodels="clr-namespace:modern_tech_499m.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Template>
@@ -31,7 +32,9 @@
 
                         <Button Grid.Column="2" Style="{StaticResource IconButton}"
                                 Content="{StaticResource FontAwesomeSettingsIcon}"
-                                Foreground="{StaticResource ForegroundDarkPurpleBrush}"/>
+                                Foreground="{StaticResource ForegroundDarkPurpleBrush}"
+                                Command="{Binding ApplicationViewModel.OpenCloseSettingsCommand,
+                                Source={x:Static viewmodels:ViewModelLocator.Instance}}"/>
                     </Grid>
                     <Border Grid.Row="1"
                             Background="{StaticResource ForegroundLightBrush}">

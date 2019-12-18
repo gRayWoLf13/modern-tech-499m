@@ -156,11 +156,30 @@ namespace modern_tech_499m.Pages
 
         #region Constructor
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public BasePage()
         {
             //Resolve preregistered generic viewmodel from bootstrapper
             ViewModel = BootStrapper.Resolve<TViewModel>();
         }
+
+        /// <summary>
+        /// Specific constructor
+        /// </summary>
+        /// <param name="specificViewModel">The viewmodel type</param>
+        public BasePage(TViewModel specificViewModel = null)
+        : base()
+        {
+            //Set specific model, if any
+            if (specificViewModel != null)
+                ViewModel = specificViewModel;
+            else
+            //Otherwise - load default viewmodel
+                ViewModel = BootStrapper.Resolve<TViewModel>();
+        }
+
 
         #endregion
     }

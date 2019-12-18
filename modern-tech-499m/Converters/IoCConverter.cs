@@ -17,7 +17,7 @@ namespace modern_tech_499m.Converters
             switch ((string)value)
             {
                 case nameof(ApplicationViewModel):
-                    return BootStrapper.Resolve<ApplicationViewModel>();
+                    return ViewModelLocator.ApplicationViewModel;
 
                 default:
                     Debugger.Break();

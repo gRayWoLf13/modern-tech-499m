@@ -61,7 +61,7 @@ namespace modern_tech_499m.ViewModels
         public LoginViewModel()
         {
             //Create commands
-            LoginCommand = new RelayParameterizedCommand( async parameter => await Login(parameter));
+            LoginCommand = new RelayParameterizedCommand( async parameter => await LoginAsync(parameter));
             RegisterCommand = new RelayCommand(async () => await RegisterAsync());
         }
 
@@ -72,14 +72,14 @@ namespace modern_tech_499m.ViewModels
         /// </summary>
         /// <param name="parameter">The secure string passed in from the view</param>
         /// <returns></returns>
-        public async Task Login(object parameter)
+        public async Task LoginAsync(object parameter)
         {
             await RunCommand(() => LoginIsRunning, async () =>
             {
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 //Go to game info selection page
-                BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.GameInfoSelection);
+                ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.GameInfoSelection);
 
                 //var username = Username;
                 //var value = (parameter as IHavePassword).SecurePassword.Unsecure();
@@ -93,9 +93,15 @@ namespace modern_tech_499m.ViewModels
         public async Task RegisterAsync()
         {
             // Go to register page
-           // BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
+            //ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Register);
 
-           BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Game);
+            //ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Game);
+
+
+            //Right now we have to manually resolve a viewmodel for the page to set it's navigation source
+            var registerViewModel = BootStrapper.Resolve<RegisterViewModel>();
+           ViewModelLocator.ApplicationViewModel
+               .GoToPageWithNavigationSource(ApplicationPage.Register, ApplicationPage.Login, this, registerViewModel);
 
             await Task.Delay(1);
         }

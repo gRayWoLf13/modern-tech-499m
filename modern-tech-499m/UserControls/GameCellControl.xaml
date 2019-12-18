@@ -85,13 +85,13 @@
                                     <Condition Binding="{Binding ElementName=currentControl, Path=IsActiveCell}" Value="True"/>
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.EnterActions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetName="buttonShadowEffect" Storyboard.TargetProperty="Opacity" Duration="0:0:1" To="1" AutoReverse="True" RepeatBehavior="Forever"/>
-                                                <ColorAnimation To="{StaticResource ForegroundVeryLightPurple}" Duration="0:0:1" Storyboard.TargetName="background" Storyboard.TargetProperty="Background.Color"/>
-                                                <ColorAnimation To="{StaticResource ForegroundDarkPurple}" Duration="0:0:1" Storyboard.TargetName="foreground" Storyboard.TargetProperty="Foreground.Color"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="buttonShadowEffect" Storyboard.TargetProperty="Opacity" Duration="0:0:1" To="1" AutoReverse="True" RepeatBehavior="Forever"/>
+                                            <ColorAnimation To="{StaticResource ForegroundVeryLightPurple}" Duration="0:0:1" Storyboard.TargetName="background" Storyboard.TargetProperty="Background.Color"/>
+                                            <ColorAnimation To="{StaticResource ForegroundDarkPurple}" Duration="0:0:1" Storyboard.TargetName="foreground" Storyboard.TargetProperty="Foreground.Color"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
                                 </MultiDataTrigger.EnterActions>
                                 <MultiDataTrigger.ExitActions>
                                     <BeginStoryboard>

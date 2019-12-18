@@ -125,18 +125,25 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <control:SideMenuContol Width="300" base:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible,
-            Source={x:Static viewmodels:ViewModelLocator.Instance}}">
-            <Button>hhhhhey!</Button>
-        </control:SideMenuContol>
+        <Grid>
+            <Button Width="50" VerticalAlignment="Top" HorizontalAlignment="Left"
+                    Command="{Binding ApplicationViewModel.OpenCloseSettingsCommand,
+                                Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                    Foreground="{StaticResource ForegroundDarkPurpleBrush}"
+                    Style="{StaticResource IconButton}"
+                    Content="{StaticResource FontAwesomeSettingsIcon}"/>
+            <control:SideMenuContol Width="300" base:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible,
+                Source={x:Static viewmodels:ViewModelLocator.Instance}}">
+                <Button>hhhhhey!</Button>
+            </control:SideMenuContol>
+        </Grid>
 
         <Grid Grid.Column="1">
             <control:PageHost
-                   DataContext="{Binding ApplicationViewModel.CurrentPage, 
-                            Source={x:Static viewmodels:ViewModelLocator.Instance}, 
-                            Converter={converters:PageValueConverter}}"
-                   d:DataContext=""
-                   CurrentPage="{Binding}"/>
+                CurrentPage="{Binding ApplicationViewModel.CurrentPage, 
+                            Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                CurrentPageViewModel="{Binding ApplicationViewModel.CurrentPageViewModel,
+                                        Source={x:Static viewmodels:ViewModelLocator.Instance}}"/>
         </Grid>
     </Grid>
 </Window>

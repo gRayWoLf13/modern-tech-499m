@@ -12,7 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using modern_tech_499m.Converters;
 using modern_tech_499m.Pages;
+using modern_tech_499m.ViewModels;
+using modern_tech_499m.ViewModels.Base;
 
 namespace modern_tech_499m.UserControls
 {
@@ -21,22 +24,37 @@ namespace modern_tech_499m.UserControls
     /// </summary>
     public partial class PageHost : UserControl
     {
-        #region Dependenty property
+        #region Dependenty properties
 
         /// <summary>
         /// Registers <see cref="CurrentPage"/> as a dependency property
         /// </summary>
         public static readonly DependencyProperty CurrentPageProperty = DependencyProperty.Register(
-            nameof(CurrentPage), typeof(BasePage), typeof(PageHost), new UIPropertyMetadata(CurrentPagePropertyChanged));
+            nameof(CurrentPage), typeof(ApplicationPage), typeof(PageHost),
+            new UIPropertyMetadata(default(ApplicationPage), null, CurrentPagePropertyChanged));
+        /// <summary>
+        /// The current page to show in the page host
+        /// </summary>
+        public ApplicationPage CurrentPage
+        {
+            get => (ApplicationPage)GetValue(CurrentPageProperty);
+            set => SetValue(CurrentPageProperty, value);
+        }
+
+        /// <summary>
+        /// Registers <see cref="CurrentPageViewModel"/> as a dependency property
+        /// </summary>
+        public static readonly DependencyProperty CurrentPageViewModelProperty = DependencyProperty.Register(
+            nameof(CurrentPageViewModel), typeof(BaseViewModel), typeof(PageHost), new UIPropertyMetadata());
 
         /// <summary>
         /// The current page to show in the page host
         /// </summary>
-        public BasePage CurrentPage
+        public BaseViewModel CurrentPageViewModel
         {
-            get => (BasePage)GetValue(CurrentPageProperty);
-            set => SetValue(CurrentPageProperty, value);
-        } 
+            get => (BaseViewModel)GetValue(CurrentPageViewModelProperty);
+            set => SetValue(CurrentPageViewModelProperty, value);
+        }
 
         #endregion
 
@@ -51,9 +69,13 @@ namespace modern_tech_499m.UserControls
         /// Called when <see cref="CurrentPage"/> value has changed
         /// </summary>
         /// <param name="d"></param>
-        /// <param name="e"></param>
-        private static void CurrentPagePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        /// <param name="value"></param>
+        private static object CurrentPagePropertyChanged(DependencyObject d, object value)
         {
+            //Get current values
+            var currentPage = (ApplicationPage)d.GetValue(CurrentPageProperty);
+            var currentPageViewModel = d.GetValue(CurrentPageViewModelProperty);
+
             //Get the frames
             var newPageFrame = (d as PageHost).NewPage;
             var oldPageFrame = (d as PageHost).OldPage;
@@ -82,8 +104,9 @@ namespace modern_tech_499m.UserControls
             }
 
             //Set the new page content
-            newPageFrame.Content = e.NewValue;
+            newPageFrame.Content = currentPage.ToBasePage(currentPageViewModel);
 
+            return value;
         }
 
         #endregion

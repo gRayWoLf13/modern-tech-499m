@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -14,7 +15,7 @@ namespace modern_tech_499m.UserControls
 
         public int CellValue
         {
-            get => (int) GetValue(CellValueProperty);
+            get => (int)GetValue(CellValueProperty);
             set => SetValue(CellValueProperty, value);
         }
 
@@ -23,7 +24,7 @@ namespace modern_tech_499m.UserControls
 
         public ICommand ClickCommand
         {
-            get => (ICommand) GetValue(ClickCommandProperty);
+            get => (ICommand)GetValue(ClickCommandProperty);
             set => SetValue(ClickCommandProperty, value);
         }
 
@@ -32,7 +33,7 @@ namespace modern_tech_499m.UserControls
 
         public bool IsActiveCell
         {
-            get => (bool) GetValue(IsActiveCellProperty);
+            get => (bool)GetValue(IsActiveCellProperty);
             set => SetValue(IsActiveCellProperty, value);
         }
 

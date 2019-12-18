@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using PropertyChanged;
 
 namespace modern_tech_499m.ViewModels.Base
 {
@@ -49,6 +48,20 @@ namespace modern_tech_499m.ViewModels.Base
                 updatingFlag.SetPropertyValue(false);
             }
         }
+
+        #endregion
+
+        #region Public properties
+
+        /// <summary>
+        /// The page type to return to in case of navigation backwards
+        /// </summary>
+        public ApplicationPage NavigationSourcePage { get; set; }
+
+        /// <summary>
+        /// The viewmodel if the page to return to in case of navigation backwards
+        /// </summary>
+        public BaseViewModel NavigationSourcePageViewModel { get; set; }
 
         #endregion
     }

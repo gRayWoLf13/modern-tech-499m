@@ -22,7 +22,19 @@ namespace modern_tech_499m.Pages
     /// </summary>
     public partial class RegisterPage : BasePage<RegisterViewModel>, IHavePassword
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public RegisterPage()
+        {
+            InitializeComponent();
+        }
+
+        /// <summary>
+        /// Specific constructor
+        /// </summary>
+        /// <param name="registerViewModel">Specific viewmodel for the page</param>
+        public RegisterPage(RegisterViewModel registerViewModel) : base(registerViewModel)
         {
             InitializeComponent();
         }

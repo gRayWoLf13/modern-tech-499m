@@ -74,11 +74,12 @@ namespace modern_tech_499m.ViewModels
         /// <returns></returns>
         public async Task Register(object parameter)
         {
-            await RunCommand(() => RegisterIsRunning, async () =>
+            /*await RunCommand(() => RegisterIsRunning, async () =>
             {
                 await Task.Delay(TimeSpan.FromSeconds(5));
 
-            });
+            });*/
+            ViewModelLocator.ApplicationViewModel.ReturnToNavigationPageSource(NavigationSourcePage, NavigationSourcePageViewModel);
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace modern_tech_499m.ViewModels
         public async Task LoginAsync()
         {
             // Go to register page
-            BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Login);
+            ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Login);
 
             await Task.Delay(1);
         }

@@ -115,10 +115,10 @@
     <Compile Include="Converters\FirstBoolValueToTwoValuesConverter.cs" />
     <Compile Include="Converters\GameControllerToCommandParametersConverter.cs" />
     <Compile Include="Converters\IoCConverter.cs" />
-    <Compile Include="Converters\PageValueConverter.cs" />
     <Compile Include="Converters\UserToPropertyConverter.cs" />
     <Compile Include="Converters\WrappedGameInfoToPropertyConverter.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
+    <Compile Include="DataModels\ApplicationPageHelpers.cs" />
     <Compile Include="Expressions\ExpressionHelpers.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\GameInfoSelectionPage.xaml.cs">

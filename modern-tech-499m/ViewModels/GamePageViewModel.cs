@@ -51,7 +51,7 @@ namespace modern_tech_499m.ViewModels
                 GameController.RunGame();
             }, parameter => Player1 != null && Player2 != null);*/
 
-            StartNewGameCommand = new RelayParameterizedCommand( p => BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.GameInfoSelection), p => true);
+            StartNewGameCommand = new RelayParameterizedCommand( p => ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.GameInfoSelection), p => true);
 
             UndoRedoMoveCommand = new RelayParameterizedCommand(parameter =>
             {
@@ -71,11 +71,11 @@ namespace modern_tech_499m.ViewModels
                 {
                     case "Player1":
                         // Player1 = Services.SelectPlayer();
-                        BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Login);
+                        ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Login);
                         break;
                     case "Player2":
                         //Player2 = Services.SelectPlayer();
-                        BootStrapper.Resolve<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
+                        ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Register);
                         break;
                     default:
                         {
@@ -86,11 +86,12 @@ namespace modern_tech_499m.ViewModels
                 }
             }, parameter => true);
 
-            SaveGameCommand = new RelayParameterizedCommand(parameter =>
+           /* SaveGameCommand = new RelayParameterizedCommand(parameter =>
             {
                 _logger.Debug("Save game command called");
                 GameController.SaveGame();
-            }, parameter => GameController != null && Player1 != null && Player2 != null);
+            }, parameter => GameController != null && Player1 != null && Player2 != null);*/
+           SaveGameCommand = new RelayCommand(() => ViewModelLocator.ApplicationViewModel.SideMenuVisible ^= true);
         }
 
         private GameController _gameController;

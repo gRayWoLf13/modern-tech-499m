@@ -49,13 +49,13 @@ namespace modern_tech_499m.Animation
         /// <param name="seconds">The time the animation will take</param>
         /// <param name="keepMargin">Whether to keep the element at the same width during animation</param>
         /// <returns></returns>
-        public static async Task SlideAndFadeInFromLeft(this FrameworkElement element, double seconds, bool keepMargin = true)
+        public static async Task SlideAndFadeInFromLeft(this FrameworkElement element, double seconds, bool keepMargin = true, int size = 0)
         {
             //Create the storyboard
             var sb = new Storyboard();
 
             //Add slide from right animation
-            sb.AddSlideFromLeft(seconds, element.ActualWidth, keepMargin: keepMargin);
+            sb.AddSlideFromLeft(seconds, size == 0 ? element.ActualWidth : size, keepMargin: keepMargin);
 
             //Add fade in animation
             sb.AddFadeIn(seconds);
@@ -96,7 +96,7 @@ namespace modern_tech_499m.Animation
             await Task.Delay(TimeSpan.FromSeconds(seconds));
 
             //Make page visible
-            element.Visibility = Visibility.Collapsed;
+            element.Visibility = Visibility.Hidden;
 
         }
         /// <summary>
@@ -124,7 +124,7 @@ namespace modern_tech_499m.Animation
             await Task.Delay(TimeSpan.FromSeconds(seconds));
 
             //Make page visible
-            element.Visibility = Visibility.Collapsed;
+            element.Visibility = Visibility.Hidden;
 
         }
     }
