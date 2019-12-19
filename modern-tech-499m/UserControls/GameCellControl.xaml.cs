@@ -11,11 +11,11 @@ namespace modern_tech_499m.UserControls
     public partial class GameCellControl : UserControl
     {
         public static readonly DependencyProperty CellValueProperty = DependencyProperty.Register(
-            "CellValue", typeof(int), typeof(GameCellControl), new PropertyMetadata(0));
+            "CellValue", typeof(string), typeof(GameCellControl), new PropertyMetadata(string.Empty));
 
-        public int CellValue
+        public string CellValue
         {
-            get => (int)GetValue(CellValueProperty);
+            get => (string)GetValue(CellValueProperty);
             set => SetValue(CellValueProperty, value);
         }
 

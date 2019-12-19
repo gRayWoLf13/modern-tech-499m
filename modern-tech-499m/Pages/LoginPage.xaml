@@ -44,7 +44,7 @@
                         <!-- Password -->
                         <PasswordBox x:Name="PasswordText" Tag="Password" Margin="0 0 0 30"/>
 
-                        <!-- Next button -->
+                        <!-- Login button -->
                         <Button
                             Content="Login"
                             IsDefault="True"

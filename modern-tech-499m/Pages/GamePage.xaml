@@ -44,12 +44,12 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock TextTrimming="CharacterEllipsis" Grid.Column="0" Style="{StaticResource HeaderTextLightBold}" FontSize="{StaticResource FontSizeXLarge}" Text="{Binding Player1.Name, FallbackValue=Dummy1}"></TextBlock>
+                    <TextBlock TextTrimming="CharacterEllipsis" Grid.Column="0" Style="{StaticResource HeaderTextLightBold}" FontSize="{StaticResource FontSizeXLarge}" Text="{Binding Player1.Name}"/>
                     <StackPanel Height="30" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button Command="{Binding UndoRedoMoveCommand}" CommandParameter="True" Margin="5 0" Style="{StaticResource RoundedIconButton}" Content="{StaticResource FontAwesomeUndoIcon}"/>
                         <Button Command="{Binding UndoRedoMoveCommand}" CommandParameter="False" Margin="5 0" Style="{StaticResource RoundedIconButton}" Content="{StaticResource FontAwesomeRedoIcon}"/>
                     </StackPanel>
-                    <TextBlock TextTrimming="CharacterEllipsis" Grid.Column="2" Style="{StaticResource HeaderTextLightBold}" FontSize="{StaticResource FontSizeXLarge}" Text="{Binding Player2.Name, FallbackValue=Dummy2}"></TextBlock>
+                    <TextBlock TextTrimming="CharacterEllipsis" Grid.Column="2" Style="{StaticResource HeaderTextLightBold}" FontSize="{StaticResource FontSizeXLarge}" Text="{Binding Player2.Name}"/>
                 </Grid>
             </Grid>
 

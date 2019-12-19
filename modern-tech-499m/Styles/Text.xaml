@@ -33,6 +33,7 @@
         <Setter Property="Margin" Value="0 6"/>
     </Style>
 
+
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="BigLightText">
         <Setter Property="Foreground" Value="{StaticResource ForegroundPurpleBrush}"/>
         <Setter Property="FontSize" Value="{StaticResource FontSizeXLarge}"/>
@@ -178,6 +179,27 @@
                 <DataTrigger.ExitActions>
                     <RemoveStoryboard BeginStoryboardName="SpinStoryboard"/>
                 </DataTrigger.ExitActions>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="SpinningAtomText" BasedOn="{StaticResource SpinningText}">
+        <Setter Property="Text" Value="{StaticResource FontAwesomeAtomIcon}"/>
+        <Style.Triggers>
+            <DataTrigger
+                Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsVisible}"  Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                From="0"
+                                To="360"
+                                Duration="0:0:2"
+                                RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
             </DataTrigger>
         </Style.Triggers>
     </Style>

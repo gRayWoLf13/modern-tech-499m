@@ -36,7 +36,7 @@
                                 Command="{Binding ApplicationViewModel.OpenCloseSettingsCommand,
                                 Source={x:Static viewmodels:ViewModelLocator.Instance}}"/>
                     </Grid>
-                    <Border Grid.Row="1"
+                    <Border Grid.Row="1" CornerRadius="10"
                             Background="{StaticResource ForegroundLightBrush}">
                         <ContentPresenter/>
                     </Border>

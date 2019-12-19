@@ -34,6 +34,7 @@
     <system:String x:Key="FontAwesomeGamesDatabaseIcon">&#xf11b;</system:String>
     <system:String x:Key="FontAwesomeSettingsIcon">&#xf185;</system:String>
     <system:String x:Key="FontAwesomeSpinningIcon">&#xf110;</system:String>
+    <system:String x:Key="FontAwesomeAtomIcon">&#xf285;</system:String>
 
     <system:String x:Key="FontAwesomeUndoIcon">&#xf0e2;</system:String>
     <system:String x:Key="FontAwesomeRedoIcon">&#xf01e;</system:String>

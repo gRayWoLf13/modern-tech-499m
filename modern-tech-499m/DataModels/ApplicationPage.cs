@@ -6,9 +6,14 @@
     public enum ApplicationPage
     {
         /// <summary>
+        /// Startup page
+        /// </summary>
+        Welcome = 0,
+
+        /// <summary>
         /// Login page
         /// </summary>
-        Login = 0,
+        Login,
 
         /// <summary>
         ///Register page 

@@ -23,7 +23,7 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// The margin around the window to allow a drop shadow
         /// </summary>
-        private int _outerMarginSize = 10;
+        private int _outerMarginSize = 0;
 
         /// <summary>
         /// The radius of the edges of the window
@@ -137,7 +137,7 @@ namespace modern_tech_499m.ViewModels
             };
 
             //Create commands
-            MinimizeCommand = new RelayCommand(() => _window.WindowState = WindowState.Minimized);
+            MinimizeCommand = new RelayCommand(() => _window.WindowState = WindowState.Minimized); 
             MaximizeCommand = new RelayCommand(() => _window.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => _window.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(_window, GetMousePosition()));
