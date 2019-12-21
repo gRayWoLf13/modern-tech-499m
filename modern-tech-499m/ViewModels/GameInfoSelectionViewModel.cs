@@ -8,7 +8,7 @@ using NLog;
 
 namespace modern_tech_499m.ViewModels
 {
-    class GameInfoSelectionViewModel : BaseViewModel, IEntitySelectionViewModel<GameInfo>
+    public class GameInfoSelectionViewModel : BaseViewModel, IEntitySelectionViewModel<GameInfo>
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IGameInfoRepository _gameInfoRepository;

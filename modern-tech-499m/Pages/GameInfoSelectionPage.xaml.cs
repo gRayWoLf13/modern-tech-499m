@@ -8,11 +8,21 @@ namespace modern_tech_499m.Pages
     /// </summary>
     public partial class GameInfoSelectionPage : BasePage<GameInfoSelectionPageViewModel>
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public GameInfoSelectionPage()
         {
             InitializeComponent();
-            //??
-            DataContext = ViewModel;
+        }
+
+        /// <summary>
+        /// Specific constructor
+        /// </summary>
+        /// <param name="gameInfoSelectionPageViewModel">Specific viewmodel for the page</param>
+        public GameInfoSelectionPage(GameInfoSelectionPageViewModel gameInfoSelectionPageViewModel) : base(gameInfoSelectionPageViewModel)
+        {
+            InitializeComponent();
         }
     }
 }

@@ -17,10 +17,12 @@
             Margin="50 50 50 50">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource HeaderText}"
+            <TextBlock Grid.Row="0"
+                       Margin="0"
+                       Style="{StaticResource HeaderText}"
                        Foreground="{StaticResource ForegroundTealBrush}"
                        FontSize="{StaticResource FontSizeXXLarge}"
                        FontFamily="{StaticResource LatoBoldItalic}"

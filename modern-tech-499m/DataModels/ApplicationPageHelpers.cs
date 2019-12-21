@@ -15,7 +15,6 @@ namespace modern_tech_499m
         {
             switch (page)
             {
-
                 case ApplicationPage.Login:
                     return new LoginPage(viewmodel as LoginViewModel);
 
@@ -26,13 +25,10 @@ namespace modern_tech_499m
                     return new GamePage(viewmodel as GamePageViewModel);
 
                 case ApplicationPage.GameInfoSelection:
-                    return new GameInfoSelectionPage();
-
-                case ApplicationPage.PlayerSelection:
-                    return null;
+                    return new GameInfoSelectionPage(viewmodel as GameInfoSelectionPageViewModel);
 
                 case ApplicationPage.UsersDatabase:
-                    return null;
+                    return new UsersDatabasePage(viewmodel as UsersDatabasePageViewModel);
 
                 case ApplicationPage.Welcome:
                     return new WelcomePage(viewmodel as WelcomePageViewModel);
@@ -52,6 +48,7 @@ namespace modern_tech_499m
                 case GamePage _: return ApplicationPage.Game;
                 case GameInfoSelectionPage _: return ApplicationPage.GameInfoSelection;
                 case WelcomePage _: return ApplicationPage.Welcome;
+                case UsersDatabasePage _: return ApplicationPage.UsersDatabase;
             }
             Debugger.Break();
             return default;

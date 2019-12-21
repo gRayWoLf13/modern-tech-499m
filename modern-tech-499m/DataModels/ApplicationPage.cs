@@ -33,11 +33,6 @@
         /// <summary>
         /// Page for viewing the list of the game infos
         /// </summary>
-        GameInfoSelection,
-
-        /// <summary>
-        /// Page for selecting a player
-        /// </summary>
-        PlayerSelection
+        GameInfoSelection
     }
 }
