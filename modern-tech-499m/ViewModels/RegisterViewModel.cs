@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
+using modern_tech_499m.Logic;
+using modern_tech_499m.Repositories.Core.Domain;
+using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.Security;
 using modern_tech_499m.ViewModels.Base;
 
@@ -14,9 +17,10 @@ namespace modern_tech_499m.ViewModels
 {
     public class RegisterViewModel : BaseViewModel
     {
+
         #region Private members
 
-
+        private readonly IUserRepository _userRepository;
 
         #endregion
 
@@ -79,8 +83,9 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// Default constructor
         /// </summary>
-        public RegisterViewModel()
+        public RegisterViewModel(IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             //Create commands
             RegisterCommand = new RelayParameterizedCommand( async parameter => await Register(parameter));
             LoginCommand = new RelayCommand(async () => await LoginAsync());
@@ -100,15 +105,37 @@ namespace modern_tech_499m.ViewModels
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 var username = Username;
-                var password = (parameter as IHavePassword).SecurePassword.Unsecure();
+                var passwordHash = (parameter as IHavePassword).SecurePassword.Unsecure().GetStringHash();
                 var firstName = FirstName;
                 var lastName = LastName;
                 var patronymic = Patronymic;
                 var birthDate = BirthDate;
 
-                //TODO Get password hash and create register method in repository
-                MessageBox.Show(
-                    $"{username}{Environment.NewLine}{password}{Environment.NewLine}{firstName}{Environment.NewLine}{lastName}{Environment.NewLine}{patronymic}{Environment.NewLine}{birthDate}");
+                var user = new User
+                {
+                    Username = username,
+                    BirthDate = birthDate.HasValue ? birthDate.Value : DateTime.Today,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Patronymic = patronymic,
+                    PasswordHash = passwordHash
+                };
+
+                var registerResult = await _userRepository.RegisterUser(user);
+
+                switch (registerResult.registerResult)
+                {
+                    case RegisterResult.UsernameAlreadyExists:
+                        MessageBox.Show("Selected username already exists");
+                        break;
+                    case RegisterResult.Success:
+                        MessageBox.Show("Registration successful, returning to the game page");
+                        (NavigationSourcePageViewModel as GamePageViewModel).CurrentPlayerLoggingAction(
+                            new UserPlayer(registerResult.registeredUser.Username, registerResult.registeredUser, Guid.Empty));
+                        ViewModelLocator.ApplicationViewModel.ReturnToNavigationPageSource(NavigationSourcePage,
+                            NavigationSourcePageViewModel);
+                        break;
+                }
             });
         }
 
@@ -119,7 +146,14 @@ namespace modern_tech_499m.ViewModels
         public async Task LoginAsync()
         {
             // Go to login page
-            ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Login);
+            //Right now we have to manually resolve a viewmodel for the page to set it's navigation source
+
+            //In this case we are navigating to login page and passing current NavigationSourcePageViewModel and NavigationSourcePage(which was passed from the game page)
+            //So, in case of successful logging, the login page will navigate back to the game page (not the register page)
+            var loginViewModel = BootStrapper.Resolve<LoginViewModel>();
+            ViewModelLocator.ApplicationViewModel
+                .GoToPageWithNavigationSource(ApplicationPage.Login, NavigationSourcePage,
+                    NavigationSourcePageViewModel, loginViewModel);
         }
     }
 }

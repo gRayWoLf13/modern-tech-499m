@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using modern_tech_499m.Repositories.Core;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
@@ -24,10 +26,12 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
                 User user = new User
                 {
                     Id = Convert.ToInt32(reader[nameof(User.Id)].ToString()),
+                    Username = reader[nameof(User.Username)].ToString(),
                     BirthDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(User.BirthDate)].ToString())),
                     FirstName = reader[nameof(User.FirstName)].ToString(),
                     LastName = reader[nameof(User.LastName)].ToString(),
-                    Patronymic = reader[nameof(User.Patronymic)].ToString()
+                    Patronymic = reader[nameof(User.Patronymic)].ToString(),
+                    PasswordHash = (byte[])reader[nameof(User.PasswordHash)]
                 };
                 users.Add(user);
             }
@@ -43,10 +47,12 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             if (!reader.Read())
                 return user;
             user.Id = Convert.ToInt32(reader[nameof(User.Id)].ToString());
+            user.Username = reader[nameof(User.Username)].ToString();
             user.BirthDate = DateTime.FromOADate(Convert.ToDouble(reader[nameof(User.BirthDate)].ToString()));
             user.FirstName = reader[nameof(User.FirstName)].ToString();
             user.LastName = reader[nameof(User.LastName)].ToString();
             user.Patronymic = reader[nameof(User.Patronymic)].ToString();
+            user.PasswordHash = (byte[]) reader[nameof(User.PasswordHash)];
 
             return user;
         }
@@ -59,10 +65,12 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
 
         protected override void InsertCommandParameters(User entity, SQLiteCommand cmd)
         {
+            cmd.Parameters.AddWithValue(nameof(User.Username), entity.Username);
             cmd.Parameters.AddWithValue(nameof(User.BirthDate), entity.BirthDate.ToOADate());
             cmd.Parameters.AddWithValue(nameof(User.FirstName), entity.FirstName);
             cmd.Parameters.AddWithValue(nameof(User.LastName), entity.LastName);
             cmd.Parameters.AddWithValue(nameof(User.Patronymic), entity.Patronymic);
+            cmd.Parameters.AddWithValue(nameof(User.PasswordHash), entity.PasswordHash);
         }
 
         protected override void InsertManyCommandParameters(IEnumerable<User> entities, SQLiteCommand cmd)
@@ -70,23 +78,25 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             int counter = 0;
             foreach (var entity in entities)
             {
+                cmd.Parameters.AddWithValue($"{nameof(User.Username)}{counter}", entity.Username);
                 cmd.Parameters.AddWithValue($"{nameof(User.BirthDate)}{counter}", entity.BirthDate.ToOADate());
                 cmd.Parameters.AddWithValue($"{nameof(User.FirstName)}{counter}", entity.FirstName);
                 cmd.Parameters.AddWithValue($"{nameof(User.LastName)}{counter}", entity.LastName);
                 cmd.Parameters.AddWithValue($"{nameof(User.Patronymic)}{counter}", entity.Patronymic);
+                cmd.Parameters.AddWithValue($"{nameof(User.PasswordHash)}{counter}", entity.PasswordHash);
                 counter++;
             }
         }
 
         public override User Get(int id)
         {
-            string sql = "select Id, BirthDate, FirstName, LastName, Patronymic from Users where Id = @Id";
+            string sql = "select Id, Username, BirthDate, FirstName, LastName, Patronymic, PasswordHash from Users where Id = @Id";
             return GetById(id, sql);
         }
 
         public override IEnumerable<User> GetAll()
         {
-            string sql = "select Id, BirthDate, FirstName, LastName, Patronymic from Users";
+            string sql = "select Id, Username, BirthDate, FirstName, LastName, Patronymic, PasswordHash from Users";
             return GetAll(sql);
         }
 
@@ -96,15 +106,17 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             return allUsers.Where(predicate);
         }
 
-        public override void Add(User entity)
+        public override int Add(User entity)
         {
-            TryExecuteAnyAction(() =>
+            return TryExecuteFunction(() =>
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 string insertSql =
-                    "insert into Users (BirthDate, FirstName, LastName, Patronymic) VALUES (@BirthDate, @FirstName, @LastName, @Patronymic)";
+                    "insert into Users (Username, BirthDate, FirstName, LastName, Patronymic, PasswordHash) VALUES (@Username, @BirthDate, @FirstName, @LastName, @Patronymic, @PasswordHash)";
                 Insert(entity, insertSql, transaction);
+                var id = (int) _connection.LastInsertRowId;
                 _unitOfWork.Commit();
+                return id;
             });
         }
 
@@ -114,12 +126,12 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 StringBuilder insertSql = new StringBuilder(
-                    "Insert into Users (BirthDate, FirstName, LastName, Patronymic) VALUES ");
+                    "Insert into Users (Username, BirthDate, FirstName, LastName, Patronymic, PasswordHash) VALUES ");
                 int counter = 0;
                 foreach (var _ in entities)
                 {
                     insertSql.Append(
-                        $"(@BirthDate{counter}, @FirstName{counter}, @LastName{counter}, @Patronymic{counter}), ");
+                        $"(@Username{counter}, @BirthDate{counter}, @FirstName{counter}, @LastName{counter}, @Patronymic{counter}, @PasswordHash{counter}), ");
                     counter++;
                 }
                 insertSql.Remove(insertSql.Length - 2, 2);
@@ -162,9 +174,9 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
         public IEnumerable<User> GetUserFromGame(int id)
         {
             var getUsers1Sql =
-                $"select Id, BirthDate, FirstName, LastName, Patronymic from Users where Id IN (select Player1Id from GameInfo where Id = {id})";
+                $"select Id, Username, BirthDate, FirstName, LastName, Patronymic, PasswordHash from Users where Id IN (select Player1Id from GameInfo where Id = {id})";
             var users1 = GetAll(getUsers1Sql);
-            var getUsers2Sql = $"select Id, BirthDate, FirstName, LastName, Patronymic from Users where Id IN (select Player2Id from GameInfo where Id = {id})";
+            var getUsers2Sql = $"select Id, Username, BirthDate, FirstName, LastName, Patronymic, PasswordHash from Users where Id IN (select Player2Id from GameInfo where Id = {id})";
             var users2 = GetAll(getUsers2Sql);
             foreach (var user in users1)
             {
@@ -175,6 +187,72 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             {
                 yield return user;
             }
+        }
+
+        public async Task<(LoginResult loginResult, User loggedUser)> LoginUser(string username, byte[] passwordHash)
+        {
+            var taskResult = await Task.Run(() =>
+            {
+                var searchForUserSql =
+                    "select Id, Username, BirthDate, FirstName, LastName, Patronymic, PasswordHash from Users where Username = @Username";
+
+                var users = TryExecuteFunction(() =>
+                {
+                    using (var cmd = _connection.CreateCommand())
+                    {
+                        cmd.CommandText = searchForUserSql;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Parameters.AddWithValue(nameof(User.Username), username);
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            return Maps(reader);
+                        }
+                    }
+                });
+                if (users.Count == 0)
+                    return (LoginResult.UsernameNotExists, null);
+
+                if (users.Count > 1)
+                    throw new Exception("Multiple users with same username");
+
+                if (!users[0].PasswordHash.SequenceEqual(passwordHash))
+                    return (LoginResult.WrongPassword, null);
+
+                return (LoginResult.Success, users[0]);
+            });
+            return taskResult;
+        }
+
+        public async Task<(RegisterResult registerResult, User registeredUser)> RegisterUser(User user)
+        {
+            var taskResult = await Task.Run(() =>
+            {
+                var searchForUserSql =
+                    "select Id, Username, BirthDate, FirstName, LastName, Patronymic, PasswordHash from Users where Username = @Username";
+
+                var users = TryExecuteFunction(() =>
+                {
+                    using (var cmd = _connection.CreateCommand())
+                    {
+                        cmd.CommandText = searchForUserSql;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.Parameters.AddWithValue(nameof(User.Username), user.Username);
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            return Maps(reader);
+                        }
+                    }
+                });
+                if (users.Count > 0)
+                    return (RegisterResult.UsernameAlreadyExists, null);
+
+                var newUserId = Add(user);
+
+                user.Id = newUserId;
+
+                return (RegisterResult.Success, user);
+            });
+            return taskResult;
         }
     }
 }

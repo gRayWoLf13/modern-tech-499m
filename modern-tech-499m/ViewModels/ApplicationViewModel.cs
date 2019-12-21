@@ -19,7 +19,7 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Register;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Game;
 
         /// <summary>
         /// The viewmodel to use for the current page when the CurrentPage changes

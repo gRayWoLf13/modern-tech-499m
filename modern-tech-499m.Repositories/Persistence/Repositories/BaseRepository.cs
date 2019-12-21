@@ -10,7 +10,7 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
 {
     public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity, new()
     {
-        private readonly SQLiteConnection _connection;
+        protected readonly SQLiteConnection _connection;
         protected readonly IUnitOfWork _unitOfWork;
 
         protected BaseRepository(IUnitOfWork unitOfWork)
@@ -21,7 +21,7 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
         public abstract TEntity Get(int id);
         public abstract IEnumerable<TEntity> GetAll();
         public abstract IEnumerable<TEntity> Find(Func<TEntity, bool> predicate);
-        public abstract void Add(TEntity entity);
+        public abstract int Add(TEntity entity);
         public abstract void AddRange(IEnumerable<TEntity> entities);
         public abstract void Remove(TEntity entity);
         public abstract void RemoveRange(IEnumerable<TEntity> entities);

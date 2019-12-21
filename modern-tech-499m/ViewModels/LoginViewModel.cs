@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
+using modern_tech_499m.Logic;
+using modern_tech_499m.Repositories.Core.Domain;
+using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.Security;
 using modern_tech_499m.ViewModels.Base;
 
@@ -16,6 +19,7 @@ namespace modern_tech_499m.ViewModels
     {
         #region Private members
 
+        private IUserRepository _userRepository;
 
         #endregion
 
@@ -63,8 +67,9 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// Default constructor
         /// </summary>
-        public LoginViewModel()
+        public LoginViewModel(IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             //Create commands
             LoginCommand = new RelayParameterizedCommand( async parameter => await LoginAsync(parameter));
             RegisterCommand = new RelayCommand(async () => await RegisterAsync());
@@ -85,10 +90,28 @@ namespace modern_tech_499m.ViewModels
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 var username = Username;
-                var password = (parameter as IHavePassword).SecurePassword.Unsecure();
+                var passwordHash = (parameter as IHavePassword).SecurePassword.Unsecure().GetStringHash();
 
-                //TODO Get password hash and create login method in repository
-                MessageBox.Show($"{username}{Environment.NewLine}{password}");
+                var loginResult = await _userRepository.LoginUser(username, passwordHash);
+
+                switch (loginResult.loginResult)
+                {
+                    case LoginResult.Success:
+                        MessageBox.Show("Login successful, returning to the game page");
+                        (NavigationSourcePageViewModel as GamePageViewModel).CurrentPlayerLoggingAction(
+                            new UserPlayer(loginResult.loggedUser.Username, loginResult.loggedUser, Guid.Empty));
+                        ViewModelLocator.ApplicationViewModel.ReturnToNavigationPageSource(NavigationSourcePage,
+                            NavigationSourcePageViewModel);
+                        break;
+
+                    case LoginResult.UsernameNotExists:
+                        MessageBox.Show("Username does not exist");
+                        break;
+
+                    case LoginResult.WrongPassword:
+                        MessageBox.Show("You have typed a wrong password");
+                        break;
+                }
             });
         }
 
@@ -100,11 +123,13 @@ namespace modern_tech_499m.ViewModels
         {
             // Go to register page
             //Right now we have to manually resolve a viewmodel for the page to set it's navigation source
+
+            //In this case we are navigating to register page and passing current NavigationSourcePageViewModel and NavigationSourcePage(which was passed from the game page)
+            //So, in case of successful registration, the registration page will navigate back to the game page (not the login page)
             var registerViewModel = BootStrapper.Resolve<RegisterViewModel>();
             ViewModelLocator.ApplicationViewModel
-                .GoToPageWithNavigationSource(ApplicationPage.Register, ApplicationPage.Login, this, registerViewModel);
-
-            await Task.Delay(1);
+                .GoToPageWithNavigationSource(ApplicationPage.Register, NavigationSourcePage,
+                    NavigationSourcePageViewModel, registerViewModel);
         }
 
         /// <summary>
@@ -113,6 +138,10 @@ namespace modern_tech_499m.ViewModels
         public void SelectBotPlayer()
         {
             MessageBox.Show("Bot selected");
+            (NavigationSourcePageViewModel as GamePageViewModel).CurrentPlayerLoggingAction(
+                new AIPlayer("Bot", Guid.Empty));
+            ViewModelLocator.ApplicationViewModel.ReturnToNavigationPageSource(NavigationSourcePage,
+                NavigationSourcePageViewModel);
         }
     }
 }

@@ -10,11 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>modern_tech_499m.Repositories</RootNamespace>
     <AssemblyName>modern-tech-499m.Repositories</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Domain\GameInfo.cs" />
+    <Compile Include="Core\Domain\RegisterResult.cs" />
+    <Compile Include="Core\Domain\LoginResult.cs" />
     <Compile Include="Core\Domain\User.cs" />
     <Compile Include="Core\IDatabaseContext.cs" />
     <Compile Include="Core\IDatabaseContextFactory.cs" />

@@ -169,14 +169,14 @@ namespace modern_tech_499m.ViewModels
                     CurrentPlayerLoggingAction = player => Player1 = player;
                     //Navigating to login page with current viewmodel navigation source
                     ViewModelLocator.ApplicationViewModel.GoToPageWithNavigationSource(ApplicationPage.Login,
-                        ApplicationPage.Game, this, new LoginViewModel());
+                        ApplicationPage.Game, this, BootStrapper.Resolve<LoginViewModel>());
                     break;
                 case "Player2":
                     //Setting action that will be called from login page when player will be loaded
                     CurrentPlayerLoggingAction = player => Player2 = player;
                     //Navigating to login page with current viewmodel navigation source
                     ViewModelLocator.ApplicationViewModel.GoToPageWithNavigationSource(ApplicationPage.Login,
-                        ApplicationPage.Game, this, new LoginViewModel());
+                        ApplicationPage.Game, this, BootStrapper.Resolve<LoginViewModel>());
                     break;
                 default:
                     {
