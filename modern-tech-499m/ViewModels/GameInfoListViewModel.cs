@@ -17,6 +17,8 @@ namespace modern_tech_499m.ViewModels
         /// </summary>
         public List<GameInfoListItemViewModel> Items { get; set; }
 
+        public GameInfoListItemViewModel SelectedItem { get; set; }
+
         public GameInfoListViewModel(List<GameInfoListItemViewModel> items)
         {
             Items = items;

@@ -30,7 +30,6 @@
 
             <userControls:UsersDatabaseListControl Grid.Row="1" DataContext="{Binding UsersListViewModel}"
                                                   d:DataContext="{x:Static viewmodels:UsersDatabaseListDesignModel.Instance}"/>
-
         </Grid>
     </Border>
 </local:BasePage>

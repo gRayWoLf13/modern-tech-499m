@@ -28,7 +28,6 @@ namespace modern_tech_499m.ViewModels
             FullName = "Молочников Сергей Сергеевич";
             Username = "gRayWoLf";
             BirthDate = new DateTime(1996, 1, 13);
-            IsSelected = false;
         }
 
         #endregion

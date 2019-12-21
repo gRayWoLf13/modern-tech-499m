@@ -37,10 +37,5 @@ namespace modern_tech_499m.ViewModels
         /// The name of the second player
         /// </summary>
         public string Player2Name { get; set; }
-
-        /// <summary>
-        /// True if this item is selected
-        /// </summary>
-        public bool IsSelected { get; set; }
     }
 }

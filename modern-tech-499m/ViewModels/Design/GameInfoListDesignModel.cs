@@ -25,7 +25,7 @@ namespace modern_tech_499m.ViewModels
         public GameInfoListDesignModel()
             : base(new List<GameInfoListItemViewModel>
             {
-                new GameInfoListItemViewModel()
+                new GameInfoListItemViewModel
                 {
                     GameType = "AIvU",
                     GameScore = 13,
@@ -34,7 +34,7 @@ namespace modern_tech_499m.ViewModels
                     Player2Name = "Second player",
                 },
 
-                new GameInfoListItemViewModel()
+                new GameInfoListItemViewModel
                 {
                     GameType = "UvU",
                     GameScore = 5,
@@ -43,17 +43,16 @@ namespace modern_tech_499m.ViewModels
                     Player2Name = "Second player",
                 },
 
-                new GameInfoListItemViewModel()
+                new GameInfoListItemViewModel
                 {
                     GameType = "UvU",
                     GameScore = -80,
                     WasGameFinished = false,
                     Player1Name = "First winner",
                     Player2Name = "Second loser",
-                    IsSelected = true
                 },
 
-                new GameInfoListItemViewModel()
+                new GameInfoListItemViewModel
                 {
                     GameType = "UvU",
                     GameScore = 0,
@@ -61,7 +60,6 @@ namespace modern_tech_499m.ViewModels
                     Player1Name = "First broken user",
                     Player2Name = "Second broken user",
                 }
-
             })
         {
         }

@@ -9,14 +9,19 @@
              d:DataContext="{x:Static viewmodels:GameInfoListDesignModel.Instance}"
              d:DesignHeight="500" d:DesignWidth="800">
     <Grid Background="{StaticResource ForegroundLightBrush}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Items}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" BorderThickness="0" BorderBrush="{x:Null}">
+            <ListView
+                ItemsSource="{Binding Items}"
+                HorizontalContentAlignment="Stretch"
+                SelectedItem="{Binding SelectedItem}"
+                ItemContainerStyle="{StaticResource NewListViewItemStyle}"
+                Margin="-1">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <local:GameInfoListItemControl Height="90"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </ListView>
         </ScrollViewer>
     </Grid>
 </UserControl>

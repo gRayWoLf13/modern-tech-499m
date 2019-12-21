@@ -18,7 +18,7 @@
                     <ControlTemplate TargetType="{x:Type ContentControl}">
 
                         <!-- Content -->
-                        <Border x:Name="background" Background="{StaticResource ForegroundLightBrush}">
+                        <Border x:Name="background" Background="Transparent">
                             <Grid x:Name="container" Background="Transparent">
                                 <Grid.ColumnDefinitions>
                                     <!-- Game type picture -->
@@ -101,32 +101,6 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <!-- Hover effect -->
-                        <ControlTemplate.Triggers>
-                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="Background" TargetName="background" Value="{StaticResource ForegroundVeryLightPurpleBrush}"/>
-                            </DataTrigger>
-
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="{StaticResource ForegroundDarkBrush}"/>
-                            </Trigger>
-                            <EventTrigger RoutedEvent="MouseEnter">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation To="{StaticResource ForegroundVeryLightPurple}" Duration="0:0:0.5" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-
-                            <EventTrigger RoutedEvent="MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation To="Transparent" Duration="0:0:0.5" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </ControlTemplate.Triggers>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

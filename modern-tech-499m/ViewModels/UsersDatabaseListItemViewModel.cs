@@ -31,10 +31,5 @@ namespace modern_tech_499m.ViewModels
         /// The birth date of the user
         /// </summary>
         public DateTime? BirthDate { get; set; }
-
-        /// <summary>
-        /// True if this item is selected
-        /// </summary>
-        public bool IsSelected { get; set; }
     }
 }

@@ -29,7 +29,6 @@ namespace modern_tech_499m.ViewModels
             WasGameFinished = true;
             Player1Name = "First bot";
             Player2Name = "Second player";
-            IsSelected = false;
         }
 
         #endregion

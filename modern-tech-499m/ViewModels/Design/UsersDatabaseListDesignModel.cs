@@ -25,31 +25,28 @@ namespace modern_tech_499m.ViewModels
         public UsersDatabaseListDesignModel()
             : base(new List<UsersDatabaseListItemViewModel>
             {
-                new UsersDatabaseListItemViewModel()
+                new UsersDatabaseListItemViewModel
                 {
                     Initials = "М.С.С.",
                     FullName = "Молочников Сергей Сергеевич",
                     Username = "gRayWoLf",
                     BirthDate = new DateTime(1996, 1, 13),
-                    IsSelected = false
                 },
 
-                new UsersDatabaseListItemViewModel()
+                new UsersDatabaseListItemViewModel
                 {
                     Initials = "А.А.А.",
                     FullName = "Антонов Антон Антонович",
                     Username = "AntoNoV",
                     BirthDate = new DateTime(2000, 5, 28),
-                    IsSelected = false
                 },
 
-                new UsersDatabaseListItemViewModel()
+                new UsersDatabaseListItemViewModel
                 {
                     Initials = "U1",
                     FullName = "User number 1",
                     Username = "Un1",
                     BirthDate = new DateTime(2001, 1, 1),
-                    IsSelected = true
                 }
             })
         { }

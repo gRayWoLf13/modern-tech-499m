@@ -51,7 +51,6 @@ namespace modern_tech_499m.ViewModels
                     $"{item.LastName[0]}.{item.FirstName[0]}{(!string.IsNullOrEmpty(item.Patronymic) ? "." : string.Empty)}{(!string.IsNullOrEmpty(item.Patronymic) ? item.Patronymic[0].ToString() : string.Empty)}",
                 FullName = $"{item.LastName} {item.LastName} {item.Patronymic}",
                 BirthDate = item.BirthDate,
-                IsSelected = false,
                 Username = "username"
             }).ToList();
             UsersListViewModel = new UsersDatabaseListViewModel(viewUsers);

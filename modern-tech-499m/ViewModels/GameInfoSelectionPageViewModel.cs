@@ -55,7 +55,6 @@ namespace modern_tech_499m.ViewModels
                 {
                     GameType = gameType,
                     GameScore = gameInfo.Score,
-                    IsSelected = false,
                     Player1Name = user1Name,
                     Player2Name = user2Name,
                     WasGameFinished = gameInfo.GameFinished
