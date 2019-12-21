@@ -19,7 +19,7 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// The current page of the application
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Welcome;
+        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Register;
 
         /// <summary>
         /// The viewmodel to use for the current page when the CurrentPage changes
@@ -32,9 +32,27 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// True if the side menu should be shown
         /// </summary>
-        public bool SideMenuVisible { get; set; } = false;
+        public bool SideMenuVisible { get; set; }
 
+        /// <summary>
+        /// Command to open/close side menu
+        /// </summary>
         public ICommand OpenCloseSettingsCommand { get; set; }
+
+        /// <summary>
+        /// Command to go to welcome page
+        /// </summary>
+        public ICommand NavigateToWelcomePageCommand { get; set; }
+
+        /// <summary>
+        /// Command to go to all games list page
+        /// </summary>
+        public ICommand NavigateToGamesPageCommand { get; set; }
+
+        /// <summary>
+        /// Command to go to all users list command
+        /// </summary>
+        public ICommand NavigateToUsersListPageCommand { get; set; }
 
         #endregion
 
@@ -55,9 +73,6 @@ namespace modern_tech_499m.ViewModels
 
             //Fire off a CurrentPage changed event
             OnPropertyChanged(nameof(CurrentPage));
-
-            //Show side menu or not?
-            SideMenuVisible = page == ApplicationPage.GameInfoSelection;
         }
 
         /// <summary>
@@ -83,9 +98,6 @@ namespace modern_tech_499m.ViewModels
 
             //Set the navigation source page viewmodel
             CurrentPageViewModel.NavigationSourcePageViewModel = sourcePageViewModel;
-
-            //Show side menu or not?
-            SideMenuVisible = page == ApplicationPage.GameInfoSelection;
         }
 
         public void ReturnToNavigationPageSource(ApplicationPage sourcePageType, BaseViewModel sourcePageViewModel)
@@ -95,9 +107,6 @@ namespace modern_tech_499m.ViewModels
             CurrentPage = sourcePageType;
 
             OnPropertyChanged(nameof(CurrentPage));
-
-            //Show side menu or not?
-            SideMenuVisible = CurrentPage == ApplicationPage.GameInfoSelection;
         }
 
         #endregion
@@ -107,6 +116,11 @@ namespace modern_tech_499m.ViewModels
         public ApplicationViewModel()
         {
             OpenCloseSettingsCommand = new RelayCommand(() => SideMenuVisible ^= true);
+            NavigateToWelcomePageCommand = new RelayCommand(() =>
+                ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Welcome));
+            NavigateToGamesPageCommand = new RelayCommand(() =>
+                ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.GameInfoSelection));
+            NavigateToUsersListPageCommand = new RelayCommand(() => { });
         }
 
         #endregion

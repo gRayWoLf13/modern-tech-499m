@@ -42,7 +42,19 @@
                         <TextBox Text="{Binding Username}" Tag="Username"/>
 
                         <!-- Password -->
-                        <PasswordBox x:Name="PasswordText" Tag="Password" Margin="0 0 0 30"/>
+                        <PasswordBox x:Name="PasswordText" Tag="Password"/>
+
+                        <!-- First name -->
+                        <TextBox Text="{Binding FirstName}" Tag="First name"/>
+
+                        <!--Second name -->
+                        <TextBox Text="{Binding LastName}" Tag="Last name"/>
+
+                        <!-- Patronymic -->
+                        <TextBox Text="{Binding Patronymic}" Tag="Patronymic"/>
+
+                        <!-- Birth date -->
+                        <DatePicker SelectedDate="{Binding BirthDate}"/>
 
                         <!-- Next button -->
                         <Button

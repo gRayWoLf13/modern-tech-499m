@@ -54,12 +54,16 @@
                             CommandParameter="{Binding ElementName=Page}"/>
                     </StackPanel>
                 </Border>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                
+                    <Button Style="{StaticResource TextButton}"
+                        Content="Create new account"
+                        Command="{Binding RegisterCommand}"/>
 
                 <Button Style="{StaticResource TextButton}"
-                        Content="Create new account"
-                        HorizontalAlignment="Center"
-                        Command="{Binding RegisterCommand}"></Button>
-
+                        Content="Let the bot play instead of me"
+                        Command="{Binding SelectBotCommand}"/>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

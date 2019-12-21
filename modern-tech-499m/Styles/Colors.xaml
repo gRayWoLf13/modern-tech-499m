@@ -35,6 +35,9 @@
     <Color x:Key="ForegroundRed">#ff4747</Color>
     <SolidColorBrush x:Key="ForegroundRedBrush" Color="{StaticResource ForegroundRed}"/>
 
+    <Color x:Key="ForegroundLightRed">#ff9090</Color>
+    <SolidColorBrush x:Key="ForegroundLightRedBrush" Color="{StaticResource ForegroundLightRed}"/>
+
     <Color x:Key="ForegroundGreen">#00c541</Color>
     <SolidColorBrush x:Key="ForegroundGreenBrush" Color="{StaticResource ForegroundGreen}"/>
 

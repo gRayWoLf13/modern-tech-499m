@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
 using modern_tech_499m.Security;
@@ -36,6 +37,26 @@ namespace modern_tech_499m.ViewModels
         /// The password of the user
         /// </summary>
         public SecureString Password { get; set; }
+
+        /// <summary>
+        /// The first name of the user
+        /// </summary>
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// The last name of the user
+        /// </summary>
+        public string LastName { get; set; }
+
+        /// <summary>
+        /// The patronymic of the user
+        /// </summary>
+        public string Patronymic { get; set; }
+
+        /// <summary>
+        /// The birth date of the user
+        /// </summary>
+        public DateTime? BirthDate { get; set; }
 
         #endregion
 
@@ -74,12 +95,21 @@ namespace modern_tech_499m.ViewModels
         /// <returns></returns>
         public async Task Register(object parameter)
         {
-            /*await RunCommand(() => RegisterIsRunning, async () =>
+            await RunCommand(() => RegisterIsRunning, async () =>
             {
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                await Task.Delay(TimeSpan.FromSeconds(2));
 
-            });*/
-            ViewModelLocator.ApplicationViewModel.ReturnToNavigationPageSource(NavigationSourcePage, NavigationSourcePageViewModel);
+                var username = Username;
+                var password = (parameter as IHavePassword).SecurePassword.Unsecure();
+                var firstName = FirstName;
+                var lastName = LastName;
+                var patronymic = Patronymic;
+                var birthDate = BirthDate;
+
+                //TODO Get password hash and create register method in repository
+                MessageBox.Show(
+                    $"{username}{Environment.NewLine}{password}{Environment.NewLine}{firstName}{Environment.NewLine}{lastName}{Environment.NewLine}{patronymic}{Environment.NewLine}{birthDate}");
+            });
         }
 
         /// <summary>
@@ -88,10 +118,8 @@ namespace modern_tech_499m.ViewModels
         /// <returns></returns>
         public async Task LoginAsync()
         {
-            // Go to register page
+            // Go to login page
             ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Login);
-
-            await Task.Delay(1);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
 using modern_tech_499m.Security;
@@ -14,7 +15,6 @@ namespace modern_tech_499m.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         #region Private members
-
 
 
         #endregion
@@ -51,6 +51,11 @@ namespace modern_tech_499m.ViewModels
         /// </summary>
         public ICommand RegisterCommand { get; set; }
 
+        /// <summary>
+        /// The command to select the bot player instead of real player
+        /// </summary>
+        public ICommand SelectBotCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -63,6 +68,7 @@ namespace modern_tech_499m.ViewModels
             //Create commands
             LoginCommand = new RelayParameterizedCommand( async parameter => await LoginAsync(parameter));
             RegisterCommand = new RelayCommand(async () => await RegisterAsync());
+            SelectBotCommand = new RelayCommand(SelectBotPlayer);
         }
 
         #endregion
@@ -78,11 +84,11 @@ namespace modern_tech_499m.ViewModels
             {
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
-                //Go to game info selection page
-                ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.GameInfoSelection);
+                var username = Username;
+                var password = (parameter as IHavePassword).SecurePassword.Unsecure();
 
-                //var username = Username;
-                //var value = (parameter as IHavePassword).SecurePassword.Unsecure();
+                //TODO Get password hash and create login method in repository
+                MessageBox.Show($"{username}{Environment.NewLine}{password}");
             });
         }
 
@@ -93,17 +99,20 @@ namespace modern_tech_499m.ViewModels
         public async Task RegisterAsync()
         {
             // Go to register page
-            //ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Register);
-
-            //ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Game);
-
-
             //Right now we have to manually resolve a viewmodel for the page to set it's navigation source
             var registerViewModel = BootStrapper.Resolve<RegisterViewModel>();
-           ViewModelLocator.ApplicationViewModel
-               .GoToPageWithNavigationSource(ApplicationPage.Register, ApplicationPage.Login, this, registerViewModel);
+            ViewModelLocator.ApplicationViewModel
+                .GoToPageWithNavigationSource(ApplicationPage.Register, ApplicationPage.Login, this, registerViewModel);
 
             await Task.Delay(1);
+        }
+
+        /// <summary>
+        /// Selects bot player and navigates back to game page
+        /// </summary>
+        public void SelectBotPlayer()
+        {
+            MessageBox.Show("Bot selected");
         }
     }
 }

@@ -26,8 +26,15 @@
 
                         <!--Main buttons -->
                         <StackPanel  Orientation="Horizontal">
-                            <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeGamesDatabaseIcon}"/>
-                            <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeUsersDatabaseIcon}"/>
+                            <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeWelcomeIcon}"
+                                    Command="{Binding ApplicationViewModel.NavigateToWelcomePageCommand,
+                                Source={x:Static viewmodels:ViewModelLocator.Instance}}"/>
+                            <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeGamesDatabaseIcon}"
+                                    Command="{Binding ApplicationViewModel.NavigateToGamesPageCommand,
+                                Source={x:Static viewmodels:ViewModelLocator.Instance}}"/>
+                            <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeUsersDatabaseIcon}"
+                                    Command="{Binding ApplicationViewModel.NavigateToUsersListPageCommand,
+                                Source={x:Static viewmodels:ViewModelLocator.Instance}}"/>
                         </StackPanel>
 
                         <Button Grid.Column="2" Style="{StaticResource IconButton}"
@@ -36,8 +43,31 @@
                                 Command="{Binding ApplicationViewModel.OpenCloseSettingsCommand,
                                 Source={x:Static viewmodels:ViewModelLocator.Instance}}"/>
                     </Grid>
-                    <Border Grid.Row="1" CornerRadius="10"
-                            Background="{StaticResource ForegroundLightBrush}">
+                    <Border Grid.Row="1" CornerRadius="10">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="{StaticResource ForegroundLightBrush}"/>
+                                <Setter Property="Opacity" Value="0.1"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" Duration="0:0:0.3"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation To="0.1" Storyboard.TargetProperty="Opacity" Duration="0:0:0.3"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <ContentPresenter/>
                     </Border>
                 </Grid>
