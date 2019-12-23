@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Linq;
 using modern_tech_499m.Repositories.Core;
-using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.ViewModels.Base;
 using NLog;
@@ -51,7 +45,7 @@ namespace modern_tech_499m.ViewModels
                     $"{item.LastName[0]}.{item.FirstName[0]}{(!string.IsNullOrEmpty(item.Patronymic) ? "." : string.Empty)}{(!string.IsNullOrEmpty(item.Patronymic) ? item.Patronymic[0].ToString() : string.Empty)}",
                 FullName = $"{item.LastName} {item.LastName} {item.Patronymic}",
                 BirthDate = item.BirthDate,
-                Username = "username"
+                Username = item.Username
             }).ToList();
             UsersListViewModel = new UsersDatabaseListViewModel(viewUsers);
         }

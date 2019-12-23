@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
 using modern_tech_499m.Logic;
@@ -20,8 +15,6 @@ namespace modern_tech_499m.ViewModels
         public IGameInfoRepository GameInfoRepository { get; }
         public GamePageViewModel(IGameInfoRepository gameInfoRepository)
         {
-            //GameController = new GameController(gameInfoRepository.GetAll().First(), gameInfoRepository);
-
             _logger.Debug("Main window view model constructor called");
             GameInfoRepository = gameInfoRepository;
 

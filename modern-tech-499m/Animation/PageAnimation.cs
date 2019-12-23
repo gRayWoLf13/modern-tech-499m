@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace modern_tech_499m
+﻿namespace modern_tech_499m
 {
     /// <summary>
     /// Styles of page animations

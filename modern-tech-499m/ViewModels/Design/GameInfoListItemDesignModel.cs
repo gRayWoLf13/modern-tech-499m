@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace modern_tech_499m.ViewModels
+﻿namespace modern_tech_499m.ViewModels
 {
     /// <summary>
     /// The design-time data for a <see cref="GameInfoListItemViewModel"/>

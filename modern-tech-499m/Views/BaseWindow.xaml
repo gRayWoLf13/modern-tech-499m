@@ -129,7 +129,7 @@
                     Foreground="{StaticResource ForegroundDarkPurpleBrush}"
                     Style="{StaticResource IconButton}"
                     Content="{StaticResource FontAwesomeSettingsIcon}"/>
-            <control:SideMenuContol Width="300" base:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible, Source={x:Static viewmodels:ViewModelLocator.Instance}}">
+            <control:SideMenuControl Width="300" base:AnimateSlideInFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible, Source={x:Static viewmodels:ViewModelLocator.Instance}}">
                 <Grid VerticalAlignment="Top">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -150,7 +150,7 @@
                            <TextBlock Style="{StaticResource LightText}" Margin="0" Text="Theme 2"/>
                        </ComboBox>
                 </Grid>
-            </control:SideMenuContol>
+            </control:SideMenuControl>
         </Grid>
 
         <Grid Grid.Column="1">

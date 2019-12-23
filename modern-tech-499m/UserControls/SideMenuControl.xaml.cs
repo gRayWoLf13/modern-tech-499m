@@ -3,11 +3,11 @@
 namespace modern_tech_499m.UserControls
 {
     /// <summary>
-    /// Interaction logic for UsersDatabaseListControl.xaml
+    /// Interaction logic for SideMenuControl.xaml
     /// </summary>
-    public partial class UsersDatabaseListControl : UserControl
+    public partial class SideMenuControl : UserControl
     {
-        public UsersDatabaseListControl()
+        public SideMenuControl()
         {
             InitializeComponent();
         }

@@ -156,16 +156,16 @@ namespace modern_tech_499m.Tests
             int counter = 0;
             for (int i = 0; i < cellsCount; i++)
             {
-                field.Add(new Cell() { Owner = player1, Value = initialvalues[counter], IsEndingCell = false, Number = i });
+                field.Add(new Cell(player1, i) {Value = initialvalues[counter], IsEndingCell = false});
                 counter++;
             }
-            field.Add(new Cell() { Owner = player1, Value = endingCellPlayer1Value, IsEndingCell = true, Number = cellsCount });
+            field.Add(new Cell(player1, cellsCount) { Value = endingCellPlayer1Value, IsEndingCell = true });
             for (int i = 0; i < cellsCount; i++)
             {
-                field.Add(new Cell() { Owner = player2, Value = initialvalues[counter], IsEndingCell = false, Number = i });
+                field.Add(new Cell(player2, i) {Value = initialvalues[counter], IsEndingCell = false });
                 counter++;
             }
-            field.Add(new Cell() { Owner = player2, Value = endingCellPlayer2Value, IsEndingCell = true, Number = cellsCount });
+            field.Add(new Cell(player2, cellsCount) { Value = endingCellPlayer2Value, IsEndingCell = true });
             return field;
         }
     }

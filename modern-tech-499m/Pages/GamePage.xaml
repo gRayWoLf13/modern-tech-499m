@@ -175,7 +175,7 @@
                     </controls:GameCellControl>
 
                     <!-- Player 1, Cell 6 -->
-                    <controls:GameCellControl Margin="10" Grid.Row="1" Grid.Column="7" IsActiveCell="True">
+                    <controls:GameCellControl Margin="10" Grid.Row="1" Grid.Column="7" IsActiveCell="False">
                         <controls:GameCellControl.CellValue>
                             <Binding Path="GameController.GameLogic[Player1, 6]"></Binding>
                         </controls:GameCellControl.CellValue>
@@ -277,7 +277,7 @@
                         </controls:GameCellControl.CellValue>
                     </controls:GameCellControl>
 
-                    <controls:GameCellControl Margin="10" Grid.Row="1" Grid.Column="0" IsActiveCell="True">
+                    <controls:GameCellControl Margin="10" Grid.Row="1" Grid.Column="0" IsActiveCell="False">
                         <controls:GameCellControl.CellValue>
                             <Binding Path="GameController.GameLogic[Player2, 6]"></Binding>
                         </controls:GameCellControl.CellValue>

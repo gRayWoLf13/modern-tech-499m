@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
-using modern_tech_499m.Pages;
 using modern_tech_499m.ViewModels;
 
 namespace modern_tech_499m.Converters

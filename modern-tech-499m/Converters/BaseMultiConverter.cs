@@ -7,10 +7,10 @@ namespace modern_tech_499m.Converters
 {
     internal abstract class BaseMultiConverter<T> : MarkupExtension, IMultiValueConverter where T : class, new()
     {
-        private static T _mConverter = null;
+        private static T _converter = null;
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return _mConverter ?? (_mConverter = new T());
+            return _converter ?? (_converter = new T());
         }
         public abstract object Convert(object[] values, Type targetType, object parameter, CultureInfo culture);
         public abstract object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture);

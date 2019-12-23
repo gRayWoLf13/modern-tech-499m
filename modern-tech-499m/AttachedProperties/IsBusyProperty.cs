@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace modern_tech_499m
+﻿namespace modern_tech_499m
 {
     /// <summary>
     /// The IsBusy attached property for anything that want to flag if the control is busy

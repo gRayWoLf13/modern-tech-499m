@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using modern_tech_499m.ViewModels.Base;
 
 namespace modern_tech_499m.ViewModels
