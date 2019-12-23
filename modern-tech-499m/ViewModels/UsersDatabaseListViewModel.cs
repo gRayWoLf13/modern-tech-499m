@@ -16,19 +16,9 @@ namespace modern_tech_499m.ViewModels
         /// </summary>
         public List<UsersDatabaseListItemViewModel> Items { get; set; }
 
-        public UsersDatabaseListItemViewModel SelectedItem { get; set; }
-
-        public ICommand TestCommand { get; set; }
-
         public UsersDatabaseListViewModel(List<UsersDatabaseListItemViewModel> items)
         {
             Items = items;
-            TestCommand = new RelayCommand(Test);
-        }
-
-        private void Test()
-        {
-
         }
     }
 }

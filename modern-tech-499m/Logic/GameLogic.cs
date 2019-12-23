@@ -13,15 +13,15 @@ namespace modern_tech_499m.Logic
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public readonly int CellsCount;
         private List<Cell> field;
-        private Stack<Move> undoMovesHistory;
-        private Stack<Move> redoMovesHistory;
+        private Stack<Move> _undoMovesHistory;
+        private Stack<Move> _redoMovesHistory;
 
         public IPlayer Player1 { get; }
         public IPlayer Player2 { get; }
         public IPlayer CurrentPlayer { get; private set; }
         public bool GameEnded { get; private set; }
         public int Score => field[CellsCount].Value - field[field.Count - 1].Value;
-        private int initialValue;
+        private int _initialValue;
         private List<int> _availableValuesToStealEnemyPoints;
 
         public IPlayer GetOtherPlayer(IPlayer player)
@@ -68,9 +68,9 @@ namespace modern_tech_499m.Logic
             Player1 = player1;
             Player2 = player2;
             CurrentPlayer = firstPlayer;
-            undoMovesHistory = new Stack<Move>();
-            redoMovesHistory = new Stack<Move>();
-            this.initialValue = initialValue;
+            _undoMovesHistory = new Stack<Move>();
+            _redoMovesHistory = new Stack<Move>();
+            this._initialValue = initialValue;
             GameEnded = false;
             CreateField(initialValue);
         }
@@ -119,9 +119,9 @@ namespace modern_tech_499m.Logic
             Player1 = player1;
             Player2 = player2;
             CurrentPlayer = firstPlayer;
-            undoMovesHistory = new Stack<Move>();
-            redoMovesHistory = new Stack<Move>();
-            initialValue = CreateField(initialValues, endingCellPlayer1Value, endingCellPlayer2Value) / 2 / CellsCount;
+            _undoMovesHistory = new Stack<Move>();
+            _redoMovesHistory = new Stack<Move>();
+            _initialValue = CreateField(initialValues, endingCellPlayer1Value, endingCellPlayer2Value) / 2 / CellsCount;
             GameEnded = false;
         }
 
@@ -161,11 +161,11 @@ namespace modern_tech_499m.Logic
                         pl = Player2;
                         break;
                     default:
-                    {
-                        var exception = new ArgumentException(nameof(player));
-                        _logger.Fatal(exception, "Cell value getter called");
-                        throw exception;
-                    }
+                        {
+                            var exception = new ArgumentException(nameof(player));
+                            _logger.Fatal(exception, "Cell value getter called");
+                            throw exception;
+                        }
                 }
                 return GetCellValue(pl, cellIndex);
             }
@@ -200,8 +200,8 @@ namespace modern_tech_499m.Logic
 
             List<KeyValuePair<Cell, int>> cellValuesChanges = GetFieldValuesChanges(gameFieldCopy);
             Move madeMove = new Move(CurrentPlayer, cellValuesChanges, result.moveResult);
-            undoMovesHistory.Push(madeMove);
-            redoMovesHistory.Clear();
+            _undoMovesHistory.Push(madeMove);
+            _redoMovesHistory.Clear();
 
             if (CheckGameEnding())
             {
@@ -217,23 +217,23 @@ namespace modern_tech_499m.Logic
             _logger.Debug("Undo move called");
             if (!CurrentPlayer.CanUndoMoves)
                 return false;
-            if (undoMovesHistory.Count == 0)
+            if (_undoMovesHistory.Count == 0)
                 return false;
-            Move lastMove = undoMovesHistory.Pop();
-            redoMovesHistory.Push(lastMove);
+            Move lastMove = _undoMovesHistory.Pop();
+            _redoMovesHistory.Push(lastMove);
             UndoCellsValues(lastMove.CellValuesChanges);
             CurrentPlayer = lastMove.MoveOwner;
             if (!CurrentPlayer.CanUndoMoves)
             {
-                if (undoMovesHistory.Count == 0)
+                if (_undoMovesHistory.Count == 0)
                 {
-                    lastMove = redoMovesHistory.Pop();
+                    lastMove = _redoMovesHistory.Pop();
                     RedoCellsValues(lastMove.CellValuesChanges);
                     CurrentPlayer = GetOtherPlayer(lastMove.MoveOwner);
                     return false;
                 }
-                lastMove = undoMovesHistory.Pop();
-                redoMovesHistory.Push(lastMove);
+                lastMove = _undoMovesHistory.Pop();
+                _redoMovesHistory.Push(lastMove);
                 UndoCellsValues(lastMove.CellValuesChanges);
                 CurrentPlayer = lastMove.MoveOwner;
             }
@@ -246,18 +246,18 @@ namespace modern_tech_499m.Logic
             _logger.Debug("Redo move called");
             if (!CurrentPlayer.CanUndoMoves)
                 return false;
-            if (redoMovesHistory.Count == 0)
+            if (_redoMovesHistory.Count == 0)
                 return false;
-            Move lastMove = redoMovesHistory.Pop();
-            undoMovesHistory.Push(lastMove);
+            Move lastMove = _redoMovesHistory.Pop();
+            _undoMovesHistory.Push(lastMove);
             RedoCellsValues(lastMove.CellValuesChanges);
             CurrentPlayer = GetOtherPlayer(lastMove.MoveOwner);
             if (!CurrentPlayer.CanUndoMoves)
             {
-                if (redoMovesHistory.Count == 0)
+                if (_redoMovesHistory.Count == 0)
                     throw new Exception("Something is really wrong here");
-                lastMove = redoMovesHistory.Pop();
-                undoMovesHistory.Push(lastMove);
+                lastMove = _redoMovesHistory.Pop();
+                _undoMovesHistory.Push(lastMove);
                 RedoCellsValues(lastMove.CellValuesChanges);
                 CurrentPlayer = GetOtherPlayer(lastMove.MoveOwner);
             }
@@ -283,25 +283,29 @@ namespace modern_tech_499m.Logic
         public string Serialize()
         {
             _logger.Debug("Game logic Serialize method called");
-            var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Objects};
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
             return JsonConvert.SerializeObject(new SerializableGameLogic
             {
                 CellsCount = CellsCount,
                 Field = field,
-                UndoMovesHistory = undoMovesHistory,
-                RedoMovesHistory = redoMovesHistory,
+                UndoMovesHistory = _undoMovesHistory,
+                RedoMovesHistory = _redoMovesHistory,
                 Player1 = Player1,
                 Player2 = Player2,
                 CurrentPlayer = CurrentPlayer,
-                InitialValue = initialValue,
+                InitialValue = _initialValue,
                 AvailableValuesToStealEnemyPoints = _availableValuesToStealEnemyPoints
             }, settings);
         }
 
         public static GameLogic Deserialize(string data)
         {
-            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects};
+            var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
             var result = JsonConvert.DeserializeObject<SerializableGameLogic>(data, settings);
+
+            //Reversing redoMovesHistory and UndoMovesHistory stacks after deserialization
+            result.UndoMovesHistory = new Stack<Move>(result.UndoMovesHistory.ToList());
+            result.RedoMovesHistory = new Stack<Move>(result.RedoMovesHistory.ToList());
             return new GameLogic(result);
         }
 
@@ -310,12 +314,12 @@ namespace modern_tech_499m.Logic
         {
             CellsCount = obj.CellsCount;
             field = obj.Field;
-            undoMovesHistory = obj.UndoMovesHistory;
-            redoMovesHistory = obj.RedoMovesHistory;
+            _undoMovesHistory = obj.UndoMovesHistory;
+            _redoMovesHistory = obj.RedoMovesHistory;
             Player1 = obj.Player1;
             Player2 = obj.Player2;
             CurrentPlayer = obj.CurrentPlayer;
-            initialValue = obj.InitialValue;
+            _initialValue = obj.InitialValue;
             _availableValuesToStealEnemyPoints = obj.AvailableValuesToStealEnemyPoints;
         }
         #endregion
@@ -328,16 +332,17 @@ namespace modern_tech_499m.Logic
             int counter = 0;
             for (int i = 0; i < CellsCount; i++)
             {
-                field.Add(new Cell() { Owner = Player1, Value = initialvalues[counter], IsEndingCell = false, Number = i });
+                field.Add(new Cell(Player1, i) { Value = initialvalues[counter], IsEndingCell = false });
                 counter++;
             }
-            field.Add(new Cell() { Owner = Player1, Value = endingCellPlayer1Value, IsEndingCell = true, Number = CellsCount });
+            field.Add(new Cell(Player1, CellsCount) { Value = endingCellPlayer1Value, IsEndingCell = true });
             for (int i = 0; i < CellsCount; i++)
             {
-                field.Add(new Cell() { Owner = Player2, Value = initialvalues[counter], IsEndingCell = false, Number = i });
+                field.Add(new Cell(Player2, i) { Value = initialvalues[counter], IsEndingCell = false });
                 counter++;
             }
-            field.Add(new Cell() { Owner = Player2, Value = endingCellPlayer2Value, IsEndingCell = true, Number = CellsCount });
+
+            field.Add(new Cell(Player2, CellsCount) { Value = endingCellPlayer2Value, IsEndingCell = true });
             return initialvalues.Sum();
         }
 
@@ -347,14 +352,14 @@ namespace modern_tech_499m.Logic
             field = new List<Cell>();
             for (int i = 0; i < CellsCount; i++)
             {
-                field.Add(new Cell() { Owner = Player1, Value = initialValue, IsEndingCell = false, Number = i });
+                field.Add(new Cell(Player1, i) { Value = initialValue, IsEndingCell = false });
             }
-            field.Add(new Cell() { Owner = Player1, Value = 0, IsEndingCell = true, Number = CellsCount });
+            field.Add(new Cell(Player1, CellsCount) { Value = 0, IsEndingCell = true });
             for (int i = 0; i < CellsCount; i++)
             {
-                field.Add(new Cell() { Owner = Player2, Value = initialValue, IsEndingCell = false, Number = i });
+                field.Add(new Cell(Player2, i) { Value = initialValue, IsEndingCell = false });
             }
-            field.Add(new Cell() { Owner = Player2, Value = 0, IsEndingCell = true, Number = CellsCount });
+            field.Add(new Cell(Player2, CellsCount) { Value = 0, IsEndingCell = true });
         }
 
         private (MoveResult moveResult, int lastCellNumber) MakeSingleMove(IPlayer player, int indexOnField)
@@ -386,9 +391,9 @@ namespace modern_tech_499m.Logic
 
         private bool CheckGameEnding()
         {
-            if (field[CellsCount].Value >= initialValue * CellsCount)
+            if (field[CellsCount].Value >= _initialValue * CellsCount)
                 return true;
-            if (field[CellsCount * 2 + 1].Value >= initialValue * CellsCount)
+            if (field[CellsCount * 2 + 1].Value >= _initialValue * CellsCount)
                 return true;
             return false;
         }
@@ -406,7 +411,7 @@ namespace modern_tech_499m.Logic
         {
             int cellToStartCleaning = CurrentPlayer.Equals(Player1) ? CellsCount + 1 : 0;
             int targetEngingCell = CurrentPlayer.Equals(Player1) ? CellsCount * 2 + 1 : CellsCount;
-            for(int i = 0; i < CellsCount; i++)
+            for (int i = 0; i < CellsCount; i++)
             {
                 field[targetEngingCell].Value += field[cellToStartCleaning + i].Value;
                 field[cellToStartCleaning + i].Value = 0;
@@ -458,13 +463,31 @@ namespace modern_tech_499m.Logic
         private void UndoCellsValues(List<KeyValuePair<Cell, int>> deltaValues)
         {
             foreach (var keyValuePair in deltaValues)
-                keyValuePair.Key.Value -= keyValuePair.Value;
+            {
+                foreach (var cell in field)
+                {
+                    if (keyValuePair.Key.Equals(cell))
+                    {
+                        cell.Value -= keyValuePair.Value;
+                        break;
+                    }
+                }
+            }
         }
 
         private void RedoCellsValues(List<KeyValuePair<Cell, int>> deltaValues)
         {
             foreach (var keyValuePair in deltaValues)
-                keyValuePair.Key.Value += keyValuePair.Value;
+            {
+                foreach (var cell in field)
+                {
+                    if (keyValuePair.Key.Equals(cell))
+                    {
+                        cell.Value += keyValuePair.Value;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

@@ -12,7 +12,6 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <ListView ItemsSource="{Binding Items}"
                       HorizontalContentAlignment="Stretch"
-                      SelectedItem="{Binding SelectedItem}"
                       ItemContainerStyle="{StaticResource NewListViewItemStyle}"
                       Margin="-1">
                 <ItemsControl.ItemTemplate>
@@ -22,6 +21,5 @@
                 </ItemsControl.ItemTemplate>
             </ListView>
         </ScrollViewer>
-        <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding TestCommand}">test</Button>
     </Grid>
 </UserControl>
