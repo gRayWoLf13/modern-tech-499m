@@ -120,7 +120,8 @@ namespace modern_tech_499m.ViewModels
                 ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Welcome));
             NavigateToGamesPageCommand = new RelayCommand(() =>
                 ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.GameInfoSelection));
-            NavigateToUsersListPageCommand = new RelayCommand(() => { });
+            NavigateToUsersListPageCommand = new RelayCommand(() =>
+                ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.UsersDatabase));
         }
 
         #endregion

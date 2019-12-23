@@ -17,8 +17,8 @@ namespace modern_tech_499m.Security
         public static string Unsecure(this SecureString secureString)
         {
             //Make sure we have a secure string
-            if (secureString == null)
-                return string.Empty;
+            if (secureString == null || secureString.Length == 0)
+                return null;
 
             //Get a pointer for an unsecure string in memory
             var unmanagedString = IntPtr.Zero;

@@ -11,6 +11,18 @@
       x:Name="Page"
       d:DesignHeight="700" d:DesignWidth="800"
       Title="LoginPage">
+    <Page.Resources>
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel Orientation="Horizontal">
+                <AdornedElementPlaceholder/>
+                <TextBlock Foreground="{StaticResource ForegroundRedBrush}"
+                           FontSize="{StaticResource FontSizeXXXLarge}"
+                           FontFamily="{StaticResource LatoBold}"
+                           FontWeight="Bold"
+                           Text="!"/>
+            </StackPanel>
+        </ControlTemplate>
+    </Page.Resources>
     <Grid>
         <!-- Main content scroll -->
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
@@ -39,22 +51,51 @@
                                    Margin="0 0 0 20"/>
 
                         <!-- Username -->
-                        <TextBox Text="{Binding Username}" Tag="Username"/>
+                        <TextBox Text="{Binding NewUser.Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="Username">
+                            <TextBox.ToolTip>
+                                <Binding RelativeSource="{RelativeSource Self}" Path="(Validation.Errors)[0].ErrorContent" />
+                            </TextBox.ToolTip>
+                        </TextBox>
 
                         <!-- Password -->
-                        <PasswordBox x:Name="PasswordText" Tag="Password"/>
+                        <Grid>
+                            <ContentControl IsTabStop="False" x:Name="PasswordTextPlaceholder"
+                                            Validation.ErrorTemplate="{StaticResource validationFailed}">
+                                <ContentControl.Content>
+                                    <Binding Path="NewUser.PasswordHash" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
+                                </ContentControl.Content>
+                            </ContentControl>
+                            <PasswordBox x:Name="PasswordText" Tag="Password" PasswordChanged="PasswordText_OnPasswordChanged">
+                                <PasswordBox.ToolTip>
+                                    <Binding ElementName="PasswordTextPlaceholder" Path="(Validation.Errors)[0].ErrorContent" />
+                                </PasswordBox.ToolTip>
+                            </PasswordBox>
+                        </Grid>
 
                         <!-- First name -->
-                        <TextBox Text="{Binding FirstName}" Tag="First name"/>
+                        <TextBox Text="{Binding NewUser.FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="First name">
+                            <TextBox.ToolTip>
+                                <Binding RelativeSource="{RelativeSource Self}" Path="(Validation.Errors)[0].ErrorContent" />
+                            </TextBox.ToolTip>
+                        </TextBox>
 
                         <!--Second name -->
-                        <TextBox Text="{Binding LastName}" Tag="Last name"/>
+                        <TextBox Text="{Binding NewUser.LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="Last name">
+                            <TextBox.ToolTip>
+                                <Binding RelativeSource="{RelativeSource Self}" Path="(Validation.Errors)[0].ErrorContent" />
+                            </TextBox.ToolTip>
+                        </TextBox>
 
                         <!-- Patronymic -->
-                        <TextBox Text="{Binding Patronymic}" Tag="Patronymic"/>
+                        <TextBox Text="{Binding NewUser.Patronymic, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="Patronymic"/>
 
                         <!-- Birth date -->
-                        <DatePicker SelectedDate="{Binding BirthDate}"/>
+                        <DatePicker SelectedDate="{Binding NewUser.BirthDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                    Validation.ErrorTemplate="{StaticResource validationFailed}"/>
 
                         <!-- Next button -->
                         <Button

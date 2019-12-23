@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using modern_tech_499m.Commands;
 using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.ViewModels.Base;
 using NLog;
@@ -11,19 +13,44 @@ namespace modern_tech_499m.ViewModels
 {
     public class GameInfoSelectionPageViewModel : BaseViewModel
     {
+        #region Private members
+
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly IGameInfoRepository _gameInfoRepository;
         private readonly IUserRepository _userRepository;
+
+        #endregion
+
+        #region Constructor
 
         public GameInfoSelectionPageViewModel(IGameInfoRepository gameInfoRepository, IUserRepository userRepository)
         {
             _logger.Debug("Game info selection view model constructor called");
             _gameInfoRepository = gameInfoRepository;
             _userRepository = userRepository;
+            ChooseGameCommand = new RelayCommand(ChooseGame);
             LoadGames();
         }
 
-        public void LoadGames()
+        #endregion
+
+        #region Public members
+
+        /// <summary>
+        /// Viewmodel of the games list
+        /// </summary>
+        public GameInfoListViewModel GameInfoListViewModel { get; set; }
+
+        /// <summary>
+        /// Command to load chosen game and navigate back to game page
+        /// </summary>
+        public ICommand ChooseGameCommand { get; set; }
+
+        #endregion
+
+        #region Private methods
+
+        private void LoadGames()
         {
             var gameInfos = _gameInfoRepository.GetAll();
             var gamesList = new List<GameInfoListItemViewModel>();
@@ -57,13 +84,21 @@ namespace modern_tech_499m.ViewModels
                     GameScore = gameInfo.Score,
                     Player1Name = user1Name,
                     Player2Name = user2Name,
-                    WasGameFinished = gameInfo.GameFinished
+                    WasGameFinished = gameInfo.GameFinished,
+                    InternalGameInfo = gameInfo
                 });
             }
 
             GameInfoListViewModel = new GameInfoListViewModel(gamesList);
         }
 
-        public GameInfoListViewModel GameInfoListViewModel { get; set; }
+        private void ChooseGame()
+        {
+            var gameInfo = GameInfoListViewModel.SelectedItem?.InternalGameInfo;
+            var gamePageViewModel = BootStrapper.Resolve<GamePageViewModel>();
+            gamePageViewModel.GameController = new GameController(gameInfo, _gameInfoRepository);
+            ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Game, gamePageViewModel);
+        }
+        #endregion
     }
 }

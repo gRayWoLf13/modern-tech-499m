@@ -15,6 +15,8 @@ namespace modern_tech_499m.Security
         /// <returns>A hash result as byte array</returns>
         public static byte[] GetStringHash(this string inputString)
         {
+            if (string.IsNullOrEmpty(inputString))
+                return null;
             var algorithm = SHA256.Create();
             return algorithm.ComputeHash(Encoding.Unicode.GetBytes(inputString));
         }

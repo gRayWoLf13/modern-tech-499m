@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using modern_tech_499m.Security;
 using modern_tech_499m.ViewModels;
 
 namespace modern_tech_499m.Pages
@@ -43,5 +44,15 @@ namespace modern_tech_499m.Pages
         /// The secure password for this login page
         /// </summary>
         public SecureString SecurePassword => PasswordText.SecurePassword;
+
+        //Still testing...
+        private void PasswordText_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            var cnt = PasswordTextPlaceholder.Content;
+            ((RegisterViewModel) DataContext).NewUser.PasswordHash = SecurePassword.Unsecure().GetStringHash();
+            ((RegisterViewModel) DataContext).OnPropertyChanged("PasswordHash");
+            cnt = PasswordTextPlaceholder.Content;
+            cnt = PasswordTextPlaceholder.Content;
+        }
     }
 }

@@ -19,17 +19,27 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0"
                        Margin="0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"
                        Style="{StaticResource HeaderText}"
                        Foreground="{StaticResource ForegroundTealBrush}"
                        FontSize="{StaticResource FontSizeXXLarge}"
                        FontFamily="{StaticResource LatoBoldItalic}"
-                       Text="Saved games list:"></TextBlock>
+                       Text="Saved games list:"/>
 
-            <userControls:GameInfoListControl Grid.Row="1" DataContext="{Binding GameInfoListViewModel}"
+            <userControls:GameInfoListControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                              DataContext="{Binding GameInfoListViewModel}"
                                               d:DataContext="{x:Static viewmodels:GameInfoListDesignModel.Instance}"/>
+
+            <Button Grid.Row="2" Grid.Column="1" Content="Choose game" Command="{Binding ChooseGameCommand}"/>
 
         </Grid>
     </Border>

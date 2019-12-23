@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.Security;
 using modern_tech_499m.ViewModels.Base;
+using PropertyChanged;
 
 namespace modern_tech_499m.ViewModels
 {
@@ -27,15 +29,27 @@ namespace modern_tech_499m.ViewModels
 
         #region Publilc properties
 
-        /// <summary>
-        /// The name of the user
-        /// </summary>
-        public string Username { get; set; }
+        private User _newUser;
+        [DoNotNotify]
+        public User NewUser
+        {
+            get => _newUser;
+            set
+            {
+                _newUser = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// A flag indicating if register command is running
         /// </summary>
         public bool RegisterIsRunning { get; set; }
+        /*
+        /// <summary>
+        /// The name of the user
+        /// </summary>
+        public string Username { get; set; }
 
         /// <summary>
         /// The password of the user
@@ -61,7 +75,7 @@ namespace modern_tech_499m.ViewModels
         /// The birth date of the user
         /// </summary>
         public DateTime? BirthDate { get; set; }
-
+        */
         #endregion
 
         #region Commands
@@ -87,8 +101,10 @@ namespace modern_tech_499m.ViewModels
         {
             _userRepository = userRepository;
             //Create commands
-            RegisterCommand = new RelayParameterizedCommand( async parameter => await Register(parameter));
+            RegisterCommand = new RelayParameterizedCommand(async parameter => await Register(parameter),
+                parameter => true);
             LoginCommand = new RelayCommand(async () => await LoginAsync());
+            _newUser = new User {BirthDate = DateTime.Today};
         }
 
         #endregion
@@ -102,26 +118,18 @@ namespace modern_tech_499m.ViewModels
         {
             await RunCommand(() => RegisterIsRunning, async () =>
             {
-                await Task.Delay(TimeSpan.FromSeconds(2));
+                await Task.Delay(TimeSpan.FromSeconds(1));
 
-                var username = Username;
                 var passwordHash = (parameter as IHavePassword).SecurePassword.Unsecure().GetStringHash();
-                var firstName = FirstName;
-                var lastName = LastName;
-                var patronymic = Patronymic;
-                var birthDate = BirthDate;
+                NewUser.PasswordHash = passwordHash;
 
-                var user = new User
+                if (!RegisterCommandCanExecute(out string errorMessage))
                 {
-                    Username = username,
-                    BirthDate = birthDate.HasValue ? birthDate.Value : DateTime.Today,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Patronymic = patronymic,
-                    PasswordHash = passwordHash
-                };
+                    MessageBox.Show(errorMessage);
+                    return;
+                }
 
-                var registerResult = await _userRepository.RegisterUser(user);
+                var registerResult = await _userRepository.RegisterUser(NewUser);
 
                 switch (registerResult.registerResult)
                 {
@@ -137,6 +145,18 @@ namespace modern_tech_499m.ViewModels
                         break;
                 }
             });
+        }
+
+        private bool RegisterCommandCanExecute(out string errorMessage)
+        {
+            var errors = typeof(User).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(property => property.GetIndexParameters().Length == 0)
+                .Select(property => NewUser[property.Name]).Where(item => !string.IsNullOrEmpty(item));
+            StringBuilder sb = new StringBuilder();
+            foreach (var error in errors)
+                sb.AppendLine(error);
+            errorMessage = sb.ToString();
+            return errors.Count() == 0;
         }
 
         /// <summary>
