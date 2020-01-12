@@ -94,7 +94,12 @@ namespace modern_tech_499m.ViewModels
                 switch (loginResult.loginResult)
                 {
                     case LoginResult.Success:
-                        MessageBox.Show("Login successful, returning to the game page");
+                        await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                        {
+                            Title = "Warning",
+                            Message = "Login successful, returning to the game page",
+                            OkText = "OK"
+                        });
                         (NavigationSourcePageViewModel as GamePageViewModel).CurrentPlayerLoggingAction(
                             new UserPlayer(loginResult.loggedUser.Username, loginResult.loggedUser, Guid.Empty));
                         ViewModelLocator.ApplicationViewModel.ReturnToNavigationPageSource(NavigationSourcePage,
@@ -102,11 +107,21 @@ namespace modern_tech_499m.ViewModels
                         break;
 
                     case LoginResult.UsernameNotExists:
-                        MessageBox.Show("Username does not exist");
+                        await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                        {
+                            Title = "Warning",
+                            Message = "Username does not exist",
+                            OkText = "OK"
+                        });
                         break;
 
                     case LoginResult.WrongPassword:
-                        MessageBox.Show("You have typed a wrong password");
+                        await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                        {
+                            Title = "Warning",
+                            Message = "You have typed a wrong password",
+                            OkText = "OK"
+                        });
                         break;
                 }
             });
@@ -132,9 +147,14 @@ namespace modern_tech_499m.ViewModels
         /// <summary>
         /// Selects bot player and navigates back to game page
         /// </summary>
-        public void SelectBotPlayer()
+        public async void SelectBotPlayer()
         {
-            MessageBox.Show("Bot selected");
+            await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+            {
+                Title = "Info",
+                Message = "Bot selected",
+                OkText = "OK"
+            });
             (NavigationSourcePageViewModel as GamePageViewModel).CurrentPlayerLoggingAction(
                 new AIPlayer("Bot", Guid.Empty));
             ViewModelLocator.ApplicationViewModel.ReturnToNavigationPageSource(NavigationSourcePage,

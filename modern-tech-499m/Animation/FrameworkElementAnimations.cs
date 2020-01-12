@@ -123,5 +123,60 @@ namespace modern_tech_499m.Animation
             element.Visibility = Visibility.Hidden;
 
         }
+
+        /// <summary>
+        /// Fades an element in
+        /// </summary>
+        /// <param name="element">The element to animate</param>
+        /// <param name="seconds">The time the animation will take</param>
+        /// <returns></returns>
+        /// 
+        public static async Task FadeIn(this FrameworkElement element, double seconds)
+        {
+            //Create the storyboard
+            var sb = new Storyboard();
+
+            //Add fade in animation
+            sb.AddFadeIn(seconds);
+
+            //Start animation
+            sb.Begin(element);
+
+            //Make element visible
+            element.Visibility = Visibility.Visible;
+
+            //Wait for it to finish
+            await Task.Delay(TimeSpan.FromSeconds(seconds));
+        }
+
+        /// <summary>
+        /// Fades an element out
+        /// </summary>
+        /// <param name="element">The element to animate</param>
+        /// <param name="seconds">The time the animation will take</param>
+        /// <returns></returns>
+        /// 
+        public static async Task FadeOut(this FrameworkElement element, double seconds)
+        {
+            //Create the storyboard
+            var sb = new Storyboard();
+
+            //Add fade in animation
+            sb.AddFadeOut(seconds);
+
+            //Start animation
+            sb.Begin(element);
+
+            //Make element visible
+            element.Visibility = Visibility.Visible;
+
+            //Wait for it to finish
+            await Task.Delay(TimeSpan.FromSeconds(seconds));
+
+            //Fully hide the element
+            element.Visibility = Visibility.Collapsed;
+        }
+
+
     }
 }

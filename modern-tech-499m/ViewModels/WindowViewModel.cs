@@ -87,6 +87,12 @@ namespace modern_tech_499m.ViewModels
         public int TitleHeight { get; set; } = 42;
 
         public GridLength TitleHeightGridLength => new GridLength(TitleHeight + ResizeBorder);
+
+        /// <summary>
+        /// True if we should have dimmed overlay on the window
+        /// when the popup is visible or window is not focused
+        /// </summary>
+        public bool DimmableOverlayVisible { get; set; }
         #endregion
 
         #region Commands

@@ -12,7 +12,7 @@
 
     <Grid>
         <!-- Main content scroll -->
-        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                         TextBlock.TextAlignment="Center">
                 <Border

@@ -25,5 +25,17 @@ namespace modern_tech_499m.Views
             InitializeComponent();
             DataContext = new WindowViewModel(this);
         }
+
+        private void BaseWindow_OnActivated(object sender, EventArgs e)
+        {
+            //Hide overlay if we are focused
+            (DataContext as WindowViewModel).DimmableOverlayVisible = false;
+        }
+
+        private void BaseWindow_OnDeactivated(object sender, EventArgs e)
+        {
+            //Show overlay if we are not focused
+            (DataContext as WindowViewModel).DimmableOverlayVisible = true;
+        }
     }
 }

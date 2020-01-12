@@ -37,6 +37,8 @@ namespace modern_tech_499m
 
             builder.RegisterType<ApplicationViewModel>().SingleInstance();
 
+            builder.RegisterType<UIManager>().As<IUIManager>().SingleInstance();
+
 
             _rootScope = builder.Build();
             _logger.Debug("Bootsrapper started");

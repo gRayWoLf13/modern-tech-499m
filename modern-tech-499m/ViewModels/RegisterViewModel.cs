@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
 using modern_tech_499m.Logic;
@@ -43,37 +42,6 @@ namespace modern_tech_499m.ViewModels
         /// A flag indicating if register command is running
         /// </summary>
         public bool RegisterIsRunning { get; set; }
-        /*
-        /// <summary>
-        /// The name of the user
-        /// </summary>
-        public string Username { get; set; }
-
-        /// <summary>
-        /// The password of the user
-        /// </summary>
-        public SecureString Password { get; set; }
-
-        /// <summary>
-        /// The first name of the user
-        /// </summary>
-        public string FirstName { get; set; }
-
-        /// <summary>
-        /// The last name of the user
-        /// </summary>
-        public string LastName { get; set; }
-
-        /// <summary>
-        /// The patronymic of the user
-        /// </summary>
-        public string Patronymic { get; set; }
-
-        /// <summary>
-        /// The birth date of the user
-        /// </summary>
-        public DateTime? BirthDate { get; set; }
-        */
         #endregion
 
         #region Commands
@@ -123,7 +91,12 @@ namespace modern_tech_499m.ViewModels
 
                 if (!RegisterCommandCanExecute(out string errorMessage))
                 {
-                    MessageBox.Show(errorMessage);
+                    await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                    {
+                        Title = "Error",
+                        Message = errorMessage,
+                        OkText = "OK"
+                    });
                     return;
                 }
 
@@ -132,10 +105,21 @@ namespace modern_tech_499m.ViewModels
                 switch (registerResult.registerResult)
                 {
                     case RegisterResult.UsernameAlreadyExists:
-                        MessageBox.Show("Selected username already exists");
+                        await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                        {
+                            Title = "Error",
+                            Message = "Selected username already exists",
+                            OkText = "OK"
+                        });
                         break;
                     case RegisterResult.Success:
-                        MessageBox.Show("Registration successful, returning to the game page");
+                        await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                        {
+                            Title = "Info",
+                            Message = "Registration successful, returning to the game page",
+                            OkText = "OK"
+                        });
+
                         (NavigationSourcePageViewModel as GamePageViewModel).CurrentPlayerLoggingAction(
                             new UserPlayer(registerResult.registeredUser.Username, registerResult.registeredUser, Guid.Empty));
                         ViewModelLocator.ApplicationViewModel.ReturnToNavigationPageSource(NavigationSourcePage,

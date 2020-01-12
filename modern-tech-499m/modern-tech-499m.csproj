@@ -102,7 +102,14 @@
     <Compile Include="Converters\IoCConverter.cs" />
     <Compile Include="DataModels\ApplicationPage.cs" />
     <Compile Include="DataModels\ApplicationPageHelpers.cs" />
+    <Compile Include="Dialogs\BaseDialogUserControl.cs" />
+    <Compile Include="Dialogs\DialogMessageBox.xaml.cs">
+      <DependentUpon>DialogMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Expressions\ExpressionHelpers.cs" />
+    <Compile Include="IoC\Interfaces\IUIManager.cs" />
+    <Compile Include="IoC\IoC.cs" />
+    <Compile Include="IoC\UIManager.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\GameInfoSelectionPage.xaml.cs">
       <DependentUpon>GameInfoSelectionPage.xaml</DependentUpon>
@@ -146,12 +153,14 @@
       <DependentUpon>UsersDatabaseListItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Base\BaseDialogViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\IHavePassword.cs" />
     <Compile Include="ViewModels\Design\UsersDatabaseListDesignModel.cs" />
     <Compile Include="ViewModels\Design\GameInfoListDesignModel.cs" />
     <Compile Include="ViewModels\Design\UsersDatabaseListItemDesignModel.cs" />
     <Compile Include="ViewModels\Design\GameInfoListItemDesignModel.cs" />
+    <Compile Include="ViewModels\Dialogs\MessageBoxDialogViewModel.cs" />
     <Compile Include="ViewModels\GameInfoListItemViewModel.cs" />
     <Compile Include="ViewModels\GameInfoListViewModel.cs" />
     <Compile Include="ViewModels\GameInfoSelectionPageViewModel.cs" />
@@ -163,11 +172,19 @@
     <Compile Include="ViewModels\UsersDatabasePageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WelcomePageViewModel.cs" />
+    <Compile Include="ViewModels\DialogWindowViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
+    <Compile Include="Views\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BaseWindow.xaml.cs">
       <DependentUpon>BaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowResizer.cs" />
+    <Page Include="Dialogs\DialogMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\GameInfoSelectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +233,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\Scroll.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Text.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -247,6 +268,10 @@
     <Page Include="UserControls\UsersDatabaseListItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\BaseWindow.xaml">
       <SubType>Designer</SubType>

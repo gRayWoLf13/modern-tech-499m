@@ -78,4 +78,21 @@ namespace modern_tech_499m
                 await element.SlideAndFadeOutToLeft(FirstLoad ? 0 : 0.3, keepMargin: false);
         }
     }
+
+    /// <summary>
+    /// Animates a framework element fading in on show
+    /// and fading out on hide
+    /// </summary>
+    public class AnimateFadeInProperty : AnimateBaseProperty<AnimateFadeInProperty>
+    {
+        protected override async void DoAnimation(FrameworkElement element, bool value)
+        {
+            if (value)
+                //Animate in
+                await element.FadeIn(FirstLoad ? 0 : 0.3);
+            else
+                //Animate out
+                await element.FadeOut(FirstLoad ? 0 : 0.3);
+        }
+    }
 }
