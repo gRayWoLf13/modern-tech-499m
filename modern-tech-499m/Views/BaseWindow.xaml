@@ -156,21 +156,6 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource LightText}" Text="{DynamicResource BaseWindowAppTheme}" Margin="10 10 0 10"/>
-                    <ComboBox Grid.Row="1" Grid.Column="1"
-                                 DataContext="{x:Static viewmodels:ViewModelLocator.SettingsViewModel}"
-                                 ItemsSource="{Binding ColorThemeOptions}"
-                                 SelectedItem="{Binding SelectedColorTheme}"
-                                 IsSynchronizedWithCurrentItem="True"
-                                 VerticalContentAlignment="Center"
-                                 Style="{StaticResource TestComboBox}"
-                                 Margin="10">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Style="{StaticResource LightText}" Margin="0" Text="{Binding DisplayedName}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
                 </Grid>
             </control:SideMenuControl>
         </Grid>
