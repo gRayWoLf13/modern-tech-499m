@@ -1,0 +1,296 @@
+﻿<local:BasePage x:Class="modern_tech_499m.Pages.GamePage"
+                x:TypeArguments="viewmodels:GamePageViewModel"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:local="clr-namespace:modern_tech_499m.Pages"
+                xmlns:controls="clr-namespace:modern_tech_499m.UserControls"
+                xmlns:viewmodels="clr-namespace:modern_tech_499m.ViewModels"
+                xmlns:converters="clr-namespace:modern_tech_499m.Converters"
+                xmlns:system="clr-namespace:System;assembly=mscorlib"
+                mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="800"
+      Title="GamePage">
+    <Border Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"
+        BorderThickness="10"
+        BorderBrush="{StaticResource ForegroundTealBrush}"
+        CornerRadius="30">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid VerticalAlignment="Top" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Padding="5" Command="{Binding SelectPlayerCommand}" CommandParameter="Player1" Grid.Column="0" Style="{StaticResource TextButton}" Content="{DynamicResource GamePageSelectPlayer1}"/>
+                    <Button Padding="5" Command="{Binding StartNewGameCommand}" Grid.Column="1" Style="{StaticResource TextButton}" Content="{DynamicResource GamePageStartNewGame}"/>
+                    <Button Padding="5" Command="{Binding SelectPlayerCommand}" CommandParameter="Player2" Grid.Column="2" Style="{StaticResource TextButton}" Content="{DynamicResource GamePageSelectPlayer2}"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock TextTrimming="CharacterEllipsis" Grid.Column="0" Style="{StaticResource HeaderTextLightBold}" FontSize="{StaticResource FontSizeXLarge}" Text="{Binding Player1.Name}"/>
+                    <StackPanel Height="30" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Command="{Binding UndoRedoMoveCommand}" CommandParameter="True" Margin="5 0" Style="{StaticResource RoundedIconButton}" Content="{StaticResource FontAwesomeUndoIcon}"/>
+                        <Button Command="{Binding UndoRedoMoveCommand}" CommandParameter="False" Margin="5 0" Style="{StaticResource RoundedIconButton}" Content="{StaticResource FontAwesomeRedoIcon}"/>
+                    </StackPanel>
+                    <TextBlock TextTrimming="CharacterEllipsis" Grid.Column="2" Style="{StaticResource HeaderTextLightBold}" FontSize="{StaticResource FontSizeXLarge}" Text="{Binding Player2.Name}"/>
+                </Grid>
+            </Grid>
+
+            <Button Command="{Binding SaveGameCommand}" Grid.Row="2" Style="{StaticResource TextButton}" Margin="0" Content="{DynamicResource GamePageStartSaveGame}"/>
+
+            <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Background="{StaticResource ForegroundLightBrush}"
+                    CornerRadius="100"
+                    BorderBrush="{StaticResource ForegroundTealBrush}"
+                    BorderThickness="5"
+                    Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Player 1, Cell 0 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="2" Grid.Column="1" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">0</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player1"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player1, 0]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 1, Cell 1 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="2" Grid.Column="2" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">1</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player1"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player1, 1]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 1, Cell 2 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="2" Grid.Column="3" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">2</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player1"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player1, 2]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 1, Cell 3 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="2" Grid.Column="4" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">3</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player1"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player1, 3]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 1, Cell 4 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="2" Grid.Column="5" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">4</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player1"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player1, 4]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 1, Cell 5 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="2" Grid.Column="6" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">5</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player1"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player1, 5]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!-- Player 1, Cell 6 -->
+                    <controls:GameCellControl Margin="10" Grid.Row="1" Grid.Column="7" IsActiveCell="False">
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player1, 6]"></Binding>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 2, Cell 0 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="0" Grid.Column="6" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">0</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player2"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player2, 0]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 2, Cell 1 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="0" Grid.Column="5" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">1</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player2"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player2, 1]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 2, Cell 2 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="0" Grid.Column="4" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">2</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player2"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player2, 2]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 2, Cell 3 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="0" Grid.Column="3" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">3</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player2"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player2, 3]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 2, Cell 4 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="0" Grid.Column="2" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">4</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player2"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player2, 4]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <!--Player 2, Cell 5 -->
+                    <controls:GameCellControl ClickCommand="{Binding CellClickCommand}" Margin="5" Grid.Row="0" Grid.Column="1" IsActiveCell="True">
+                        <controls:GameCellControl.Resources>
+                            <system:Int32 x:Key="CellIndex">5</system:Int32>
+                        </controls:GameCellControl.Resources>
+                        <controls:GameCellControl.ClickCommandParameter>
+                            <MultiBinding Converter="{converters:GameControllerToCommandParametersConverter}">
+                                <Binding Path="GameController.GameLogic.Player2"></Binding>
+                                <Binding Source="{StaticResource CellIndex}"></Binding>
+                            </MultiBinding>
+                        </controls:GameCellControl.ClickCommandParameter>
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player2, 5]"/>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <controls:GameCellControl Margin="10" Grid.Row="1" Grid.Column="0" IsActiveCell="False">
+                        <controls:GameCellControl.CellValue>
+                            <Binding Path="GameController.GameLogic[Player2, 6]"></Binding>
+                        </controls:GameCellControl.CellValue>
+                    </controls:GameCellControl>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource LightText}" Text="{Binding GameController.LastStatus}"/>
+                        <TextBlock Style="{StaticResource LightText}" Text="{Binding GameController.CurrentPlayerInfo}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</local:BasePage>

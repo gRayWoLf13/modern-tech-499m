@@ -1,0 +1,102 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:modern_tech_499m"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <!--Test -->
+    <System:String x:Key="RussianLanguageName">Русский</System:String>
+    <System:String x:Key="EnglishLanguageName">Английский</System:String>
+    <System:String x:Key="ColorTheme1Name">Цветовая тема 1</System:String>
+    <System:String x:Key="ColorTheme2Name">Цветовая тема 2</System:String>
+
+    <!--GameInfoSelectionPage -->
+    <System:String x:Key="GameInfoSelectionPageSavedGamesList">Список сохраненных игр:</System:String>
+    <System:String x:Key="GameInfoSelectionPageChooseGame">Выберите игру</System:String>
+
+    <!--GamePage -->
+    <System:String x:Key="GamePageSelectPlayer1">Выбрать игрока №1</System:String>
+    <System:String x:Key="GamePageSelectPlayer2">Выбрать игрока №2</System:String>
+    <System:String x:Key="GamePageStartNewGame">Новая игра</System:String>
+    <System:String x:Key="GamePageStartSaveGame">Сохранить игру</System:String>
+
+    <!--LoginPage -->
+    <System:String x:Key="LoginPageSignIn">Войти</System:String>
+    <System:String x:Key="LoginPageHereTheGameBegins">Игра начинается здесь</System:String>
+    <System:String x:Key="LoginPageUsername">Имя пользователя</System:String>
+    <System:String x:Key="LoginPagePassword">Пароль</System:String>
+    <System:String x:Key="LoginPageLogin">Вход</System:String>
+    <System:String x:Key="LoginPageCreateNewAccount">Создать аккаунт</System:String>
+    <System:String x:Key="LoginPageLetTheBotPlayInsteadOfMe">Пусть бот сыграет вместо меня</System:String>
+
+    <!--RegisterPage-->
+    <System:String x:Key="RegisterPageSignUp">Зарегистрироваться</System:String>
+    <System:String x:Key="RegisterPageHereTheGameBegins">Игра начинается здесь</System:String>
+    <System:String x:Key="RegisterPageUsername">Имя пользователя</System:String>
+    <System:String x:Key="RegisterPagePassword">Пароль</System:String>
+    <System:String x:Key="RegisterPageFirstName">Имя</System:String>
+    <System:String x:Key="RegisterPageLastName">Фамилия</System:String>
+    <System:String x:Key="RegisterPagePatronymic">Отчество</System:String>
+    <System:String x:Key="RegisterPageRegister">Регистрация</System:String>
+    <System:String x:Key="RegisterPageIAlreadyHaveAnAccount">У меня уже есть аккаунт</System:String>
+
+    <!--UsersDatabasePage -->
+    <System:String x:Key="UsersDatabasePageCurrentUsersList">Список пользователей:</System:String>
+
+    <!--WelcomePage-->
+    <System:String x:Key="WelcomePageWelcomeText">Добро пожаловать в игру "Калах"</System:String>
+    <System:String x:Key="WelcomePageMadeBySerega">сделанную Серегой</System:String>
+    <System:String x:Key="WelcomePageGameRulesText">В игре есть следующие правила:</System:String>
+    <System:String x:Key="WelcomePageGameRule0Text">Игра начинается с 6-ю камнями в ячейке</System:String>
+    <System:String x:Key="WelcomePageGameRule1Text">Твой Калах находится справа</System:String>
+    <System:String x:Key="WelcomePageGameRule2Text">Ходы делаются против часовой стрелки</System:String>
+    <System:String x:Key="WelcomePageGameRule3Text">Если последний камень попадает в твой Калах, ты делаешь дополнительный ход</System:String>
+    <System:String x:Key="WelcomePageGameRule4Text">Если последний камень попадает в твою пустую ячейку, все камни из</System:String>
+    <System:String x:Key="WelcomePageGameRule5Text">ячейки противника напротив попадают в твой Калах</System:String>
+    <System:String x:Key="WelcomePageGameRule6Text">Если у одного из игроков заканчиваются камни, игра заканчивается и</System:String>
+    <System:String x:Key="WelcomePageGameRule7Text">другой игрок кладет оставшиеся камни в свой Калах</System:String>
+    <System:String x:Key="WelcomePageGameRule8Text">Игрок с наибольшим числом камней побеждает</System:String>
+    <System:String x:Key="WelcomePagePleaseHaveFun">Удачной игры!</System:String>
+    <System:String x:Key="WelcomePageStartGame">Начать игру</System:String>
+    <System:String x:Key="WelcomePageLoadGame">Загрузить игру</System:String>
+    <System:String x:Key="WelcomePageShowAllUsers">Список пользователей</System:String>
+    <System:String x:Key="WelcomePageQuitGame">Выйти из игры</System:String>
+
+    <!--GameInfoSelectionPageViewModel-->
+    <System:String x:Key="GameInfoSelectionPageViewModelBotNumber1">Бот №1</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelBotNumber2">Бот №2</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelBot">Бот</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelAIvAI">ИИvИИ</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelUvAI">ЮvИИ</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelUvU">ЮvЮ</System:String>
+
+    <!--LoginViewModel -->
+    <System:String x:Key="LoginViewModelWarning">Внимание</System:String>
+    <System:String x:Key="LoginViewModelInfo">Информация</System:String>
+    <System:String x:Key="LoginViewModelSuccessfulLoginText">Успешный вход в систему, переход на главную страницу</System:String>
+    <System:String x:Key="LoginViewModelUsernameNotExistText">Имя пользователя не существует</System:String>
+    <System:String x:Key="LoginViewModelWrongPasswordText">Вы ввели неверный пароль</System:String>
+    <System:String x:Key="LoginViewModelBotSelectedText">Бот выбран</System:String>
+    <System:String x:Key="LoginViewModelBotText">Бот</System:String>
+
+    <!--RegisterViewModel -->
+    <System:String x:Key="RegisterViewModelErrorText">Ошибка</System:String>
+    <System:String x:Key="RegisterViewModelInfoText">Информация</System:String>
+    <System:String x:Key="RegisterViewModelUsernameAlreadyExistsText">Выбранное имя пользователя уже существует</System:String>
+    <System:String x:Key="RegisterViewModelRegistrationSuccessfulText">Успешная регистрация, переход на главную страницу</System:String>
+
+    <!--BaseWindow -->
+    <System:String x:Key="BaseWindowByMolochnikovSergey">выполнил Молочников Сергей</System:String>
+    <System:String x:Key="BaseWindowAppLanguage">Язык приложения:</System:String>
+    <System:String x:Key="BaseWindowAppTheme">Цветовая схема:</System:String>
+
+    <!--GameController -->
+    <System:String x:Key="GameControllerGameStartingText">Игра начинается</System:String>
+    <System:String x:Key="GameControllerUndoText">Отмена</System:String>
+    <System:String x:Key="GameControllerRedoText">Возврат</System:String>
+    <System:String x:Key="GameControllerCantUndoText">Отмена невозможна</System:String>
+    <System:String x:Key="GameControllerCantRedoText">Возврат невозможен</System:String>
+    <System:String x:Key="GameControllerWaitingForPlayerText0">Ожидание хода игрока '</System:String>
+    <System:String x:Key="GameControllerWaitingForPlayerText1">'</System:String>
+    <System:String x:Key="GameControllerInfoText">Информация</System:String>
+    <System:String x:Key="GameControllerGameEndedText">Игра завершена</System:String>
+    <System:String x:Key="GameControllerGameInterruptedText">Игра прервана</System:String>
+</ResourceDictionary>

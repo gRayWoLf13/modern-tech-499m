@@ -1,0 +1,155 @@
+﻿<local:BasePage x:Class="modern_tech_499m.Pages.WelcomePage"
+                x:TypeArguments="viewModels:WelcomePageViewModel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:modern_tech_499m.Pages"
+      xmlns:viewModels="clr-namespace:modern_tech_499m.ViewModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="WelcomePage">
+
+    <Grid>
+        <!-- Main content scroll -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                        TextBlock.TextAlignment="Center">
+                <Border
+                    Background="Transparent"
+                    CornerRadius="10"
+                    Padding="15"
+                    MinWidth="500">
+                    <StackPanel>
+                        <!-- Welcome page caption -->
+                        <TextBlock Text="{DynamicResource WelcomePageWelcomeText}"
+                                   FontFamily="{StaticResource LatoBoldItalic}"
+                                   FontSize="{StaticResource FontSizeXXXLarge}"
+                                   Foreground="{StaticResource ForegroundTealBrush}"/>
+
+                        <!-- Caption subtitle -->
+                        <TextBlock Text="{DynamicResource WelcomePageMadeBySerega}"
+                                   FontFamily="{StaticResource LatoBoldItalic}"
+                                   FontSize="{StaticResource FontSizeLarge}"
+                                   Foreground="{StaticResource ForegroundDarkerBrush}"/>
+
+                        <!-- Rules caption -->
+                        <TextBlock Text="{DynamicResource WelcomePageGameRulesText}"
+                                   FontFamily="{StaticResource LatoRegular}"
+                                   FontSize="{StaticResource FontSizeXLarge}"
+                                   Foreground="{StaticResource ForegroundLightBrush}"
+                                   Padding="0 20 0 0"/>
+
+                        <!-- Actual rules -->
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule0Text}"
+                                           FontFamily="{StaticResource LatoRegular}"
+                                           FontSize="{StaticResource FontSizeRegular}"
+                                           Style="{StaticResource HeaderTextLight}"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule1Text}"
+                                           FontFamily="{StaticResource LatoRegular}"
+                                           FontSize="{StaticResource FontSizeRegular}"
+                                           Style="{StaticResource HeaderTextLight}"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule2Text}"
+                                           FontFamily="{StaticResource LatoRegular}"
+                                           FontSize="{StaticResource FontSizeRegular}"
+                                           Style="{StaticResource HeaderTextLight}"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule3Text}"
+                                           FontFamily="{StaticResource LatoRegular}"
+                                           FontSize="{StaticResource FontSizeRegular}"
+                                           Style="{StaticResource HeaderTextLight}"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
+                                <StackPanel>
+                                    <TextBlock FontFamily="{StaticResource LatoRegular}"
+                                               FontSize="{StaticResource FontSizeRegular}"
+                                               Style="{StaticResource HeaderTextLight}"
+                                               Margin="0 3"
+                                               Text="{DynamicResource WelcomePageGameRule4Text}"/>
+                                    <TextBlock FontFamily="{StaticResource LatoRegular}"
+                                               FontSize="{StaticResource FontSizeRegular}"
+                                               Style="{StaticResource HeaderTextLight}"
+                                               Margin="0 3"
+                                               HorizontalAlignment="Left"
+                                               Text="{DynamicResource WelcomePageGameRule5Text}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
+                                <StackPanel>
+                                    <TextBlock FontFamily="{StaticResource LatoRegular}"
+                                               FontSize="{StaticResource FontSizeRegular}"
+                                               Style="{StaticResource HeaderTextLight}"
+                                               Margin="0 3"
+                                               Text="{DynamicResource WelcomePageGameRule6Text}"/>
+                                    <TextBlock FontFamily="{StaticResource LatoRegular}"
+                                               FontSize="{StaticResource FontSizeRegular}"
+                                               Style="{StaticResource HeaderTextLight}"
+                                               Margin="0 3"
+                                               HorizontalAlignment="Left"
+                                               Text="{DynamicResource WelcomePageGameRule7Text}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule8Text}"
+                                           FontFamily="{StaticResource LatoRegular}"
+                                           FontSize="{StaticResource FontSizeRegular}"
+                                           Style="{StaticResource HeaderTextLight}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Some fun text -->
+                        <TextBlock Text="{DynamicResource WelcomePagePleaseHaveFun}"
+                                   FontFamily="{StaticResource LatoBoldItalic}"
+                                   FontSize="{StaticResource FontSizeXLarge}"
+                                   VerticalAlignment="Center"
+                                   Padding="0 10 0 10"
+                                   Foreground="{StaticResource ForegroundDarkerBrush}"/>
+
+                        <!-- Buttons leading to different pages -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="{DynamicResource WelcomePageStartGame}"
+                                    Padding="5 0"
+                                Style="{StaticResource TextButton}"
+                                    Command="{Binding StartGameCommand}"/>
+
+                            <Button Content="{DynamicResource WelcomePageLoadGame}"
+                                    Padding="5 0"
+                                    Style="{StaticResource TextButton}"
+                                    Command="{Binding LoadGameCommand}"/>
+
+                            <Button Content="{DynamicResource WelcomePageShowAllUsers}"
+                                    Padding="5 0"
+                                    Style="{StaticResource TextButton}"
+                                    Command="{Binding ShowAllUsersCommand}"/>
+
+                            <Button Content="{DynamicResource WelcomePageQuitGame}"
+                                    Padding="5 0"
+                                    Style="{StaticResource TextButton}"
+                                    Command="{Binding QuitGameCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</local:BasePage>

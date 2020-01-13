@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="modern_tech_499m.UserControls.UsersDatabaseListItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:modern_tech_499m.UserControls"
+             xmlns:viewModels="clr-namespace:modern_tech_499m.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                        <!--Content border -->
+                        <Border x:Name="background" Background="Transparent">
+                            <Grid x:Name="container" Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <!-- User picture -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- User data -->
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border
+                                    Grid.Column="0" Margin="5"
+                                    Background="{StaticResource ForegroundPurpleBrush}"
+                                    Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                    CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+
+                                    <!-- User initials -->
+                                    <TextBlock Text="{Binding Initials}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{StaticResource ForegroundLightBrush}"
+                                               FontSize="{StaticResource FontSizeXLarge}"
+                                               FontFamily="{StaticResource LatoRegular}"/>
+                                </Border>
+
+                                <!--Main content -->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Username}"
+                                               Padding="0 0 0 5"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoRegular}"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource ForegroundTealBrush}"
+                                               FontSize="{StaticResource FontSizeLarge}"/>
+
+                                    <TextBlock Text="{Binding FullName}"
+                                               Padding="0 0 0 5"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoThin}"
+                                               Foreground="{StaticResource ForegroundPurpleBrush}"
+                                               FontSize="{StaticResource FontSizeRegular}"/>
+
+                                    <TextBlock Text="{Binding BirthDate, StringFormat=dd MMMM yyyy}"
+                                               TextTrimming="CharacterEllipsis"
+                                               FontFamily="{StaticResource LatoBoldItalic}"
+                                               Foreground="{StaticResource ForegroundPurpleBrush}"
+                                               FontSize="{StaticResource FontSizeRegular}"
+                                               FontWeight="Bold"
+                                               TextDecorations="Underline"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ContentControl Style="{StaticResource ContentStyle}" d:DataContext="{x:Static viewModels:UsersDatabaseListItemDesignModel.Instance}"/>
+</UserControl>

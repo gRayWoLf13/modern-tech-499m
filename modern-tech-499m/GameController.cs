@@ -2,13 +2,15 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using modern_tech_499m.Helpers;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
+using modern_tech_499m.ViewModels;
 using NLog;
 
 namespace modern_tech_499m
 {
-    class GameController : INotifyPropertyChanged
+    public class GameController : INotifyPropertyChanged
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public GameLogic GameLogic { get; private set; }
@@ -61,7 +63,7 @@ namespace modern_tech_499m
         {
             _logger.Debug("Run game method called");
             _gameStopPending = false;
-            LastStatus = "Game starting";
+            LastStatus = "GameControllerGameStartingText".GetAsResource<string>();
             MakeGameStep();
         }
 
@@ -76,11 +78,11 @@ namespace modern_tech_499m
             _logger.Debug("Undo move method called");
             if (GameLogic.UndoMove())
             {
-                LastStatus = "Undo";
+                LastStatus = "GameControllerUndoText".GetAsResource<string>();
                 OnPropertyChanged(nameof(GameLogic));
             }
             else
-                LastStatus = "Can't undo";
+                LastStatus = "GameControllerCantUndoText".GetAsResource<string>();
         }
 
         public void RedoMove()
@@ -88,11 +90,11 @@ namespace modern_tech_499m
             _logger.Debug("Redo move method called");
             if (GameLogic.RedoMove())
             {
-                LastStatus = "Redo";
+                LastStatus = "GameControllerRedoText".GetAsResource<string>();
                 OnPropertyChanged(nameof(GameLogic));
             }
             else
-                LastStatus = "Can't redo";
+                LastStatus = "GameControllerCantRedoText".GetAsResource<string>();
         }
 
         public void SaveGame()
@@ -117,23 +119,27 @@ namespace modern_tech_499m
 
         private void MakeGameStep()
         {
-            CurrentPlayerInfo = $"Waiting for player '{GameLogic.CurrentPlayer.Name}' to make move";
+            CurrentPlayerInfo = $"{"GameControllerWaitingForPlayerText0".GetAsResource<string>()}{GameLogic.CurrentPlayer.Name}{"GameControllerWaitingForPlayerText1".GetAsResource<string>()}";
             GameLogic.CurrentPlayer.GetCell(GameLogic);
         }
 
-        private void RecieveCellNumber(object sender, CellGetterEventArgs eventArgs)
+        private async void RecieveCellNumber(object sender, CellGetterEventArgs eventArgs)
         {
             MoveResult moveResult = GameLogic.MakeMove(sender as IPlayer, eventArgs.CellNumber);
             LastStatus = Enum.GetName(typeof(MoveResult), moveResult);
             if (moveResult == MoveResult.GameEnded)
             {
-                //TODO - Show message box via service
-                CurrentPlayerInfo = "Game ended";
+                await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+                {
+                    Title = "GameControllerInfoText".GetAsResource<string>(),
+                    Message = "GameControllerGameEndedText".GetAsResource<string>(),
+                    OkText = "OK"
+                });
                 return;
             }
             if (_gameStopPending)
             {
-                LastStatus = "Game interrupted";
+                LastStatus = "GameControllerGameInterruptedText".GetAsResource<string>();
                 return;
             }
             if (moveResult != MoveResult.ImpossibleMove)

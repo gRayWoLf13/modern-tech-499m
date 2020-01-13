@@ -22,16 +22,24 @@ namespace modern_tech_499m
                 return;
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<UsersDatabaseViewModel>().AsSelf();
-            builder.RegisterType<AddUserViewModel>().AsSelf();
-            builder.RegisterType<MainWindowViewModel>().AsSelf();
-
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterType<GameInfoRepository>().As<IGameInfoRepository>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<DatabaseContextFactory>().As<IDatabaseContextFactory>();
-            builder.RegisterType<PlayerSelectionViewModel>().As<IEntitySelectionViewModel<IPlayer>>();
-            builder.RegisterType<GameInfoSelectionViewModel>().As<IEntitySelectionViewModel<GameInfo>>();
+
+            builder.RegisterType<LoginViewModel>().AsSelf();
+            builder.RegisterType<RegisterViewModel>().AsSelf();
+            builder.RegisterType<GameInfoSelectionPageViewModel>().AsSelf();
+            builder.RegisterType<GamePageViewModel>().AsSelf();
+            builder.RegisterType<WelcomePageViewModel>().AsSelf();
+            builder.RegisterType<UsersDatabasePageViewModel>().AsSelf();
+            builder.RegisterType<SettingsViewModel>().AsSelf();
+
+
+            builder.RegisterType<ApplicationViewModel>().SingleInstance();
+
+            builder.RegisterType<UIManager>().As<IUIManager>().SingleInstance();
+
 
             _rootScope = builder.Build();
             _logger.Debug("Bootsrapper started");

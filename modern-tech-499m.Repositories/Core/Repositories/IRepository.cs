@@ -9,7 +9,7 @@ namespace modern_tech_499m.Repositories.Core.Repositories
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Func<TEntity, bool> predicate);
 
-        void Add(TEntity entity);
+        int Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
 
         void Remove(TEntity entity);

@@ -2,7 +2,7 @@
 
 namespace modern_tech_499m.Logic
 {
-    interface IPlayer : IEquatable<IPlayer>
+    public interface IPlayer : IEquatable<IPlayer>
     {
         Guid GlobalId { get; }
         event EventHandler<CellGetterEventArgs> OnGetCell;

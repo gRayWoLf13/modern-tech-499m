@@ -115,15 +115,17 @@ namespace modern_tech_499m.Repositories.Persistence.Repositories
             return allGameInfos.Where(predicate);
         }
 
-        public override void Add(GameInfo entity)
+        public override int Add(GameInfo entity)
         {
-            TryExecuteAnyAction(() =>
+            return TryExecuteFunction(() =>
             {
                 SQLiteTransaction transaction = _unitOfWork.BeginTransaction();
                 string insertSql =
                     "Insert into GameInfo (GameDate, Player1Id, Player2Id, Score, GameFinished, InternalGameData, InternalSolverData) VALUES (@GameDate, @Player1Id, @Player2Id, @Score, @GameFinished, @InternalGameData, @InternalSolverData)";
                 Insert(entity, insertSql, transaction);
+                var lastId = (int)_connection.LastInsertRowId;
                 _unitOfWork.Commit();
+                return lastId;
             });
         }
 
