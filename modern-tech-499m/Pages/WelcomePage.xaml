@@ -21,21 +21,20 @@
                     Padding="15"
                     MinWidth="500">
                     <StackPanel>
-
                         <!-- Welcome page caption -->
-                        <TextBlock Text="Welcome to the Kalah game"
+                        <TextBlock Text="{DynamicResource WelcomePageWelcomeText}"
                                    FontFamily="{StaticResource LatoBoldItalic}"
                                    FontSize="{StaticResource FontSizeXXXLarge}"
                                    Foreground="{StaticResource ForegroundTealBrush}"/>
 
                         <!-- Caption subtitle -->
-                        <TextBlock Text="made by Serega"
+                        <TextBlock Text="{DynamicResource WelcomePageMadeBySerega}"
                                    FontFamily="{StaticResource LatoBoldItalic}"
                                    FontSize="{StaticResource FontSizeLarge}"
                                    Foreground="{StaticResource ForegroundDarkerBrush}"/>
 
                         <!-- Rules caption -->
-                        <TextBlock Text="The game has following rules:"
+                        <TextBlock Text="{DynamicResource WelcomePageGameRulesText}"
                                    FontFamily="{StaticResource LatoRegular}"
                                    FontSize="{StaticResource FontSizeXLarge}"
                                    Foreground="{StaticResource ForegroundLightBrush}"
@@ -45,7 +44,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
-                                <TextBlock Text="Game starts with 6 stones per hole"
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule0Text}"
                                            FontFamily="{StaticResource LatoRegular}"
                                            FontSize="{StaticResource FontSizeRegular}"
                                            Style="{StaticResource HeaderTextLight}"/>
@@ -53,7 +52,7 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
-                                <TextBlock Text="Your Kalah is on your right"
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule1Text}"
                                            FontFamily="{StaticResource LatoRegular}"
                                            FontSize="{StaticResource FontSizeRegular}"
                                            Style="{StaticResource HeaderTextLight}"/>
@@ -61,7 +60,7 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
-                                <TextBlock Text="Moves are counterclockwise"
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule2Text}"
                                            FontFamily="{StaticResource LatoRegular}"
                                            FontSize="{StaticResource FontSizeRegular}"
                                            Style="{StaticResource HeaderTextLight}"/>
@@ -69,7 +68,7 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
-                                <TextBlock Text="If the last stone lands in your Kalah, you get another turn"
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule3Text}"
                                            FontFamily="{StaticResource LatoRegular}"
                                            FontSize="{StaticResource FontSizeRegular}"
                                            Style="{StaticResource HeaderTextLight}"/>
@@ -82,13 +81,13 @@
                                                FontSize="{StaticResource FontSizeRegular}"
                                                Style="{StaticResource HeaderTextLight}"
                                                Margin="0 3"
-                                               Text="If the last stone lands in your empty hole, all the stones from the"/>
+                                               Text="{DynamicResource WelcomePageGameRule4Text}"/>
                                     <TextBlock FontFamily="{StaticResource LatoRegular}"
                                                FontSize="{StaticResource FontSizeRegular}"
                                                Style="{StaticResource HeaderTextLight}"
                                                Margin="0 3"
                                                HorizontalAlignment="Left"
-                                               Text="other player's opposite hole go into your Kalah"/>
+                                               Text="{DynamicResource WelcomePageGameRule5Text}"/>
                                 </StackPanel>
                             </StackPanel>
 
@@ -99,19 +98,19 @@
                                                FontSize="{StaticResource FontSizeRegular}"
                                                Style="{StaticResource HeaderTextLight}"
                                                Margin="0 3"
-                                               Text="If one player runs out of stones, the game ends and the other"/>
+                                               Text="{DynamicResource WelcomePageGameRule6Text}"/>
                                     <TextBlock FontFamily="{StaticResource LatoRegular}"
                                                FontSize="{StaticResource FontSizeRegular}"
                                                Style="{StaticResource HeaderTextLight}"
                                                Margin="0 3"
                                                HorizontalAlignment="Left"
-                                               Text="player puts the rest of his/her stones in her/his Kalah"/>
+                                               Text="{DynamicResource WelcomePageGameRule7Text}"/>
                                 </StackPanel>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource AlwaysSpinningButton}" Margin="0 0 20 0"/>
-                                <TextBlock Text="The player with the most stones at the end of the game wins"
+                                <TextBlock Text="{DynamicResource WelcomePageGameRule8Text}"
                                            FontFamily="{StaticResource LatoRegular}"
                                            FontSize="{StaticResource FontSizeRegular}"
                                            Style="{StaticResource HeaderTextLight}"/>
@@ -119,7 +118,7 @@
                         </StackPanel>
 
                         <!-- Some fun text -->
-                        <TextBlock Text="Please have fun!"
+                        <TextBlock Text="{DynamicResource WelcomePagePleaseHaveFun}"
                                    FontFamily="{StaticResource LatoBoldItalic}"
                                    FontSize="{StaticResource FontSizeXLarge}"
                                    VerticalAlignment="Center"
@@ -128,27 +127,25 @@
 
                         <!-- Buttons leading to different pages -->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Content="Start game"
-                                    Padding="10 0"
+                            <Button Content="{DynamicResource WelcomePageStartGame}"
+                                    Padding="5 0"
                                 Style="{StaticResource TextButton}"
                                     Command="{Binding StartGameCommand}"/>
 
-                            <Button Content="Load game"
-                                    Padding="10 0"
+                            <Button Content="{DynamicResource WelcomePageLoadGame}"
+                                    Padding="5 0"
                                     Style="{StaticResource TextButton}"
                                     Command="{Binding LoadGameCommand}"/>
 
-                            <Button Content="Show all users"
-                                    Padding="10 0"
+                            <Button Content="{DynamicResource WelcomePageShowAllUsers}"
+                                    Padding="5 0"
                                     Style="{StaticResource TextButton}"
                                     Command="{Binding ShowAllUsersCommand}"/>
 
-                            <Button Content="Quit game"
-                                    Padding="10 0"
+                            <Button Content="{DynamicResource WelcomePageQuitGame}"
+                                    Padding="5 0"
                                     Style="{StaticResource TextButton}"
                                     Command="{Binding QuitGameCommand}"/>
-
-
                         </StackPanel>
                     </StackPanel>
                 </Border>

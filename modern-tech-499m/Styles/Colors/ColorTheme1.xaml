@@ -1,0 +1,6 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:modern_tech_499m">
+    <Color x:Key="TestColor">#ff8800</Color>
+    <SolidColorBrush x:Key="TestBrush" Color="{DynamicResource TestColor}"/>
+</ResourceDictionary>

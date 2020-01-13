@@ -78,7 +78,7 @@
                                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="0">
                                             <StackPanel>
                                                 <TextBlock FontFamily="{StaticResource LatoBold}" FontSize="{StaticResource FontSizeRegular}" Margin="0, 0, 0, -5" TextAlignment="Center"><Run Text="M" Foreground="{StaticResource ForegroundOrangeBrush}"/><Run Text="T" Foreground="{StaticResource ForegroundRedBrush}"/><Run Text="499m" Foreground="{StaticResource ForegroundGreenBrush}"/></TextBlock>
-                                                <TextBlock Text="by Molochnikov Sergey" Foreground="{StaticResource ForegroundDarkBrush}" TextAlignment="Center"/>
+                                                <TextBlock Text="{DynamicResource BaseWindowByMolochnikovSergey}" Foreground="{StaticResource ForegroundDarkBrush}" TextAlignment="Center"/>
                                             </StackPanel>
                                         </Viewbox>
 
@@ -141,16 +141,36 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                       <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource LightText}" Text="Application language:" Margin="10 10 0 10"/>
-                       <ComboBox Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" Style="{StaticResource TestComboBox}" Margin="10" SelectedIndex="0">
-                            <TextBlock Style="{StaticResource LightText}" Margin="0" Text="English"/>
-                            <TextBlock Style="{StaticResource LightText}" Margin="0" Text="Russian"/>
-                        </ComboBox>
-                       <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource LightText}" Text="Application theme:" Margin="10 10 0 10"/>
-                       <ComboBox Grid.Row="1" Grid.Column="1" VerticalContentAlignment="Center" Style="{StaticResource TestComboBox}" Margin="10" SelectedIndex="0">
-                           <TextBlock Style="{StaticResource LightText}" Margin="0" Text="Theme 1"/>
-                           <TextBlock Style="{StaticResource LightText}" Margin="0" Text="Theme 2"/>
-                       </ComboBox>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource LightText}" Text="{DynamicResource BaseWindowAppLanguage}" Margin="10 10 0 10"/>
+                    <ComboBox DataContext="{x:Static viewmodels:ViewModelLocator.SettingsViewModel}"
+                                ItemsSource="{Binding LanguageOptions}"
+                                SelectedItem="{Binding SelectedLanguage}"
+                                IsSynchronizedWithCurrentItem="True"
+                                Grid.Row="0" Grid.Column="1"
+                                VerticalContentAlignment="Center"
+                                Style="{StaticResource TestComboBox}"
+                                Margin="10">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource LightText}" Margin="0" Text="{Binding DisplayedName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource LightText}" Text="{DynamicResource BaseWindowAppTheme}" Margin="10 10 0 10"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1"
+                                 DataContext="{x:Static viewmodels:ViewModelLocator.SettingsViewModel}"
+                                 ItemsSource="{Binding ColorThemeOptions}"
+                                 SelectedItem="{Binding SelectedColorTheme}"
+                                 IsSynchronizedWithCurrentItem="True"
+                                 VerticalContentAlignment="Center"
+                                 Style="{StaticResource TestComboBox}"
+                                 Margin="10">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource LightText}" Margin="0" Text="{Binding DisplayedName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
             </control:SideMenuControl>
         </Grid>

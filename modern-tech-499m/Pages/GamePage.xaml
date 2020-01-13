@@ -15,7 +15,7 @@
     <Border Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"
         BorderThickness="10"
         BorderBrush="{StaticResource ForegroundTealBrush}"
-        CornerRadius="100">
+        CornerRadius="30">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -34,9 +34,9 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Command="{Binding SelectPlayerCommand}" CommandParameter="Player1" Grid.Column="0" Style="{StaticResource TextButton}">Select player 1</Button>
-                    <Button Command="{Binding StartNewGameCommand}" Grid.Column="1" Style="{StaticResource TextButton}">Start new game</Button>
-                    <Button Command="{Binding SelectPlayerCommand}" CommandParameter="Player2" Grid.Column="2" Style="{StaticResource TextButton}">Select player 2</Button>
+                    <Button Padding="5" Command="{Binding SelectPlayerCommand}" CommandParameter="Player1" Grid.Column="0" Style="{StaticResource TextButton}" Content="{DynamicResource GamePageSelectPlayer1}"/>
+                    <Button Padding="5" Command="{Binding StartNewGameCommand}" Grid.Column="1" Style="{StaticResource TextButton}" Content="{DynamicResource GamePageStartNewGame}"/>
+                    <Button Padding="5" Command="{Binding SelectPlayerCommand}" CommandParameter="Player2" Grid.Column="2" Style="{StaticResource TextButton}" Content="{DynamicResource GamePageSelectPlayer2}"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -53,7 +53,7 @@
                 </Grid>
             </Grid>
 
-            <Button Command="{Binding SaveGameCommand}" Grid.Row="2" Style="{StaticResource TextButton}" Margin="0">Save game</Button>
+            <Button Command="{Binding SaveGameCommand}" Grid.Row="2" Style="{StaticResource TextButton}" Margin="0" Content="{DynamicResource GamePageStartSaveGame}"/>
 
             <Border Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Background="{StaticResource ForegroundLightBrush}"
@@ -286,8 +286,8 @@
                     <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
-                        <TextBlock Style="{StaticResource LightText}" Text="{Binding GameController.LastStatus, FallbackValue=test}"/>
-                        <TextBlock Style="{StaticResource LightText}" Text="{Binding GameController.CurrentPlayerInfo, FallbackValue=test}"/>
+                        <TextBlock Style="{StaticResource LightText}" Text="{Binding GameController.LastStatus}"/>
+                        <TextBlock Style="{StaticResource LightText}" Text="{Binding GameController.CurrentPlayerInfo}"/>
                     </StackPanel>
                 </Grid>
             </Border>

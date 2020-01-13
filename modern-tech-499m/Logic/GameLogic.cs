@@ -324,7 +324,6 @@ namespace modern_tech_499m.Logic
         }
         #endregion
 
-        [Obsolete]
         private int CreateField(int[] initialvalues, int endingCellPlayer1Value, int endingCellPlayer2Value)
         {
             _logger.Debug("Create field from mjltiple values method called");

@@ -112,7 +112,7 @@ namespace modern_tech_499m.ViewModels
         {
             OpenCloseSettingsCommand = new RelayCommand(() => SideMenuVisible ^= true);
             NavigateToWelcomePageCommand = new RelayCommand(() =>
-                ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Welcome));
+                 ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.Welcome));
             NavigateToGamesPageCommand = new RelayCommand(() =>
                 ViewModelLocator.ApplicationViewModel.GoToPage(ApplicationPage.GameInfoSelection));
             NavigateToUsersListPageCommand = new RelayCommand(() =>

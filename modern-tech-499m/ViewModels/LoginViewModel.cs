@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
+using modern_tech_499m.Helpers;
 using modern_tech_499m.Logic;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
@@ -96,8 +97,8 @@ namespace modern_tech_499m.ViewModels
                     case LoginResult.Success:
                         await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                         {
-                            Title = "Warning",
-                            Message = "Login successful, returning to the game page",
+                            Title = "LoginViewModelWarning".GetAsResource<string>(),
+                            Message = "LoginViewModelSuccessfulLoginText".GetAsResource<string>(),
                             OkText = "OK"
                         });
                         (NavigationSourcePageViewModel as GamePageViewModel).CurrentPlayerLoggingAction(
@@ -109,8 +110,8 @@ namespace modern_tech_499m.ViewModels
                     case LoginResult.UsernameNotExists:
                         await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                         {
-                            Title = "Warning",
-                            Message = "Username does not exist",
+                            Title = "LoginViewModelWarning".GetAsResource<string>(),
+                            Message = "LoginViewModelUsernameNotExistText".GetAsResource<string>(),
                             OkText = "OK"
                         });
                         break;
@@ -118,8 +119,8 @@ namespace modern_tech_499m.ViewModels
                     case LoginResult.WrongPassword:
                         await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                         {
-                            Title = "Warning",
-                            Message = "You have typed a wrong password",
+                            Title = "LoginViewModelWarning".GetAsResource<string>(),
+                            Message = "LoginViewModelWrongPasswordText".GetAsResource<string>(),
                             OkText = "OK"
                         });
                         break;
@@ -151,12 +152,12 @@ namespace modern_tech_499m.ViewModels
         {
             await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
             {
-                Title = "Info",
-                Message = "Bot selected",
+                Title = "LoginViewModelInfo".GetAsResource<string>(),
+                Message = "LoginViewModelBotSelectedText".GetAsResource<string>(),
                 OkText = "OK"
             });
             (NavigationSourcePageViewModel as GamePageViewModel).CurrentPlayerLoggingAction(
-                new AIPlayer("Bot", Guid.Empty));
+                new AIPlayer("LoginViewModelBotText".GetAsResource<string>(), Guid.Empty));
             ViewModelLocator.ApplicationViewModel.ReturnToNavigationPageSource(NavigationSourcePage,
                 NavigationSourcePageViewModel);
         }

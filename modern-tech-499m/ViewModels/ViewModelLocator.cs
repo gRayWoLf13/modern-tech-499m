@@ -18,5 +18,10 @@
         /// The application viewmodel
         /// </summary>
         public static ApplicationViewModel ApplicationViewModel => BootStrapper.Resolve<ApplicationViewModel>();
+
+        /// <summary>
+        /// The viewmodel of the settings page
+        /// </summary>
+        public static SettingsViewModel SettingsViewModel => BootStrapper.Resolve<SettingsViewModel>();
     }
 }

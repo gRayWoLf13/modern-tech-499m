@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
+using modern_tech_499m.Helpers;
 using modern_tech_499m.Logic;
 using modern_tech_499m.Repositories.Core.Domain;
 using modern_tech_499m.Repositories.Core.Repositories;
@@ -93,7 +94,7 @@ namespace modern_tech_499m.ViewModels
                 {
                     await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                     {
-                        Title = "Error",
+                        Title = "RegisterViewModelErrorText".GetAsResource<string>(),
                         Message = errorMessage,
                         OkText = "OK"
                     });
@@ -107,16 +108,16 @@ namespace modern_tech_499m.ViewModels
                     case RegisterResult.UsernameAlreadyExists:
                         await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                         {
-                            Title = "Error",
-                            Message = "Selected username already exists",
+                            Title = "RegisterViewModelErrorText".GetAsResource<string>(),
+                            Message = "RegisterViewModelUsernameAlreadyExistsText".GetAsResource<string>(),
                             OkText = "OK"
                         });
                         break;
                     case RegisterResult.Success:
                         await IoC.UI.ShowMessage(new MessageBoxDialogViewModel
                         {
-                            Title = "Info",
-                            Message = "Registration successful, returning to the game page",
+                            Title = "RegisterViewModelInfoText".GetAsResource<string>(),
+                            Message = "RegisterViewModelRegistrationSuccessfulText".GetAsResource<string>(),
                             OkText = "OK"
                         });
 

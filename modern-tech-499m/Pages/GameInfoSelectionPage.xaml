@@ -27,13 +27,13 @@
                        Foreground="{StaticResource ForegroundTealBrush}"
                        FontSize="{StaticResource FontSizeXXLarge}"
                        FontFamily="{StaticResource LatoBoldItalic}"
-                       Text="Saved games list:"/>
+                       Text="{DynamicResource GameInfoSelectionPageSavedGamesList}"/>
 
                 <userControls:GameInfoListControl Grid.Row="1"
                                               DataContext="{Binding GameInfoListViewModel}"
                                               d:DataContext="{x:Static viewmodels:GameInfoListDesignModel.Instance}"/>
             </Grid>
         </Border>
-        <Button Content="Choose game" HorizontalAlignment="Center" Command="{Binding ChooseGameCommand}"/>
+        <Button Content="{DynamicResource GameInfoSelectionPageChooseGame}" HorizontalAlignment="Center" Command="{Binding ChooseGameCommand}"/>
     </StackPanel>
 </local:BasePage>

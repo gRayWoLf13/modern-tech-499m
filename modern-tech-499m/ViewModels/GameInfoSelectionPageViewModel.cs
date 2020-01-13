@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using modern_tech_499m.Commands;
+using modern_tech_499m.Helpers;
 using modern_tech_499m.Repositories.Core.Repositories;
 using modern_tech_499m.ViewModels.Base;
 using NLog;
@@ -59,19 +61,19 @@ namespace modern_tech_499m.ViewModels
                 switch (gameUsers.Count)
                 {
                     case 0:
-                        user1Name = "Bot number 1";
-                        user2Name = "Bot number 2";
-                        gameType = "AIvAI";
+                        user1Name = "GameInfoSelectionPageViewModelBotNumber1".GetAsResource<string>();
+                        user2Name = "GameInfoSelectionPageViewModelBotNumber2".GetAsResource<string>();
+                        gameType = "GameInfoSelectionPageViewModelAIvAI".GetAsResource<string>();
                         break;
                     case 1:
                         user1Name = gameUsers[0].FullName;
-                        user2Name = "Bot";
-                        gameType = "UvAI";
+                        user2Name = "GameInfoSelectionPageViewModelBot".GetAsResource<string>();
+                        gameType = "GameInfoSelectionPageViewModelUvAI".GetAsResource<string>();
                         break;
                     case 2:
                         user1Name = gameUsers[0].FullName;
                         user2Name = gameUsers[1].FullName;
-                        gameType = "UvU";
+                        gameType = "GameInfoSelectionPageViewModelUvU".GetAsResource<string>();
                         break;
                     default: throw new ArgumentException("Something is really wrong here...", nameof(gameInfo));
                 }

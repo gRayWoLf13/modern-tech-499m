@@ -28,25 +28,25 @@
                     <StackPanel>
 
                         <!-- Signup header -->
-                        <TextBlock Text="Sign in" FontSize="{StaticResource FontSizeXXLarge}"
+                        <TextBlock Text="{DynamicResource LoginPageSignIn}" FontSize="{StaticResource FontSizeXXLarge}"
                                    FontFamily="{StaticResource LatoRegular}"
                                    Foreground="{StaticResource ForegroundPurpleBrush}"/>
 
                         <!-- Signup subtext -->
-                        <TextBlock Text="Here the game begins"
+                        <TextBlock Text="{DynamicResource LoginPageHereTheGameBegins}"
                                    Foreground="{StaticResource ForegroundDarkBrush}"
                                    FontSize="{StaticResource FontSizeLarge}"
                                    Margin="0 0 0 20"/>
 
                         <!-- Username -->
-                        <TextBox Text="{Binding Username}" Tag="Username"/>
+                        <TextBox Text="{Binding Username}" Tag="{DynamicResource LoginPageUsername}"/>
 
                         <!-- Password -->
-                        <PasswordBox x:Name="PasswordText" Tag="Password" Margin="0 0 0 30"/>
+                        <PasswordBox x:Name="PasswordText" Tag="{DynamicResource LoginPagePassword}" Margin="0 0 0 30"/>
 
                         <!-- Login button -->
                         <Button
-                            Content="Login"
+                            Content="{DynamicResource LoginPageLogin}"
                             IsDefault="True"
                             mainNamespace:IsBusyProperty.Value="{Binding LoginIsRunning}"
                             HorizontalAlignment="Center"
@@ -57,11 +57,11 @@
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 
                     <Button Style="{StaticResource TextButton}"
-                        Content="Create new account"
+                        Content="{DynamicResource LoginPageCreateNewAccount}"
                         Command="{Binding RegisterCommand}"/>
 
                 <Button Style="{StaticResource TextButton}"
-                        Content="Let the bot play instead of me"
+                        Content="{DynamicResource LoginPageLetTheBotPlayInsteadOfMe}"
                         Command="{Binding SelectBotCommand}"/>
                 </StackPanel>
             </StackPanel>

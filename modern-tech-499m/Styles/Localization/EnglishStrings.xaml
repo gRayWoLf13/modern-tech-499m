@@ -1,0 +1,102 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:modern_tech_499m"
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <!--Test -->
+    <System:String x:Key="RussianLanguageName">Russian</System:String>
+    <System:String x:Key="EnglishLanguageName">English</System:String>
+    <System:String x:Key="ColorTheme1Name">Color theme 1</System:String>
+    <System:String x:Key="ColorTheme2Name">Color theme 2</System:String>
+
+    <!--GameInfoSelectionPage -->
+    <System:String x:Key="GameInfoSelectionPageSavedGamesList">Saved games list:</System:String>
+    <System:String x:Key="GameInfoSelectionPageChooseGame">Choose game</System:String>
+
+    <!--GamePage -->
+    <System:String x:Key="GamePageSelectPlayer1">Select player 1</System:String>
+    <System:String x:Key="GamePageSelectPlayer2">Select player 2</System:String>
+    <System:String x:Key="GamePageStartNewGame">Start new game</System:String>
+    <System:String x:Key="GamePageStartSaveGame">Save game</System:String>
+
+    <!--LoginPage -->
+    <System:String x:Key="LoginPageSignIn">Sign in</System:String>
+    <System:String x:Key="LoginPageHereTheGameBegins">Here the game begins</System:String>
+    <System:String x:Key="LoginPageUsername">Username</System:String>
+    <System:String x:Key="LoginPagePassword">Password</System:String>
+    <System:String x:Key="LoginPageLogin">Login</System:String>
+    <System:String x:Key="LoginPageCreateNewAccount">Create new account</System:String>
+    <System:String x:Key="LoginPageLetTheBotPlayInsteadOfMe">Let the bot play instead of me</System:String>
+
+    <!--RegisterPage-->
+    <System:String x:Key="RegisterPageSignUp">Sign up</System:String>
+    <System:String x:Key="RegisterPageHereTheGameBegins">Here the game begins</System:String>
+    <System:String x:Key="RegisterPageUsername">Username</System:String>
+    <System:String x:Key="RegisterPagePassword">Password</System:String>
+    <System:String x:Key="RegisterPageFirstName">First name</System:String>
+    <System:String x:Key="RegisterPageLastName">Last name</System:String>
+    <System:String x:Key="RegisterPagePatronymic">Patronymic</System:String>
+    <System:String x:Key="RegisterPageRegister">Register</System:String>
+    <System:String x:Key="RegisterPageIAlreadyHaveAnAccount">I already have an account</System:String>
+
+    <!--UsersDatabasePage -->
+    <System:String x:Key="UsersDatabasePageCurrentUsersList">Current users list:</System:String>
+
+    <!--WelcomePage-->
+    <System:String x:Key="WelcomePageWelcomeText">Welcome to the Kalah game</System:String>
+    <System:String x:Key="WelcomePageMadeBySerega">made by Serega</System:String>
+    <System:String x:Key="WelcomePageGameRulesText">The game has following rules:</System:String>
+    <System:String x:Key="WelcomePageGameRule0Text">Game starts with 6 stones per hole</System:String>
+    <System:String x:Key="WelcomePageGameRule1Text">Your Kalah is on your right</System:String>
+    <System:String x:Key="WelcomePageGameRule2Text">Moves are counterclockwise</System:String>
+    <System:String x:Key="WelcomePageGameRule3Text">If the last stone lands in your Kalah, you get another turn</System:String>
+    <System:String x:Key="WelcomePageGameRule4Text">If the last stone lands in your empty hole, all the stones from the</System:String>
+    <System:String x:Key="WelcomePageGameRule5Text">other player's opposite hole go into your Kalah</System:String>
+    <System:String x:Key="WelcomePageGameRule6Text">If one player runs out of stones, the game ends and the other</System:String>
+    <System:String x:Key="WelcomePageGameRule7Text">player puts the rest of his/her stones in her/his Kalah</System:String>
+    <System:String x:Key="WelcomePageGameRule8Text">The player with the most stones at the end of the game wins</System:String>
+    <System:String x:Key="WelcomePagePleaseHaveFun">Please have fun!</System:String>
+    <System:String x:Key="WelcomePageStartGame">Start game</System:String>
+    <System:String x:Key="WelcomePageLoadGame">Load game</System:String>
+    <System:String x:Key="WelcomePageShowAllUsers">Show all users</System:String>
+    <System:String x:Key="WelcomePageQuitGame">Quit game</System:String>
+
+    <!--GameInfoSelectionPageViewModel-->
+    <System:String x:Key="GameInfoSelectionPageViewModelBotNumber1">Bot number 1</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelBotNumber2">Bot number 2</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelBot">Bot</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelAIvAI">AIvAI</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelUvAI">UvAI</System:String>
+    <System:String x:Key="GameInfoSelectionPageViewModelUvU">UvU</System:String>
+
+    <!--LoginViewModel -->
+    <System:String x:Key="LoginViewModelWarning">Warning</System:String>
+    <System:String x:Key="LoginViewModelInfo">Info</System:String>
+    <System:String x:Key="LoginViewModelSuccessfulLoginText">Login successful, returning to the game page</System:String>
+    <System:String x:Key="LoginViewModelUsernameNotExistText">Username does not exist</System:String>
+    <System:String x:Key="LoginViewModelWrongPasswordText">You have typed a wrong password</System:String>
+    <System:String x:Key="LoginViewModelBotSelectedText">Bot selected</System:String>
+    <System:String x:Key="LoginViewModelBotText">Bot</System:String>
+
+    <!--RegisterViewModel -->
+    <System:String x:Key="RegisterViewModelErrorText">Error</System:String>
+    <System:String x:Key="RegisterViewModelInfoText">Info</System:String>
+    <System:String x:Key="RegisterViewModelUsernameAlreadyExistsText">Selected username already exists</System:String>
+    <System:String x:Key="RegisterViewModelRegistrationSuccessfulText">Registration successful, returning to the game page</System:String>
+
+    <!--BaseWindow -->
+    <System:String x:Key="BaseWindowByMolochnikovSergey">by Molochnikov Sergey</System:String>
+    <System:String x:Key="BaseWindowAppLanguage">Application language:</System:String>
+    <System:String x:Key="BaseWindowAppTheme">Application theme:</System:String>
+
+    <!--GameController -->
+    <System:String x:Key="GameControllerGameStartingText">Game starting</System:String>
+    <System:String x:Key="GameControllerUndoText">Undo</System:String>
+    <System:String x:Key="GameControllerRedoText">Redo</System:String>
+    <System:String x:Key="GameControllerCantUndoText">Can't undo</System:String>
+    <System:String x:Key="GameControllerCantRedoText">Can't redo</System:String>
+    <System:String x:Key="GameControllerWaitingForPlayerText0">Waiting for player '</System:String>
+    <System:String x:Key="GameControllerWaitingForPlayerText1">' to make move</System:String>
+    <System:String x:Key="GameControllerInfoText">Info</System:String>
+    <System:String x:Key="GameControllerGameEndedText">Game ended</System:String>
+    <System:String x:Key="GameControllerGameInterruptedText">Game interrupted</System:String>
+</ResourceDictionary>

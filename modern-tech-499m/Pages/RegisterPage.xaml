@@ -9,7 +9,7 @@
       xmlns:mainNamespace="clr-namespace:modern_tech_499m"
       mc:Ignorable="d" 
       x:Name="Page"
-      d:DesignHeight="700" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="800"
       Title="LoginPage">
     <Page.Resources>
         <ControlTemplate x:Key="validationFailed">
@@ -40,19 +40,19 @@
                     <StackPanel>
 
                         <!-- Signup header -->
-                        <TextBlock Text="Sign up" FontSize="{StaticResource FontSizeXXLarge}"
+                        <TextBlock Text="{DynamicResource RegisterPageSignUp}" FontSize="{StaticResource FontSizeXXLarge}"
                                    FontFamily="{StaticResource LatoRegular}"
                                    Foreground="{StaticResource ForegroundPurpleBrush}"/>
 
                         <!-- Signup subtext -->
-                        <TextBlock Text="Here the game begins"
+                        <TextBlock Text="{DynamicResource RegisterPageHereTheGameBegins}"
                                    Foreground="{StaticResource ForegroundDarkBrush}"
                                    FontSize="{StaticResource FontSizeRegular}"
                                    Margin="0 0 0 20"/>
 
                         <!-- Username -->
                         <TextBox Text="{Binding NewUser.Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="Username">
+                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="{DynamicResource RegisterPageUsername}">
                             <TextBox.ToolTip>
                                 <Binding RelativeSource="{RelativeSource Self}" Path="(Validation.Errors)[0].ErrorContent" />
                             </TextBox.ToolTip>
@@ -66,7 +66,7 @@
                                     <Binding Path="NewUser.PasswordHash" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True"/>
                                 </ContentControl.Content>
                             </ContentControl>
-                            <PasswordBox x:Name="PasswordText" Tag="Password" PasswordChanged="PasswordText_OnPasswordChanged">
+                            <PasswordBox x:Name="PasswordText" Tag="{DynamicResource RegisterPagePassword}" PasswordChanged="PasswordText_OnPasswordChanged">
                                 <PasswordBox.ToolTip>
                                     <Binding ElementName="PasswordTextPlaceholder" Path="(Validation.Errors)[0].ErrorContent" />
                                 </PasswordBox.ToolTip>
@@ -75,7 +75,7 @@
 
                         <!-- First name -->
                         <TextBox Text="{Binding NewUser.FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="First name">
+                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="{DynamicResource RegisterPageFirstName}">
                             <TextBox.ToolTip>
                                 <Binding RelativeSource="{RelativeSource Self}" Path="(Validation.Errors)[0].ErrorContent" />
                             </TextBox.ToolTip>
@@ -83,7 +83,7 @@
 
                         <!--Second name -->
                         <TextBox Text="{Binding NewUser.LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="Last name">
+                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="{DynamicResource RegisterPageLastName}">
                             <TextBox.ToolTip>
                                 <Binding RelativeSource="{RelativeSource Self}" Path="(Validation.Errors)[0].ErrorContent" />
                             </TextBox.ToolTip>
@@ -91,7 +91,7 @@
 
                         <!-- Patronymic -->
                         <TextBox Text="{Binding NewUser.Patronymic, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="Patronymic"/>
+                                 Validation.ErrorTemplate="{StaticResource validationFailed}" Tag="{DynamicResource RegisterPagePatronymic}"/>
 
                         <!-- Birth date -->
                         <DatePicker SelectedDate="{Binding NewUser.BirthDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
@@ -99,7 +99,7 @@
 
                         <!-- Next button -->
                         <Button
-                            Content="Register"
+                            Content="{DynamicResource RegisterPageRegister}"
                             IsDefault="True"
                             mainNamespace:IsBusyProperty.Value="{Binding RegisterIsRunning}"
                             HorizontalAlignment="Center"
@@ -109,7 +109,7 @@
                 </Border>
 
                 <Button Style="{StaticResource TextButton}"
-                        Content="I already have an account"
+                        Content="{DynamicResource RegisterPageIAlreadyHaveAnAccount}"
                         HorizontalAlignment="Center"
                         Command="{Binding LoginCommand}"></Button>
 

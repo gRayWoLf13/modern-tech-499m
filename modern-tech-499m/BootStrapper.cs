@@ -33,6 +33,7 @@ namespace modern_tech_499m
             builder.RegisterType<GamePageViewModel>().AsSelf();
             builder.RegisterType<WelcomePageViewModel>().AsSelf();
             builder.RegisterType<UsersDatabasePageViewModel>().AsSelf();
+            builder.RegisterType<SettingsViewModel>().AsSelf();
 
 
             builder.RegisterType<ApplicationViewModel>().SingleInstance();

@@ -107,6 +107,7 @@
       <DependentUpon>DialogMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Expressions\ExpressionHelpers.cs" />
+    <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="IoC\Interfaces\IUIManager.cs" />
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="IoC\UIManager.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="ViewModels\GamePageViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\UsersDatabaseListItemViewModel.cs" />
     <Compile Include="ViewModels\UsersDatabaseListViewModel.cs" />
     <Compile Include="ViewModels\UsersDatabasePageViewModel.cs" />
@@ -217,6 +219,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\Colors\ColorTheme2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Colors\ColorTheme1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\DatePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,6 +242,14 @@
     <Page Include="Styles\ListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Localization\EnglishStrings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Localization\RussianStrings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Scroll.xaml">
       <SubType>Designer</SubType>

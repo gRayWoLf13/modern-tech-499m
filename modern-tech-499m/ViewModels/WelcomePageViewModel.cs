@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using modern_tech_499m.Commands;
 using modern_tech_499m.ViewModels.Base;
 
@@ -61,7 +62,7 @@ namespace modern_tech_499m.ViewModels
 
         private void QuitGame()
         {
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         #endregion

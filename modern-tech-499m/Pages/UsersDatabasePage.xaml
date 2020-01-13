@@ -26,7 +26,7 @@
                            Foreground="{StaticResource ForegroundTealBrush}"
                            FontSize="{StaticResource FontSizeXXLarge}"
                            FontFamily="{StaticResource LatoBoldItalic}"
-                           Text="Current users list:"/>
+                           Text="{DynamicResource UsersDatabasePageCurrentUsersList}"/>
 
             <userControls:UsersDatabaseListControl Grid.Row="1" DataContext="{Binding UsersListViewModel}"
                                                   d:DataContext="{x:Static viewmodels:UsersDatabaseListDesignModel.Instance}"/>
