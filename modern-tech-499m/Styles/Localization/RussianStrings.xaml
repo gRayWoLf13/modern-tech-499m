@@ -5,8 +5,6 @@
     <!--Test -->
     <System:String x:Key="RussianLanguageName">Русский</System:String>
     <System:String x:Key="EnglishLanguageName">Английский</System:String>
-    <System:String x:Key="ColorTheme1Name">Цветовая тема 1</System:String>
-    <System:String x:Key="ColorTheme2Name">Цветовая тема 2</System:String>
 
     <!--GameInfoSelectionPage -->
     <System:String x:Key="GameInfoSelectionPageSavedGamesList">Список сохраненных игр:</System:String>
@@ -86,7 +84,6 @@
     <!--BaseWindow -->
     <System:String x:Key="BaseWindowByMolochnikovSergey">выполнил Молочников Сергей</System:String>
     <System:String x:Key="BaseWindowAppLanguage">Язык приложения:</System:String>
-    <System:String x:Key="BaseWindowAppTheme">Цветовая схема:</System:String>
 
     <!--GameController -->
     <System:String x:Key="GameControllerGameStartingText">Игра начинается</System:String>

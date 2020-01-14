@@ -1,0 +1,694 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="modern_tech_499m.AILogic.AISolver">
+    <Position X="35.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RCAAABAAABAAAAIAAQAAAAAAKAAAAAAAAAAAAAAYkAA=</HashCode>
+      <FileName>AILogic\AISolver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.AILogic.SolvingTreeNode">
+    <Position X="35.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAFAAgAAABAQAAAAAAAAAAEAAgAAAAAAQAAA=</HashCode>
+      <FileName>AILogic\SolvingTreeNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Animation.FrameworkElementAnimations">
+    <Position X="40.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAQAQCAAAgAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Animation\FrameworkElementAnimations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Animation.PageAnimations">
+    <Position X="44" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Animation\PageAnimations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Animation.StoryboardHelpers">
+    <Position X="37" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAIAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAIQAA=</HashCode>
+      <FileName>Animation\StoryboardHelpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.App">
+    <Position X="37" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.BaseAttachedProperty&lt;TParent, TProperty&gt;">
+    <Position X="21.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAQAAgAAAAAQAAAAAEAEBAFAQAAAAAAAAAA=</HashCode>
+      <FileName>AttachedProperties\BaseAttachedProperty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.AnimateBaseProperty&lt;TParent&gt;">
+    <Position X="26" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAEAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachedProperties\FrameworkElementAttachedProperties.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.AnimateSlideInFromLeftProperty">
+    <Position X="27.25" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachedProperties\FrameworkElementAttachedProperties.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.AnimateFadeInProperty">
+    <Position X="25" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachedProperties\FrameworkElementAttachedProperties.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.IsBusyProperty">
+    <Position X="16" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachedProperties\IsBusyProperty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.NoFrameHistoryAttachedProperty">
+    <Position X="18.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachedProperties\NoFrameHistoryAttachedProperty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.MonitorPasswordProperty">
+    <Position X="20.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachedProperties\PasswordBoxAttachedProperties.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.HasTextProperty">
+    <Position X="22.75" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AttachedProperties\PasswordBoxAttachedProperties.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.BootStrapper">
+    <Position X="42.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAACCAAAAAAAAAAAAAIAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>BootStrapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ApplicationPageHelpers">
+    <Position X="38.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataModels\ApplicationPageHelpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.BaseDialogUserControl">
+    <Position X="15.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAABEAAAAAAAEEAAAgAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Dialogs\BaseDialogUserControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.DialogMessageBox">
+    <Position X="15.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dialogs\DialogMessageBox.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.ExpressionHelpers">
+    <Position X="37" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Expressions\ExpressionHelpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Extensions">
+    <Position X="38.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.GameController" BaseTypeListCollapsed="true">
+    <Position X="44" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACBAAAAQAAQAAAAIAQAKRAAoAACAAAABAQIAAAAAAE=</HashCode>
+      <FileName>GameController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.IoC">
+    <Position X="38.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>IoC\IoC.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.UIManager" BaseTypeListCollapsed="true">
+    <Position X="40.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IoC\UIManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.WindowResizer">
+    <Position X="38.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAACAAAAIEAAAAAACAAAACAIAAAAAAA=</HashCode>
+      <FileName>WindowResizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.MONITORINFO">
+    <Position X="40.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAEAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAA=</HashCode>
+      <FileName>WindowResizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Commands.RelayCommand" BaseTypeListCollapsed="true">
+    <Position X="35.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Commands\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.Commands.RelayParameterizedCommand" BaseTypeListCollapsed="true">
+    <Position X="37" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACAAQAAEAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Commands\RelayParameterizedCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.Converters.AttachedPropertyValueConverter">
+    <Position X="9.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\AttachedPropertyValueConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Converters.BaseConverter&lt;T&gt;">
+    <Position X="10.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Converters\BaseConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.Converters.BaseMultiConverter&lt;T&gt;">
+    <Position X="1.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Converters\BaseMultiConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.Converters.FirstBoolValueToTwoValuesConverter">
+    <Position X="0.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\FirstBoolValueToTwoValuesConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Converters.GameControllerToCommandParametersConverter">
+    <Position X="2.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAIAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\GameControllerToCommandParametersConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Converters.IoCConverter">
+    <Position X="11.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Converters\IoCConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Helpers.ResourceHelper">
+    <Position X="38.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Helpers\ResourceHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Logic.AIPlayer" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAgAAAAAAAAAAgAAQAAQIIAAAAIAAAAAACAAAgAA=</HashCode>
+      <FileName>Logic\AIPlayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.Logic.Cell" BaseTypeListCollapsed="true">
+    <Position X="44" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAgEAAAAAAAAAAAIAAAAAgBAAAAAA=</HashCode>
+      <FileName>Logic\Cell.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.Logic.CellGetterEventArgs">
+    <Position X="33.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\CellGetterEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Logic.GameLogic" BaseTypeListCollapsed="true">
+    <Position X="37" Y="3" Width="1.5" />
+    <NestedTypes>
+      <Class Name="modern_tech_499m.Logic.GameLogic.SerializableGameLogic" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Logic\GameLogic.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EACAAAAAQIQAYA4AyAAAhQAAISFAAgCBAAQAgACCARA=</HashCode>
+      <FileName>Logic\GameLogic.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.Logic.Move">
+    <Position X="42.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAQAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Logic\Move.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Logic.UserPlayer" BaseTypeListCollapsed="true">
+    <Position X="42.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAADAgAAAAAAAAAAgAAQAAQAIAAAAoAAAAAACAAAgAA=</HashCode>
+      <FileName>Logic\UserPlayer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.Pages.BasePage">
+    <Position X="6.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAgAAAAAAAAAAACABAAAAAAAAAARAAAAAAA=</HashCode>
+      <FileName>Pages\BasePage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Pages.BasePage&lt;TViewModel&gt;">
+    <Position X="6.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\BasePage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Pages.GameInfoSelectionPage">
+    <Position X="1" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\GameInfoSelectionPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.Pages.GamePage">
+    <Position X="3.25" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\GamePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.Pages.LoginPage">
+    <Position X="5.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\LoginPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.Pages.RegisterPage">
+    <Position X="7.75" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\RegisterPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.Pages.UsersDatabasePage">
+    <Position X="10" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\UsersDatabasePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.Pages.WelcomePage">
+    <Position X="12.25" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\WelcomePage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.Properties.Resources">
+    <Position X="40.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Properties.Settings">
+    <Position X="44" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Security.SecureStringHelpers">
+    <Position X="42.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Security\SecureStringHelpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.Security.StringHelpers">
+    <Position X="38.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Security\StringHelpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.UserControls.GameCellControl" BaseTypeListCollapsed="true">
+    <Position X="42.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAJAAAAQAAAAAAAAAAIAAAAAAAAAQAAAAhAAAIAAAA=</HashCode>
+      <FileName>UserControls\GameCellControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.UserControls.GameInfoListControl" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserControls\GameInfoListControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.UserControls.GameInfoListItemControl" BaseTypeListCollapsed="true">
+    <Position X="35.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserControls\GameInfoListItemControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.UserControls.PageHost" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAEAAAAEAAAAgI=</HashCode>
+      <FileName>UserControls\PageHost.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.UserControls.SideMenuControl" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserControls\SideMenuControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.UserControls.UsersDatabaseListControl" BaseTypeListCollapsed="true">
+    <Position X="44" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserControls\UsersDatabaseListControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.UserControls.UsersDatabaseListItemControl" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserControls\UsersDatabaseListItemControl.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.ApplicationViewModel">
+    <Position X="22" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAACAgiAAAAAAAAAAAAAAAAAAAAAAACAAgEgAAAAI=</HashCode>
+      <FileName>ViewModels\ApplicationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.GameInfoListDesignModel">
+    <Position X="17.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Design\GameInfoListDesignModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.GameInfoListItemDesignModel">
+    <Position X="15.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Design\GameInfoListItemDesignModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.UsersDatabaseListDesignModel">
+    <Position X="10.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Design\UsersDatabaseListDesignModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.UsersDatabaseListItemDesignModel">
+    <Position X="8.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Design\UsersDatabaseListItemDesignModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.MessageBoxDialogViewModel">
+    <Position X="31" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>ViewModels\Dialogs\MessageBoxDialogViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.DialogWindowViewModel">
+    <Position X="26.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\DialogWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.GameInfoListItemViewModel">
+    <Position X="15.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAIAAAAAQAAAEAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\GameInfoListItemViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.GameInfoListViewModel">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\GameInfoListViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.GameInfoSelectionPageViewModel">
+    <Position X="24.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAggAAAAAAAAQIAAAAAAIAACAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>ViewModels\GameInfoSelectionPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.GamePageViewModel">
+    <Position X="28.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAACABAwgAAQ0AAAiACAIAEAADCQAgIAAQAAAAA=</HashCode>
+      <FileName>ViewModels\GamePageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.LoginViewModel">
+    <Position X="1.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAgAAAAAAAAAQAACAAAAAAAAACiAAAAAADAAgA=</HashCode>
+      <FileName>ViewModels\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.RegisterViewModel">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAgAAAACAAIAAAAABAAAAABAACAAAAAAACAQAA=</HashCode>
+      <FileName>ViewModels\RegisterViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.SettingsViewModel">
+    <Position X="6.25" Y="3.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="modern_tech_499m.ViewModels.SettingsViewModel.ItemOption" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ViewModels\SettingsViewModel.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EIgAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\SettingsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.UsersDatabaseListItemViewModel">
+    <Position X="8.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAQCAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\UsersDatabaseListItemViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.UsersDatabaseListViewModel">
+    <Position X="10.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\UsersDatabaseListViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.UsersDatabasePageViewModel">
+    <Position X="13" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAgAAAAAAAAAgAAAAAAIAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>ViewModels\UsersDatabasePageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.ViewModelLocator">
+    <Position X="35.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAABAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ViewModelLocator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.WelcomePageViewModel">
+    <Position X="19.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAgAAAAAAAAgIAgAAAAAQAAAAAIAAAAAAE=</HashCode>
+      <FileName>ViewModels\WelcomePageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.WindowViewModel">
+    <Position X="26.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQEACQEAFggIBAAAgAEAQEEAAAAAAAIAAIAhAAAEAAA=</HashCode>
+      <FileName>ViewModels\WindowViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.Base.BaseDialogViewModel">
+    <Position X="31" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Base\BaseDialogViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="modern_tech_499m.ViewModels.Base.BaseViewModel">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAYAAAAAAAgAAAAAAIACAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Base\BaseViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="modern_tech_499m.Views.BaseWindow" BaseTypeListCollapsed="true">
+    <Position X="40.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\BaseWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="modern_tech_499m.Views.DialogWindow" BaseTypeListCollapsed="true">
+    <Position X="35.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\DialogWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Struct Name="modern_tech_499m.Rectangle">
+    <Position X="38.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAIAAAACACAAAAAAAA=</HashCode>
+      <FileName>WindowResizer.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="modern_tech_499m.MINMAXINFO">
+    <Position X="33.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQBAAAAAAACAAAIAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>WindowResizer.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="modern_tech_499m.POINT">
+    <Position X="35.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>WindowResizer.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="modern_tech_499m.IUIManager">
+    <Position X="38.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IoC\Interfaces\IUIManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="modern_tech_499m.Logic.IPlayer">
+    <Position X="35.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAgAAAAAAAAAAAAAQAAQAAAAAAAAAAAAACAAAgAA=</HashCode>
+      <FileName>Logic\IPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="modern_tech_499m.ViewModels.IHavePassword">
+    <Position X="33.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Base\IHavePassword.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="modern_tech_499m.PageAnimation">
+    <Position X="38.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Animation\PageAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="modern_tech_499m.ApplicationPage">
+    <Position X="33.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAgBAAAAAAAQAAAQAAA=</HashCode>
+      <FileName>DataModels\ApplicationPage.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="modern_tech_499m.MonitorOptions">
+    <Position X="35.25" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAIAQAAAAAAAA=</HashCode>
+      <FileName>WindowResizer.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="modern_tech_499m.Logic.MoveResult">
+    <Position X="38.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAABAAAgAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Logic\MoveResult.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

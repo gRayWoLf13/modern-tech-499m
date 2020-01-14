@@ -5,8 +5,6 @@
     <!--Test -->
     <System:String x:Key="RussianLanguageName">Russian</System:String>
     <System:String x:Key="EnglishLanguageName">English</System:String>
-    <System:String x:Key="ColorTheme1Name">Color theme 1</System:String>
-    <System:String x:Key="ColorTheme2Name">Color theme 2</System:String>
 
     <!--GameInfoSelectionPage -->
     <System:String x:Key="GameInfoSelectionPageSavedGamesList">Saved games list:</System:String>
@@ -86,7 +84,6 @@
     <!--BaseWindow -->
     <System:String x:Key="BaseWindowByMolochnikovSergey">by Molochnikov Sergey</System:String>
     <System:String x:Key="BaseWindowAppLanguage">Application language:</System:String>
-    <System:String x:Key="BaseWindowAppTheme">Application theme:</System:String>
 
     <!--GameController -->
     <System:String x:Key="GameControllerGameStartingText">Game starting</System:String>
