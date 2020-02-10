@@ -112,6 +112,22 @@
         </Style>
     </Window.Resources>
 
+    <x:Code>
+        <![CDATA[
+        public BaseWindow() 
+        {
+            InitializeComponent();
+            DataContext = new modern_tech_499m.ViewModels.WindowViewModel(this);
+        }
+        
+        //Hide overlay if we are focused
+        private void BaseWindow_OnActivated(object sender, EventArgs e) => (DataContext as modern_tech_499m.ViewModels.WindowViewModel).DimmableOverlayVisible = false;
+
+        //Show overlay if we are not focused
+        private void BaseWindow_OnDeactivated(object sender, EventArgs e) => (DataContext as modern_tech_499m.ViewModels.WindowViewModel).DimmableOverlayVisible = true;
+        ]]>
+    </x:Code>
+
     <WindowChrome.WindowChrome>
         <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}"
                       CaptionHeight="{Binding TitleHeight}"

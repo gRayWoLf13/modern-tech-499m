@@ -118,6 +118,32 @@
         </Style>
     </Window.Resources>
 
+    <x:Code>
+        <![CDATA[
+         /// <summary>
+        /// The viewmodel for this window
+        /// </summary>
+        private modern_tech_499m.ViewModels.DialogWindowViewModel _viewModel;
+
+        /// <summary>
+        /// The viewmodel for this dialog
+        /// </summary>
+        public modern_tech_499m.ViewModels.DialogWindowViewModel ViewModel
+        {
+            get => _viewModel;
+            set
+            {
+                //Set a new value
+                _viewModel = value;
+                //Update data context
+                DataContext = _viewModel;
+            }
+        }
+
+        public DialogWindow() => InitializeComponent();
+        ]]>
+    </x:Code>
+
     <WindowChrome.WindowChrome>
         <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}"
                       CaptionHeight="{Binding TitleHeight}"

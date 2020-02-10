@@ -176,12 +176,6 @@
     <Compile Include="ViewModels\WelcomePageViewModel.cs" />
     <Compile Include="ViewModels\DialogWindowViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
-    <Compile Include="Views\DialogWindow.xaml.cs">
-      <DependentUpon>DialogWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BaseWindow.xaml.cs">
-      <DependentUpon>BaseWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="WindowResizer.cs" />
     <Page Include="Dialogs\DialogMessageBox.xaml">
       <SubType>Designer</SubType>
