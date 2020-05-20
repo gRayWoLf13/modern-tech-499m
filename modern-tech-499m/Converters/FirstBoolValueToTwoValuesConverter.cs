@@ -19,7 +19,10 @@ namespace modern_tech_499m.Converters
 
         public override object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            throw new NotSupportedException();
+            if (value) 
+                return new object[2];
+            else
+                return null;
         }
     }
 }
